@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <style>
+    #root {
+      display: inherit;
+      min-height: 100vh;
+    }
+
+    .dropzone {
+      display: none;
+      align-items: center;
+      justify-content: center;
+      justify-self: center;
+      align-self: center;
+      font-family: "Quicksand", sans-serif;
+      border: 4px dashed #4466EE;
+      height: 80%;
+      width: 80%;
+    }
+
+    .drop-zone.dragOver {
+      border-style: solid;
+    }
+
+    .file-holder {
+      display: none;
+    }
+
+
+
+    .file-holder .fileStats {
+      display: grid;
+      justify-content: flex-start;
+      align-items: center;
+      font-size: 15px;
+    }
+
+    .fileStats .filename {
+      font-weight: bold;
+
+    }
+
+    .fileStats .filesize {
+      font-weight: lighter;
+    }
+
+    .file-holder .progressbar-outline {
+      width: 100%;
+      height: 10px;
+      border-radius: 5px;
+      background-color: #9e9e9e40;
+    }
+
+    .file-holder .progressbar-inner {
+      width: 0%;
+      height: 100%;
+      border-radius: 5px;
+      background-color: cornflowerblue;
+      transition: width 1s ease-out;
+    }
+
+
+    .showgrid {
+      display: grid;
+    }
+
+    .showflex {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .showflex .file {
+      margin-bottom: 1em;
+    }
+
+    .file.readedFile {
+      padding: .5em 0 .5em 1em;
+      margin-bottom: 1em;
+      /* border: 1px solid black; */
+      box-shadow: 0 0 5px #7a7676;
+      border-radius: 5px;
+      position: relative;
+    }
+
+    .deleteFile {
+      font-weight: bold;
+      position: absolute;
+      right: 15px;
+      top: 5px;
+      cursor: pointer;
+    }
+
+    .submit {
+      justify-self: start;
+      align-self: start;
+    }
+  </style>
+</head>
+
+<body>
+  <h2>Submit Files</h2>
+
+  <div id="root">
+
+    <div class="dropzone">
+      <span>Drag and Drop to Upload</span>
+    </div>
+    <div class="file-holder"></div>
+    <button class="submit">Submit</button>
+  </div>
+
+  <!-- <div class="file readedFile">
+    <span class="deleteFile">X</span>
+    <div class="fileStats">
+      <span class="filename">File name.jpg</span>
+      <span class="filesize">294 MB</span>
+    </div>
+    <div class="progressbar-outline">
+      <div class="progressbar-inner"></div>
+    </div>
+  </div> -->
+
+  <script>
+
+    const allowedFileExt = ['png', 'jpg', 'jpeg', 'webp'];
+    const fileData = new FormData();
+
+    const root = document.querySelector('#root')
+    const dropzone = document.querySelector('.dropzone');
+    const fileHolder = document.querySelector('.file-holder');
+    const submit = document.querySelector('.submit');
+
+    root.addEventListener('dragover', dragOverRoot);
+    root.addEventListener('dragend', dragEndRoot);
+    dropzone.addEventListener('drop', dropzoneDrop);
+    submit.addEventListener('click', submitHandler);
+
+    // document.body.addEventListener('dragleave', dragLeaveBody);
+    // dropzone.addEventListener('dragleave', dropzoneDropLeave)
+
+    function renderFileStats(stats, i) {
+      // 
+      const file = document.createElement('div');
+      file.className = 'file'
+      file.id = `file${i - 1}`
+      // 
+      const fileStats = document.createElement('div');
+      const filename = document.createElement('div');
+      const filesize = document.createElement('div');
+      const deleteFile = document.createElement('span');
+
+      deleteFile.className = 'deleteFile';
+      deleteFile.innerHTML = 'X';
+
+      deleteFile.addEventListener('click', deleteFileHandler)
+
+      function deleteFileHandler(e) {
+        const element = e.currentTarget.parentElement;
+        fileHolder.removeChild(element);
+        const key = element.id.toLowerCase();
+        console.log(key);
+        fileData.delete(key);
+      }
+
+      fileStats.className = 'fileStats';
+      filename.className = 'filename';
+      filesize.className = 'filesize';
+      filename.innerText = stats.name
+      filesize.innerText = `${stats.size / 1000000} MB`;
+
+      fileStats.appendChild(filename)
+      fileStats.appendChild(filesize)
+
+      const outline = document.createElement('div');
+      const inner = document.createElement('div');
+
+      outline.className = 'progressbar-outline'
+      inner.className = 'progressbar-inner'
+      setTimeout(() => inner.style.width = '100%', 100 * i)
+      outline.appendChild(inner)
+
+      file.appendChild(fileStats)
+      file.appendChild(outline)
+      fileHolder.appendChild(file)
+      setTimeout(() => {
+        file.removeChild(outline);
+        file.classList.add('readedFile');
+        file.appendChild(deleteFile);
+      }, (100 * i) * 2 + 1000);
+    }
+
+    function appendFormData(param) {
+      const files = param
+      let counter = 0
+
+      const validFile = new FormData();
+
+      for (let i = 0; i < files.length; i++) {
+        const fileName = files[i].name
+        const splitName = fileName.split('.');
+        const fileExt = splitName[splitName.length - 1].toLowerCase()
+        const found = allowedFileExt.find(ext => ext === fileExt);
+        if (found) {
+          fileData.append(`file${i}`, files[i]);
+          validFile.append(`file${i}`, files[i]);
+          counter++
+        } else {
+          console.log('invalid files:', fileName);
+        }
+      }
+      if (counter) {
+        fileHolder.classList.add('showflex');
+        let i = 1
+        for (const file of validFile.values()) {
+          renderFileStats(file, i);
+          i++
+        }
+      }
+    }
+
+    function dragOverRoot(e) {
+      e.preventDefault()
+      fileHolder.classList.remove('showflex');
+      dropzone.classList.add('showgrid');
+      root.style.display = 'grid'
+    }
+
+    function dragEndRoot(e) {
+      console.log('dragend');
+      dropzone.classList.remove('showgrid');
+      root.style.removeProperty('display');
+    }
+
+    function dropzoneDrop(e) {
+      e.preventDefault();
+      console.log('files was dropped');
+      dropzone.classList.remove('showgrid');
+      root.style.removeProperty('display');
+      appendFormData(e.dataTransfer.files)
+    }
+
+
+    function submitHandler(e) {
+      let counter = 0
+      for (const file of fileData.keys()) counter++
+      if (counter) {
+        fetch('/submitter/draganddrop', {
+          method: 'post',
+          body: fileData
+        })
+          .then((msg) => console.log(msg))
+          .catch((err) => console.log(err))
+      } else {
+        console.log('no files uploaded');
+      }
+
+
+
+    }
+
+    // will be implemented later
+
+    // function dropzoneDropLeave(e) {
+    //   e.preventDefault();
+    //   console.log('dropone drop leave');
+    //   dropzone.classList.remove('show');
+    // }
+
+    // function dragLeaveBody() {
+    //   console.log('dragleave');
+    //   dropzone.classList.remove('show');
+    // }
+
+  </script>
+
+</body>

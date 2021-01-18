@@ -1,0 +1,6 @@
+# Ignore directory
+
+/submission
+/node_modules
+/tmp
+/temp
