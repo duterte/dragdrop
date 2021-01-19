@@ -6,19 +6,26 @@
   <style>
     #root {
       display: inherit;
-      min-height: 100vh;
+      width: 100%;
+      height: 100vh;
+      /* border: 1px solid red; */
+      grid-template-rows: 3fr 1fr;
     }
 
     .dropzone {
       display: none;
       align-items: center;
       justify-content: center;
-      justify-self: center;
-      align-self: center;
-      font-family: "Quicksand", sans-serif;
+      /* justify-self: center; */
+      /* align-self: center; */
       border: 4px dashed #4466EE;
-      height: 80%;
-      width: 80%;
+      font-family: "Quicksand", sans-serif;
+      font-size: 3em;
+      /* height: 80%; */
+      /* width: 80%; */
+      /* width: 100%; */
+      margin: 0 5em;
+      user-select: none;
     }
 
     .drop-zone.dragOver {
@@ -29,29 +36,35 @@
       display: none;
     }
 
-
+    .file {
+      position: relative;
+      padding: .5em 0 .5em 3em;
+      margin-bottom: 1em;
+      box-shadow: 0 0 5px #7a7676;
+      border-radius: 5px;
+    }
 
     .file-holder .fileStats {
-      display: grid;
-      justify-content: flex-start;
-      align-items: center;
       font-size: 15px;
+      font-family: sans-serif;
     }
 
     .fileStats .filename {
       font-weight: bold;
-
+      margin-bottom: .2em;
     }
 
     .fileStats .filesize {
       font-weight: lighter;
+      color: darkgrey;
     }
 
     .file-holder .progressbar-outline {
-      width: 100%;
+      width: 90%;
       height: 10px;
       border-radius: 5px;
       background-color: #9e9e9e40;
+      margin-top: .5em;
     }
 
     .file-holder .progressbar-inner {
@@ -76,16 +89,9 @@
       margin-bottom: 1em;
     }
 
-    .file.readedFile {
-      padding: .5em 0 .5em 1em;
-      margin-bottom: 1em;
-      /* border: 1px solid black; */
-      box-shadow: 0 0 5px #7a7676;
-      border-radius: 5px;
-      position: relative;
-    }
+    /* .file.readedFile  */
 
-    .deleteFile {
+    .deleteIcon {
       font-weight: bold;
       position: absolute;
       right: 15px;
@@ -93,15 +99,57 @@
       cursor: pointer;
     }
 
+    .fileIcon {
+      position: absolute;
+      left: 11px;
+      top: 12px;
+    }
+
     .submit {
+      /* display: none; */
       justify-self: start;
       align-self: start;
+    }
+
+    .submit.show {
+      display: initial;
+    }
+
+    svg {
+      width: 25px;
+      height: 25px;
+      font-size: 1.7em;
     }
   </style>
 </head>
 
 <body>
-  <h2>Submit Files</h2>
+  <!-- File svg Icon -->
+  <svg style="display: none" xmlns="http://www.w3.org/2000/svg">
+    <symbol id="file-icon-solid" viewBox="0 0 384 512" fill="currentColor" width="1em" height="1em">
+      <path
+        d="M224 136V0H24C10.7 0 0 10.7 0 24v464c0 13.3 10.7 24 24 24h336c13.3 0 24-10.7 24-24V160H248c-13.2 0-24-10.8-24-24zm160-14.1v6.1H256V0h6.1c6.4 0 12.5 2.5 17 7l97.9 98c4.5 4.5 7 10.6 7 16.9z" />
+    </symbol>
+  </svg>
+
+  <!-- Close Icon -->
+  <svg style="display: none" xmlns="http://www.w3.org/2000/svg">
+    <symbol id="close-icon-solid" viewBox="0 0 24 24" fill="currentColor" width="1em" height="1em">
+      <g>
+        <path fill="none" d="M0 0h24v24H0z" />
+        <path
+          d="M12 10.586l4.95-4.95 1.414 1.414-4.95 4.95 4.95 4.95-1.414 1.414-4.95-4.95-4.95 4.95-1.414-1.414 4.95-4.95-4.95-4.95L7.05 5.636z" />
+      </g>
+    </symbol>
+  </svg>
+  <!-- Check Icon -->
+  <svg style="display: none" xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 48 48">
+    <symbol id="check-icon-colored" viewBox="0 0 48 48" width="1em" height="1em">
+      <polygon fill="#43A047" points="40.6,12.1 17,35.7 7.4,26.1 4.6,29 17,41.3 43.4,14.9" />
+    </symbol>
+  </svg>
+
+  <h2>Try to Drop a files</h2>
 
   <div id="root">
 
@@ -111,17 +159,6 @@
     <div class="file-holder"></div>
     <button class="submit">Submit</button>
   </div>
-
-  <!-- <div class="file readedFile">
-    <span class="deleteFile">X</span>
-    <div class="fileStats">
-      <span class="filename">File name.jpg</span>
-      <span class="filesize">294 MB</span>
-    </div>
-    <div class="progressbar-outline">
-      <div class="progressbar-inner"></div>
-    </div>
-  </div> -->
 
   <script>
 
@@ -134,12 +171,12 @@
     const submit = document.querySelector('.submit');
 
     root.addEventListener('dragover', dragOverRoot);
-    root.addEventListener('dragend', dragEndRoot);
-    dropzone.addEventListener('drop', dropzoneDrop);
-    submit.addEventListener('click', submitHandler);
+    root.addEventListener('drop', dropRoot);
 
-    // document.body.addEventListener('dragleave', dragLeaveBody);
-    // dropzone.addEventListener('dragleave', dropzoneDropLeave)
+    dropzone.addEventListener('drop', dropzoneDrop);
+    dropzone.addEventListener('dragenter', dropzoneDragEnter);
+
+    submit.addEventListener('click', submitHandler);
 
     function renderFileStats(stats, i) {
       // 
@@ -151,9 +188,13 @@
       const filename = document.createElement('div');
       const filesize = document.createElement('div');
       const deleteFile = document.createElement('span');
+      const fileIcon = document.createElement('span');
 
-      deleteFile.className = 'deleteFile';
-      deleteFile.innerHTML = 'X';
+      fileIcon.className = 'fileIcon';
+      fileIcon.innerHTML = `<svg><use href="#file-icon-solid" /></svg>`;
+
+      deleteFile.className = 'deleteIcon';
+      deleteFile.innerHTML = `<svg><use href="#close-icon-solid" /></svg>`;
 
       deleteFile.addEventListener('click', deleteFileHandler)
 
@@ -161,7 +202,6 @@
         const element = e.currentTarget.parentElement;
         fileHolder.removeChild(element);
         const key = element.id.toLowerCase();
-        console.log(key);
         fileData.delete(key);
       }
 
@@ -169,10 +209,7 @@
       filename.className = 'filename';
       filesize.className = 'filesize';
       filename.innerText = stats.name
-      filesize.innerText = `${stats.size / 1000000} MB`;
-
-      fileStats.appendChild(filename)
-      fileStats.appendChild(filesize)
+      filesize.innerHTML = `${(stats.size / 1000).toFixed(2)} KB <span class="checkIcon"><svg><use href="#check-icon-colored" /></svg></span>`;
 
       const outline = document.createElement('div');
       const inner = document.createElement('div');
@@ -180,13 +217,17 @@
       outline.className = 'progressbar-outline'
       inner.className = 'progressbar-inner'
       setTimeout(() => inner.style.width = '100%', 100 * i)
-      outline.appendChild(inner)
 
-      file.appendChild(fileStats)
-      file.appendChild(outline)
+      outline.appendChild(inner)
+      fileStats.appendChild(filename)
+      fileStats.appendChild(filesize)
+      fileStats.appendChild(outline)
+
+      file.appendChild(fileIcon);
+      file.appendChild(fileStats);
       fileHolder.appendChild(file)
       setTimeout(() => {
-        file.removeChild(outline);
+        fileStats.removeChild(outline);
         file.classList.add('readedFile');
         file.appendChild(deleteFile);
       }, (100 * i) * 2 + 1000);
@@ -207,8 +248,6 @@
           fileData.append(`file${i}`, files[i]);
           validFile.append(`file${i}`, files[i]);
           counter++
-        } else {
-          console.log('invalid files:', fileName);
         }
       }
       if (counter) {
@@ -228,8 +267,20 @@
       root.style.display = 'grid'
     }
 
-    function dragEndRoot(e) {
-      console.log('dragend');
+    root.addEventListener('dragleave', dragLeaveRoot);
+    function dragLeaveRoot(e) {
+      console.log('mouse leave');
+      const target = e.target;
+      console.log(target)
+      // if (target.className !== 'dropzone') {
+      //   dropzone.classList.remove('showgrid');
+      //   root.style.removeProperty('display');
+      // }
+    }
+
+    function dropRoot(e) {
+      console.log('drop root');
+      e.preventDefault();
       dropzone.classList.remove('showgrid');
       root.style.removeProperty('display');
     }
@@ -242,6 +293,13 @@
       appendFormData(e.dataTransfer.files)
     }
 
+    function dropzoneDragEnter(e) {
+      console.log('dragged on the dropzone')
+      e.preventDefault();
+      e.stopPropagation();
+      dropzone.classList.add('showgrid');
+      root.style.display = 'grid'
+    }
 
     function submitHandler(e) {
       let counter = 0
@@ -256,23 +314,7 @@
       } else {
         console.log('no files uploaded');
       }
-
-
-
     }
-
-    // will be implemented later
-
-    // function dropzoneDropLeave(e) {
-    //   e.preventDefault();
-    //   console.log('dropone drop leave');
-    //   dropzone.classList.remove('show');
-    // }
-
-    // function dragLeaveBody() {
-    //   console.log('dragleave');
-    //   dropzone.classList.remove('show');
-    // }
 
   </script>
 
