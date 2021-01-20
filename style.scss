@@ -1,0 +1,258 @@
+ul,
+li {
+  list-style: none;
+}
+
+#root {
+  display: inherit;
+  width: 100%;
+  height: 100vh;
+  grid-template-rows: 3fr 1fr;
+  position: relative;
+  margin-top: 2em;
+}
+
+.dropzone {
+  --dimension: 66vh;
+  display: grid;
+  grid-template-rows: 1fr 1fr 1fr;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Quicksand', sans-serif;
+  width: var(--dimension);
+  height: var(--dimension);
+  margin: 0 auto;
+  padding: 0.9em;
+  box-sizing: border-box;
+  position: relative;
+}
+
+.dropzone.showborder {
+  position: relative;
+  border: 4px dashed #4466ee;
+  grid-template-rows: 1fr;
+  background-color: rgba(227, 255, 193, 0.15);
+}
+
+.dropzone.hideui {
+  display: none;
+}
+
+.dropzone > span {
+  text-transform: uppercase;
+  text-align: center;
+}
+
+.dropzone .addbutton {
+  align-self: flex-end;
+  justify-self: center;
+  display: inline-block;
+  width: max-content;
+  font-size: 1.8em;
+  padding: 0.4em 2.1em 0.4em 0.8em;
+  border-radius: 10px;
+  background-color: #6495ed;
+  color: #ffffffad;
+  box-shadow: 0 0 5px #6495ed;
+  cursor: pointer;
+  position: relative;
+}
+
+.showborder .addbutton,
+.hideui .addbutton {
+  display: none;
+}
+
+.addbutton > svg {
+  width: 50px;
+  height: 50px;
+  font-size: 2.5rem;
+  position: absolute;
+  top: 6.7px;
+  left: 155px;
+}
+
+.dropzone .or {
+  align-self: center;
+  justify-self: center;
+  font-size: 2em;
+  font-weight: bolder;
+  color: #9e9e9ef5;
+  pointer-events: none;
+}
+
+.showborder .or,
+.hideui .or {
+  display: none;
+}
+
+.dropzone .textui {
+  align-self: start;
+  justify-self: center;
+  width: 80%;
+  font-size: 3em;
+  font-weight: bolder;
+  color: #6495ed;
+  pointer-events: none;
+}
+
+.showborder .textui {
+  align-self: center;
+}
+
+.hideui .textui {
+  display: none;
+}
+
+.file-holder {
+  display: none;
+}
+
+.file {
+  position: relative;
+  padding: 0.5em 0 0.5em 3em;
+  margin-bottom: 1em;
+  box-shadow: 0 0 5px #7a7676;
+  border-radius: 5px;
+  font-family: sans-serif;
+}
+
+.file-holder .fileStats {
+  font-size: 15px;
+  margin-right: 23px;
+}
+
+.fileStats .filename {
+  font-weight: bold;
+  margin-bottom: 0.2em;
+}
+
+.fileStats .filesize {
+  font-weight: lighter;
+  color: darkgrey;
+}
+
+.file-holder .progressbar-outline {
+  width: 100%;
+  height: 10px;
+  border-radius: 5px;
+  background-color: #9e9e9e40;
+  margin-top: 0.5em;
+}
+
+.file-holder .progressbar-inner {
+  width: 0%;
+  height: 100%;
+  border-radius: 5px;
+  background-color: cornflowerblue;
+  transition: width 1s ease-out;
+}
+
+.showflex {
+  display: flex;
+  flex-direction: column;
+}
+
+.showflex .file {
+  margin-bottom: 1em;
+}
+
+.deleteIcon {
+  font-weight: bold;
+  position: absolute;
+  right: 15px;
+  top: 5px;
+  cursor: pointer;
+  color: #0000007a;
+}
+
+.deleteIcon:hover {
+  color: #000000bf;
+}
+
+.fileIcon {
+  position: absolute;
+  left: 11px;
+  top: 20px;
+  color: #000000ad;
+}
+
+.checkIcon {
+  font-size: 0.8em;
+}
+
+.checkIcon svg {
+  position: relative;
+  top: 8px;
+}
+
+.buttons {
+  display: none;
+  justify-content: flex-end;
+  font-family: sans-serif;
+  font-weight: bold;
+}
+
+.buttons .addbutton2 {
+  display: flex;
+  align-items: center;
+  border: 2px solid black;
+  padding: 0.6em 1.6em;
+  border-radius: 5px;
+  cursor: pointer;
+  transition-property: color, background-color;
+  transition-duration: 0.7s;
+  transition-timing-function: ease-in-out;
+}
+
+.buttons .addbutton2:hover {
+  background-color: black;
+  color: white;
+}
+
+.addbutton2 > svg {
+  margin-left: 5px;
+}
+
+.buttons .submit {
+  display: flex;
+  align-items: center;
+  background-color: #4466ee;
+  padding: 0.6em 1.6em;
+  border-radius: 5px;
+  box-shadow: 0 0 5px #4466eeb8;
+  cursor: pointer;
+  color: #ffffffad;
+  margin-left: 3em;
+}
+
+.buttons.show {
+  display: flex;
+}
+
+svg {
+  width: 25px;
+  height: 25px;
+  font-size: 1.7em;
+  pointer-events: none;
+}
+
+.fileError {
+  background-color: #ff00003b;
+}
+
+.fileError .filesize {
+  color: #715555;
+}
+
+.errorDetails {
+  margin-right: 23px;
+  margin-top: 26px;
+  line-height: 0.7;
+}
+
+.no-pointer > div,
+.no-pointer > span {
+  pointer-events: none;
+  cursor: grabbing;
+}

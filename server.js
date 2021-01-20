@@ -8,6 +8,8 @@ app.get('/', (req, res) => {
   return res.sendFile(path.resolve('index.html'));
 });
 
+app.use('/', express.static(path.resolve('public')));
+
 const option = {
   createParentPath: true,
   useTempFiles: true,
