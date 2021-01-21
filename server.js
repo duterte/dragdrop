@@ -3,6 +3,7 @@ const fileupload = require('express-fileupload');
 const path = require('path');
 
 const app = express();
+const PORT = process.env.PORT || 3000;
 
 app.get('/', (req, res) => {
   return res.sendFile(path.resolve('public/index.html'));
@@ -67,4 +68,4 @@ app.post('/submitter/draganddrop', fileupload(option), (req, res) => {
   }
 });
 
-app.listen(3000, () => console.log('server is starting'));
+app.listen(PORT, () => console.log('server is started'));
