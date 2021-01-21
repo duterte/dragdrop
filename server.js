@@ -5,7 +5,7 @@ const path = require('path');
 const app = express();
 
 app.get('/', (req, res) => {
-  return res.sendFile(path.resolve('index.html'));
+  return res.sendFile(path.resolve('public/index.html'));
 });
 
 app.use('/', express.static(path.resolve('public')));
@@ -60,7 +60,7 @@ app.post('/submitter/draganddrop', fileupload(option), (req, res) => {
     }
     console.log('test sucessful');
 
-    return res.status(200).json('Testing Successful');
+    return res.status(202).json('Testing Successful');
   } catch (err) {
     console.log(err);
     return res.status(500).json('Testing Error');
