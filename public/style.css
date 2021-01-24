@@ -8,9 +8,13 @@ li {
   width: 100%;
   height: 100vh;
   -ms-grid-rows: 3fr 1fr;
-  grid-template-rows: 3fr 1fr;
+      grid-template-rows: 3fr 1fr;
   position: relative;
   margin-top: 2em;
+}
+
+.banner {
+  display: none;
 }
 
 .dropzone {
@@ -18,20 +22,20 @@ li {
   display: -ms-grid;
   display: grid;
   -ms-grid-rows: 1fr 1fr 1fr;
-  grid-template-rows: 1fr 1fr 1fr;
+      grid-template-rows: 1fr 1fr 1fr;
   -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
   -webkit-box-pack: center;
-  -ms-flex-pack: center;
-  justify-content: center;
+      -ms-flex-pack: center;
+          justify-content: center;
   font-family: 'Quicksand', sans-serif;
   width: var(--dimension);
   height: var(--dimension);
   margin: 0 auto;
   padding: 0.9em;
   -webkit-box-sizing: border-box;
-  box-sizing: border-box;
+          box-sizing: border-box;
   position: relative;
 }
 
@@ -39,7 +43,7 @@ li {
   position: relative;
   border: 4px dashed #4466ee;
   -ms-grid-rows: 1fr;
-  grid-template-rows: 1fr;
+      grid-template-rows: 1fr;
   background-color: rgba(227, 255, 193, 0.15);
 }
 
@@ -54,9 +58,9 @@ li {
 
 .dropzone .addbutton {
   -ms-flex-item-align: end;
-  align-self: flex-end;
+      align-self: flex-end;
   -ms-grid-column-align: center;
-  justify-self: center;
+      justify-self: center;
   display: inline-block;
   width: -webkit-max-content;
   width: -moz-max-content;
@@ -67,7 +71,7 @@ li {
   background-color: #6495ed;
   color: #ffffffad;
   -webkit-box-shadow: 0 0 5px #6495ed;
-  box-shadow: 0 0 5px #6495ed;
+          box-shadow: 0 0 5px #6495ed;
   cursor: pointer;
   position: relative;
 }
@@ -88,10 +92,10 @@ li {
 
 .dropzone .or {
   -ms-flex-item-align: center;
-  -ms-grid-row-align: center;
-  align-self: center;
+      -ms-grid-row-align: center;
+      align-self: center;
   -ms-grid-column-align: center;
-  justify-self: center;
+      justify-self: center;
   font-size: 2em;
   font-weight: bolder;
   color: #9e9e9ef5;
@@ -105,10 +109,10 @@ li {
 
 .dropzone .textui {
   -ms-flex-item-align: start;
-  -ms-grid-row-align: start;
-  align-self: start;
+      -ms-grid-row-align: start;
+      align-self: start;
   -ms-grid-column-align: center;
-  justify-self: center;
+      justify-self: center;
   width: 80%;
   font-size: 3em;
   font-weight: bolder;
@@ -118,8 +122,8 @@ li {
 
 .showborder .textui {
   -ms-flex-item-align: center;
-  -ms-grid-row-align: center;
-  align-self: center;
+      -ms-grid-row-align: center;
+      align-self: center;
 }
 
 .hideui .textui {
@@ -135,7 +139,7 @@ li {
   padding: 0.5em 0 0.5em 3em;
   margin-bottom: 1em;
   -webkit-box-shadow: 0 0 5px #7a7676;
-  box-shadow: 0 0 5px #7a7676;
+          box-shadow: 0 0 5px #7a7676;
   border-radius: 5px;
   font-family: sans-serif;
 }
@@ -178,8 +182,8 @@ li {
   display: flex;
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
-  -ms-flex-direction: column;
-  flex-direction: column;
+      -ms-flex-direction: column;
+          flex-direction: column;
 }
 
 .showflex .file {
@@ -218,8 +222,8 @@ li {
 .buttons {
   display: none;
   -webkit-box-pack: end;
-  -ms-flex-pack: end;
-  justify-content: flex-end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
   font-family: sans-serif;
   font-weight: bold;
 }
@@ -229,8 +233,8 @@ li {
   display: -ms-flexbox;
   display: flex;
   -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
   border: 2px solid black;
   padding: 0.6em 1.6em;
   border-radius: 5px;
@@ -238,9 +242,9 @@ li {
   -webkit-transition-property: color, background-color;
   transition-property: color, background-color;
   -webkit-transition-duration: 0.7s;
-  transition-duration: 0.7s;
+          transition-duration: 0.7s;
   -webkit-transition-timing-function: ease-in-out;
-  transition-timing-function: ease-in-out;
+          transition-timing-function: ease-in-out;
 }
 
 .buttons .addbutton2:hover {
@@ -257,13 +261,13 @@ li {
   display: -ms-flexbox;
   display: flex;
   -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
   background-color: #4466ee;
   padding: 0.6em 1.6em;
   border-radius: 5px;
   -webkit-box-shadow: 0 0 5px #4466eeb8;
-  box-shadow: 0 0 5px #4466eeb8;
+          box-shadow: 0 0 5px #4466eeb8;
   cursor: pointer;
   color: #ffffffad;
   margin-left: 3em;
@@ -306,11 +310,11 @@ svg {
 #pop {
   display: none;
   -webkit-box-pack: center;
-  -ms-flex-pack: center;
-  justify-content: center;
+      -ms-flex-pack: center;
+          justify-content: center;
   -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
   width: 100vw;
   height: 100vh;
   position: fixed;
@@ -328,15 +332,15 @@ svg {
 
 .spinner-icon.animate {
   -webkit-animation-name: rotateSpinner;
-  animation-name: rotateSpinner;
+          animation-name: rotateSpinner;
   -webkit-animation-duration: 0.7s;
-  animation-duration: 0.7s;
+          animation-duration: 0.7s;
   -webkit-animation-iteration-count: infinite;
-  animation-iteration-count: infinite;
+          animation-iteration-count: infinite;
   -webkit-animation-timing-function: linear;
-  animation-timing-function: linear;
+          animation-timing-function: linear;
   -webkit-animation-fill-mode: forwards;
-  animation-fill-mode: forwards;
+          animation-fill-mode: forwards;
   width: 165px;
   height: 165px;
   font-size: 10em;
@@ -346,21 +350,21 @@ svg {
 @-webkit-keyframes rotateSpinner {
   from {
     -webkit-transform: rotateZ(0deg);
-    transform: rotateZ(0deg);
+            transform: rotateZ(0deg);
   }
   to {
     -webkit-transform: rotateZ(360deg);
-    transform: rotateZ(360deg);
+            transform: rotateZ(360deg);
   }
 }
 
 @keyframes rotateSpinner {
   from {
     -webkit-transform: rotateZ(0deg);
-    transform: rotateZ(0deg);
+            transform: rotateZ(0deg);
   }
   to {
     -webkit-transform: rotateZ(360deg);
-    transform: rotateZ(360deg);
+            transform: rotateZ(360deg);
   }
 }
