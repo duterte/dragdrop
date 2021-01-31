@@ -1,6 +1,9 @@
+const path = require('path');
 const express = require('express');
 const fileupload = require('express-fileupload');
-const path = require('path');
+const { v4: uuidv4 } = require('uuid');
+
+const extractZipFile = require('./zip');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -19,44 +22,34 @@ const option = {
   preserveExtension: true,
 };
 
-app.post('/submitter/draganddrop', fileupload(option), (req, res) => {
+app.post('/upload', fileupload(option), (req, res) => {
   try {
     const { files } = req;
     // file validation
     const filesLen = files ? Object.keys(files).length : 0;
     if (!filesLen) {
-      // send response Bad Request when there is no files is this ok ?
       console.log('request body has no files in it.');
       return res.status(400).json('request body has no files in it.');
     }
-
-    // allowed extension : This is just a sample
     const validFiles = {};
-    const EXT = ['jpg', 'jpeg', 'png', 'webp'];
     for (const i in files) {
-      const fileName = files[i].name;
-      const splitName = fileName.split('.');
-      const fileExt = splitName[splitName.length - 1].toLowerCase();
-      const found = EXT.find(extension => extension === fileExt);
-
-      if (found) {
-        validFiles[i] = {
-          save: files[i].mv,
-          url: path.join(__dirname, `/submission/${files[i].name}`),
-          name: files[i].name,
-        };
-      } else {
-        // trigger when there is unwanted files
-        console.log('contain invalid files', i);
-        return res.status(400).json('Invalid Files');
-      }
+      const uid = uuidv4().split('-').join('');
+      const split = files[i].name.split('.');
+      const name = split[0];
+      const ext = split[split.length - 1];
+      validFiles[i] = {
+        save: files[i].mv,
+        url: path.join(__dirname, `/submission/${name}.${ext}`),
+        name: files[i].name,
+        data: files[i].data,
+      };
     }
 
-    // save files if validfiles lenght is not 0
     if (Object.keys(validFiles).length) {
       for (const i in validFiles) {
         validFiles[i].save(validFiles[i].url);
         console.log(`${validFiles[i].name} saved to ${validFiles[i].url}`);
+        extractZipFile(validFiles[i].url);
       }
     }
     console.log('test sucessful');

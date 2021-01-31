@@ -227,7 +227,7 @@
   function submitHandler(e) {
     if (fileData.fileCount) {
       activateSpinner();
-      fetch('/submitter/draganddrop', {
+      fetch('/upload', {
         method: 'post',
         body: fileData,
       })

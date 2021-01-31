@@ -6,5 +6,6 @@
 /temp
 
 
-# FaFile : file icon
-# IoMdClose : close icon
+# ignore files
+
+stats.json
