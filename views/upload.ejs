@@ -17,7 +17,8 @@
   </style>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="assets/css/common.css">
+  <link rel="stylesheet" href="assets/css/upload.css">
   <title>Upload | Submission</title>
 </head>
 
@@ -71,40 +72,42 @@
       </symbol>
     </svg>
   </div>
-  <div class="banner">
-    <img src="drag_and_drop.jpg" alt="Banner" />
-  </div>
-  <div id="root">
-    <div class="dropzone">
-      <input type="file" style="display: none;" multiple id="fileInput">
-      <span class="addbutton">ADD FILE
-        <svg>
-          <use href="#add-icon-regular" />
-        </svg>
-      </span>
-      <span class="or">OR</span>
-      <span class="textui">DROP TO ADD FILE</span>
-    </div>
+  <%- include('partials/header.ejs', {className: 'upload' }) %>
+    <main class="upload">
+      <div class="wrapper">
+        <div id="root">
+          <div class="dropzone">
+            <input type="file" style="display: none;" multiple id="fileInput">
+            <span class="addbutton">ADD FILE
+              <svg>
+                <use href="#add-icon-regular" />
+              </svg>
+            </span>
+            <span class="or">OR</span>
+            <span class="textui">DROP TO ADD FILE</span>
+          </div>
 
-    <div class="file-holder"></div>
-    <div class="buttons">
-      <span class="addbutton2">ADD MORE FILES
-        <svg>
-          <use href="#add-icon-regular" />
-        </svg>
-      </span>
-      <span class="submit">Submit</span>
-    </div>
-  </div>
+          <div class="file-holder"></div>
+          <div class="buttons">
+            <span class="addbutton2">ADD MORE FILES
+              <svg>
+                <use href="#add-icon-regular" />
+              </svg>
+            </span>
+            <span class="submit">Submit</span>
+          </div>
+        </div>
+      </div>
+    </main>
 
-  <div id="pop">
-    <div class="loading-spinner">
-      <svg class="spinner-icon">
-        <use href="#spinner-icon-solid" />
-      </svg>
+    <div id="pop">
+      <div class="loading-spinner">
+        <svg class="spinner-icon">
+          <use href="#spinner-icon-solid" />
+        </svg>
+      </div>
     </div>
-  </div>
-  <script src="assets/js/draganddrop.js"></script>
+    <script src="assets/js/upload.js"></script>
 </body>
 
 </html>

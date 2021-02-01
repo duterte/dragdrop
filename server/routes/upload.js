@@ -2,14 +2,14 @@ const path = require('path');
 const fs = require('fs');
 const express = require('express');
 const fileupload = require('express-fileupload');
-const extractZipFile = require('../zip');
+const { analyzeZip } = require('../modules');
 
 const router = express.Router();
 
 const fileUploadOption = {
   createParentPath: true,
   useTempFiles: true,
-  tempFileDir: path.join(__dirname, 'tmp'),
+  tempFileDir: path.resolve('temp'),
   safeFileNames: true,
   preserveExtension: true,
 };
@@ -34,36 +34,21 @@ router.post('/', fileupload(fileUploadOption), (req, res) => {
       const ext = split[split.length - 1];
       validFiles[i] = {
         save: files[i].mv,
-        url: path.join(__dirname, `/submission/${name}.${ext}`),
+        // url: path.join(__dirname, `/submission/${name}.${ext}`),
+        url: path.resolve(`submission/${name}.${ext}`),
         name: files[i].name,
         data: files[i].data,
       };
     }
-
+    let statsID = undefined;
     if (Object.keys(validFiles).length) {
       for (const i in validFiles) {
         validFiles[i].save(validFiles[i].url);
-        console.log(`${validFiles[i].name} saved to ${validFiles[i].url}`);
-        extractZipFile(validFiles[i].url);
+        statsID = analyzeZip(validFiles[i].url);
       }
     }
     console.log('test sucessful');
-    return res.redirect(301, '/stats');
-    // const stats = fs.readFile(
-    //   path.resolve('stats.json'),
-    //   { encoding: 'utf8' },
-    //   (err, data) => {
-    //     if (err) {
-    //       console.log('error');
-    //       throw new Error();
-    //     } else {
-    //       return res.contentType('.html').render('stats', {
-    //         data: 'Hello World',
-    //         stats: JSON.parse(data),
-    //       });
-    //     }
-    //   }
-    // );
+    return res.redirect(`/stats?q=${statsID}`);
   } catch (err) {
     console.log(err);
     return res.status(500).json('Testing Error');

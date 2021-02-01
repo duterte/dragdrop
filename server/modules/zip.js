@@ -2,6 +2,7 @@ const path = require('path');
 const fs = require('fs-extra');
 const AdmZip = require('adm-zip');
 const $ = require('cheerio');
+const { v4: uuid } = require('uuid');
 
 const allowedDirectory = [
   'assets',
@@ -13,7 +14,8 @@ const allowedDirectory = [
   'video',
 ];
 
-function extractZipFile(filename) {
+function analyzeZip(filename) {
+  console.log(filename);
   const zip = new AdmZip(path.resolve(filename));
   const zipEntries = zip.getEntries(); //
 
@@ -136,12 +138,15 @@ function extractZipFile(filename) {
     }
   }
   const json = JSON.stringify(stats, null, 2);
-  const report = fs.createWriteStream(path.resolve('stats.json'), {
+  const statsID = uuid();
+  const jsonFileName = path.resolve(`submission/${statsID}.json`);
+  const report = fs.createWriteStream(jsonFileName, {
     encoding: 'utf8',
   });
   // reporting stats
   report.write(json);
-
+  console.log(jsonFileName);
+  return statsID;
   // The next step will be here.
 
   // We will never actually unzip and write files unto our disk
@@ -149,17 +154,18 @@ function extractZipFile(filename) {
   // if there is no errors
 
   // parsing Date
-  const date = new Date();
-  const year = date.getFullYear();
-  const month = date.getMonth() + 1;
-  const day = date.getDay() + 1;
-  const stringDate = `${year}/${month}/${day}`;
+
+  // const date = new Date();
+  // const year = date.getFullYear();
+  // const month = date.getMonth() + 1;
+  // const day = date.getDay() + 1;
+  // const stringDate = `${year}/${month}/${day}`;
 
   //
-  fs.remove(path.resolve(filename), err => {
-    if (err) console.log(err);
-    console.log('done');
-  });
+  // fs.remove(path.resolve(filename), err => {
+  //   if (err) console.log(err);
+  //   console.log('done');
+  // });
 }
 
-module.exports = extractZipFile;
+module.exports = analyzeZip;

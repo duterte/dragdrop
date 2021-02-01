@@ -233,9 +233,11 @@
         body: fileData,
       })
         .then(res => {
-          deactivateSpinner();
+          // deactivateSpinner();
           console.log(res);
-          if (res.status > 399) {
+          if (res.redirected) {
+            location.replace(res.url);
+          } else if (res.status > 399) {
             throw new Error(`Upload failed response status code ${res.status}`);
           }
           return res.json();

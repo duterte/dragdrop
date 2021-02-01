@@ -1,7 +1,20 @@
-ul,
-li {
-  list-style: none;
+header.upload {
+  min-height: 4em;
+  margin-bottom: 2em;
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.5);
+  padding-top: 1em;
+  .wrapper {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin-bottom: 1em;
+  }
 }
+
+// ul,
+// li {
+//   list-style: none;
+// }
 
 #root {
   display: inherit;
@@ -241,19 +254,19 @@ svg {
   pointer-events: none;
 }
 
-.fileError {
-  background-color: #ff00003b;
-}
+// .fileError {
+//   background-color: #ff00003b;
+// }
 
-.fileError .filesize {
-  color: #715555;
-}
+// .fileError .filesize {
+//   color: #715555;
+// }
 
-.errorDetails {
-  margin-right: 23px;
-  margin-top: 26px;
-  line-height: 0.7;
-}
+// .errorDetails {
+//   margin-right: 23px;
+//   margin-top: 26px;
+//   line-height: 0.7;
+// }
 
 .no-pointer > div,
 .no-pointer > span {

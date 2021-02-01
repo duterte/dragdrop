@@ -14,14 +14,37 @@ header.stats {
 main.stats {
   .wrapper {
     margin-bottom: 2em;
+    position: relative;
+  }
+
+  .collapse {
+    background-color: #eee;
+    color: #444;
+    cursor: pointer;
+    padding: 18px;
+    border-radius: 5px;
   }
 
   .content {
-    display: flex;
+    display: none;
+    overflow: hidden;
     flex-direction: column;
-    // border: 1px solid black;
-    min-height: 4em;
+    max-height: 0;
     padding: 1em;
+    transition: max-height 0.2s ease-out;
+    font-family: 'Nunito';
+  }
+
+  svg {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    transform: rotateX(0deg);
+    transition: transform 0.2s ease-out;
+  }
+
+  svg.down {
+    transform: rotateZ(90deg);
   }
 
   .app-prim-button {

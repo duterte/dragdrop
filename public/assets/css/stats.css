@@ -1,0 +1,100 @@
+header.stats {
+  min-height: 4em;
+  margin-bottom: 2em;
+  -webkit-box-shadow: 0 1px 5px rgba(0, 0, 0, 0.5);
+          box-shadow: 0 1px 5px rgba(0, 0, 0, 0.5);
+  padding-top: 1em;
+}
+
+header.stats .wrapper {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  margin-bottom: 1em;
+}
+
+main.stats .wrapper {
+  margin-bottom: 2em;
+  position: relative;
+}
+
+main.stats .collapse {
+  background-color: #eee;
+  color: #444;
+  cursor: pointer;
+  padding: 18px;
+  border-radius: 5px;
+}
+
+main.stats .content {
+  display: none;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  max-height: 0;
+  padding: 1em;
+  -webkit-transition: max-height 0.2s ease-out;
+  transition: max-height 0.2s ease-out;
+  font-family: 'Nunito';
+}
+
+main.stats svg {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  -webkit-transform: rotateX(0deg);
+          transform: rotateX(0deg);
+  -webkit-transition: -webkit-transform 0.2s ease-out;
+  transition: -webkit-transform 0.2s ease-out;
+  transition: transform 0.2s ease-out;
+  transition: transform 0.2s ease-out, -webkit-transform 0.2s ease-out;
+}
+
+main.stats svg.down {
+  -webkit-transform: rotateZ(90deg);
+          transform: rotateZ(90deg);
+}
+
+main.stats .app-prim-button {
+  padding: 18px 31px;
+}
+
+main.stats .app-prim-button:first-of-type {
+  margin-right: 1em;
+}
+
+.stats.fixed {
+  min-height: 4em;
+  bottom: 0;
+}
+
+.stats.fixed .wrapper {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  position: relative;
+}
+
+.stats.fixed .app-prim-button {
+  padding: 18px 31px;
+}
+
+.stats.fixed .app-prim-button:first-of-type {
+  margin-right: 1em;
+  -webkit-box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+          box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+}

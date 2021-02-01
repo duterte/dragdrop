@@ -17,97 +17,123 @@
   </style>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="assets/css/common.css">
+  <link rel="stylesheet" href="assets/css/stats.css">
   <title>Stats | Submission</title>
 </head>
 
 <body>
-  <header class="stats">
-    <div class="wrapper">
-      <span class="app-prim-button login">Login</span>
-    </div>
-  </header>
-  <main class="stats">
-    <div class="wrapper">
-      <h1>Stats
-      </h1>
-      <hr />
-    </div>
-    <div class="wrapper">
-      <h3>Files</h3>
-      <div class="content">
-        <% stats.files.map(item=> { %>
-          <span>
-            <%= item %>
-          </span>
-          <% }) %>
-      </div>
-      <hr />
-    </div>
-    <div class="wrapper">
-      <h3>Hierarchy Level Violation</h3>
-      <div class="content">
-        <% stats.errors.hierarchyLevelViolation.map(item=> { %>
-          <span>
-            <%= item %>
-          </span>
-          <% }) %>
-      </div>
-      <hr />
-    </div>
-    <div class="wrapper">
-      <h3>Files that are in wrong directory</h3>
-      <div class="content">
-        <% stats.errors.filesInWrongDirectory.map(item=> { %>
-          <span>
-            <%= item %>
-          </span>
-          <% }) %>
-      </div>
-      <hr />
-    </div>
-    <div class="wrapper">
-      <h3>Directory that are not allowed</h3>
-      <div class="content">
-        <% stats.errors.notAllowedDirectory.map(item=> { %>
-          <span>
-            <%= item %>
-          </span>
-          <% }) %>
-      </div>
-      <hr />
-    </div>
-    <div class="wrapper">
-      <h3>Unsupported files</h3>
-      <div class="content">
-        <% stats.errors.unSupportedTypeOfFiles.map(item=> { %>
-          <span>
-            <%= item %>
-          </span>
-          <% }) %>
-      </div>
-      <hr />
-    </div>
-    <div class="wrapper">
-      <h3>Files that are reference in index.html but did not exists</h3>
-      <div class="content">
-        <% stats.errors.notFoundFiles.map(item=> { %>
-          <span>
-            <%= item %>
-          </span>
-          <% }) %>
-      </div>
-      <hr />
-    </div>
-
-  </main>
-  <div class="stats fixed">
-    <div class="wrapper">
-      <span id="beta-server" class="app-prim-button">SUBMIT AS BETA SERVER</span>
-      <span id="live-server" class="app-prim-button">SUBMIT AS LIVE SERVER</span>
-    </div>
+  <div style="display: none;">
+    <svg xmlns="http://www.w3.org/2000/svg">
+      <symbol id="angle-right" viewBox="0 0 256 512" fill="currentColor" width="1em" height="1em">
+        <path
+          d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z" />
+      </symbol>
+    </svg>
   </div>
-  <footer class="stats">Footer</footer>
+  <%- include('partials/header.ejs', {className: 'stats' }) %>
+    <main class="stats">
+      <div class="wrapper">
+        <h1 style="text-align: center;">Stats</h1>
+        <hr />
+      </div>
+      <div class="wrapper">
+        <h3 class="collapse">Files (<%= stats.files.length %>)</h3>
+        <div class="content">
+          <% stats.files.map(item=> { %>
+            <span>
+              <%= item %>
+            </span>
+            <% }) %>
+        </div>
+        <svg>
+          <use href="#angle-right" />
+        </svg>
+        <hr />
+      </div>
+      <div class="wrapper">
+        <h3 class="collapse">Hierarchy Level Violation (<%= stats.errors.hierarchyLevelViolation.length %>)</h3>
+        <div class="content">
+          <% stats.errors.hierarchyLevelViolation.map(item=> { %>
+            <span>
+              <%= item %>
+            </span>
+            <% }) %>
+        </div>
+        <svg>
+          <use href="#angle-right" />
+        </svg>
+        <hr />
+      </div>
+      <div class="wrapper">
+        <h3 class="collapse">Files that are in wrong directory (<%= stats.errors.filesInWrongDirectory.length %>)</h3>
+        <div class="content">
+          <% stats.errors.filesInWrongDirectory.map(item=> { %>
+            <span>
+              <%= item %>
+            </span>
+            <% }) %>
+        </div>
+        <svg>
+          <use href="#angle-right" />
+        </svg>
+        <hr />
+      </div>
+      <div class="wrapper">
+        <h3 class="collapse">Directories that are not allowed (<%= stats.errors.notAllowedDirectory.length %>)</h3>
+        <div class="content">
+          <% stats.errors.notAllowedDirectory.map(item=> { %>
+            <span>
+              <%= item %>
+            </span>
+            <% }) %>
+        </div>
+        <svg>
+          <use href="#angle-right" />
+        </svg>
+        <hr />
+      </div>
+      <div class="wrapper">
+        <h3 class="collapse">Unsupported files (<%= stats.errors.unSupportedTypeOfFiles.length %>)</h3>
+        <div class="content">
+          <% stats.errors.unSupportedTypeOfFiles.map(item=> { %>
+            <span>
+              <%= item %>
+            </span>
+            <% }) %>
+        </div>
+        <svg>
+          <use href="#angle-right" />
+        </svg>
+        <hr />
+      </div>
+      <div class="wrapper">
+        <h3 class="collapse">Files that are reference in index.html but did not found (<%=
+            stats.errors.notFoundFiles.length %>)</h3>
+        <div class="content">
+          <% stats.errors.notFoundFiles.map(item=> { %>
+            <span>
+              <%= item %>
+            </span>
+            <% }) %>
+        </div>
+        <svg>
+          <use href="#angle-right" />
+        </svg>
+        <hr />
+      </div>
+    </main>
+    <div class="stats fixed">
+      <div class="wrapper">
+        <span id="beta-server" class="app-prim-button">SUBMIT AS BETA SERVER</span>
+        <span id="live-server" class="app-prim-button">SUBMIT AS LIVE SERVER</span>
+      </div>
+    </div>
+    <footer class="stats">
+      <!-- <div class="wrapper">
+    </div> -->
+    </footer>
+    <script src="assets/js/stats.js"></script>
 </body>
 
 </html>
