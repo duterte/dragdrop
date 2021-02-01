@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <link rel="preload" type="font/ttf" href="assets/fonts/Montserrat-Regular.ttf" as="font" crossorigin>
+  <link rel="preload" type="font/ttf" href="assets/fonts/Nunito-Regular.ttf" as="font" crossorigin>
+  <style>
+    @font-face {
+      font-family: 'Montseratt';
+      src: url("assets/fonts/Montserrat-Regular.ttf");
+    }
+
+    @font-face {
+      font-family: 'Nunito';
+      src: url("assets/fonts/Nunito-Regular.ttf");
+    }
+  </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <title>Upload | Submission</title>
+</head>
+
+<body>
+  <div style="display: none">
+    <!-- File svg Icon -->
+    <svg xmlns="http://www.w3.org/2000/svg">
+      <symbol id="file-icon-solid" viewBox="0 0 384 512" fill="currentColor" width="1em" height="1em">
+        <path
+          d="M224 136V0H24C10.7 0 0 10.7 0 24v464c0 13.3 10.7 24 24 24h336c13.3 0 24-10.7 24-24V160H248c-13.2 0-24-10.8-24-24zm160-14.1v6.1H256V0h6.1c6.4 0 12.5 2.5 17 7l97.9 98c4.5 4.5 7 10.6 7 16.9z" />
+      </symbol>
+    </svg>
+
+    <!-- Close Icon -->
+    <svg xmlns="http://www.w3.org/2000/svg">
+      <symbol id="close-icon-solid" viewBox="0 0 24 24" fill="currentColor" width="1em" height="1em">
+        <g>
+          <path fill="none" d="M0 0h24v24H0z" />
+          <path
+            d="M12 10.586l4.95-4.95 1.414 1.414-4.95 4.95 4.95 4.95-1.414 1.414-4.95-4.95-4.95 4.95-1.414-1.414 4.95-4.95-4.95-4.95L7.05 5.636z" />
+        </g>
+      </symbol>
+    </svg>
+    <!-- Check Icon -->
+    <svg xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 48 48">
+      <symbol id="check-icon-colored" viewBox="0 0 48 48" width="1em" height="1em">
+        <polygon fill="#43A047" points="40.6,12.1 17,35.7 7.4,26.1 4.6,29 17,41.3 43.4,14.9" />
+      </symbol>
+    </svg>
+
+    <svg xmlns="http://www.w3.org/2000/svg">
+      <symbol id="add-icon-regular" viewBox="0 0 24 24" width="1em" height="1em" fill="currentColor">
+        <path
+          d="M20,2H8C6.897,2,6,2.897,6,4v12c0,1.103,0.897,2,2,2h12c1.103,0,2-0.897,2-2V4C22,2.897,21.103,2,20,2z M8,16V4h12 l0.002,12H8z" />
+        <path
+          d="M4 8H2v12c0 1.103.897 2 2 2h12v-2H4V8zM15 6L13 6 13 9 10 9 10 11 13 11 13 14 15 14 15 11 18 11 18 9 15 9z" />
+      </symbol>
+    </svg>
+    <svg xmlns="http://www.w3.org/2000/svg">
+      <symbol id="spinner-icon-solid" viewBox="0 0 1024 1024" width="1em" height="1em" fill="currentCOlor">
+        <path
+          d="M512 1024c-69.1 0-136.2-13.5-199.3-40.2C251.7 958 197 921 150 874c-47-47-84-101.7-109.8-162.7C13.5 648.2 0 581.1 0 512c0-19.9 16.1-36 36-36s36 16.1 36 36c0 59.4 11.6 117 34.6 171.3 22.2 52.4 53.9 99.5 94.3 139.9 40.4 40.4 87.5 72.2 139.9 94.3C395 940.4 452.6 952 512 952c59.4 0 117-11.6 171.3-34.6 52.4-22.2 99.5-53.9 139.9-94.3 40.4-40.4 72.2-87.5 94.3-139.9C940.4 629 952 571.4 952 512c0-59.4-11.6-117-34.6-171.3a440.45 440.45 0 0 0-94.3-139.9 437.71 437.71 0 0 0-139.9-94.3C629 83.6 571.4 72 512 72c-19.9 0-36-16.1-36-36s16.1-36 36-36c69.1 0 136.2 13.5 199.3 40.2C772.3 66 827 103 874 150c47 47 83.9 101.8 109.7 162.7 26.7 63.1 40.2 130.2 40.2 199.3s-13.5 136.2-40.2 199.3C958 772.3 921 827 874 874c-47 47-101.8 83.9-162.7 109.7-63.1 26.8-130.2 40.3-199.3 40.3z" />
+      </symbol>
+    </svg>
+
+    <svg xmlns="http://www.w3.org/2000/svg">
+      <symbol id="check-icon-circle" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+        stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check-circle">
+        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+        <polyline points="22 4 12 14.01 9 11.01"></polyline>
+      </symbol>
+    </svg>
+  </div>
+  <div class="banner">
+    <img src="drag_and_drop.jpg" alt="Banner" />
+  </div>
+  <div id="root">
+    <div class="dropzone">
+      <input type="file" style="display: none;" multiple id="fileInput">
+      <span class="addbutton">ADD FILE
+        <svg>
+          <use href="#add-icon-regular" />
+        </svg>
+      </span>
+      <span class="or">OR</span>
+      <span class="textui">DROP TO ADD FILE</span>
+    </div>
+
+    <div class="file-holder"></div>
+    <div class="buttons">
+      <span class="addbutton2">ADD MORE FILES
+        <svg>
+          <use href="#add-icon-regular" />
+        </svg>
+      </span>
+      <span class="submit">Submit</span>
+    </div>
+  </div>
+
+  <div id="pop">
+    <div class="loading-spinner">
+      <svg class="spinner-icon">
+        <use href="#spinner-icon-solid" />
+      </svg>
+    </div>
+  </div>
+  <script src="assets/js/draganddrop.js"></script>
+</body>
+
+</html>

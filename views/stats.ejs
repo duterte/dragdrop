@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <link rel="preload" type="font/ttf" href="assets/fonts/Montserrat-Regular.ttf" as="font" crossorigin>
+  <link rel="preload" type="font/ttf" href="assets/fonts/Nunito-Regular.ttf" as="font" crossorigin>
+  <style>
+    @font-face {
+      font-family: 'Montseratt';
+      src: url("assets/fonts/Montserrat-Regular.ttf");
+    }
+
+    @font-face {
+      font-family: 'Nunito';
+      src: url("assets/fonts/Nunito-Regular.ttf");
+    }
+  </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <title>Stats | Submission</title>
+</head>
+
+<body>
+  <header class="stats">
+    <div class="wrapper">
+      <span class="app-prim-button login">Login</span>
+    </div>
+  </header>
+  <main class="stats">
+    <div class="wrapper">
+      <h1>Stats
+      </h1>
+      <hr />
+    </div>
+    <div class="wrapper">
+      <h3>Files</h3>
+      <div class="content">
+        <% stats.files.map(item=> { %>
+          <span>
+            <%= item %>
+          </span>
+          <% }) %>
+      </div>
+      <hr />
+    </div>
+    <div class="wrapper">
+      <h3>Hierarchy Level Violation</h3>
+      <div class="content">
+        <% stats.errors.hierarchyLevelViolation.map(item=> { %>
+          <span>
+            <%= item %>
+          </span>
+          <% }) %>
+      </div>
+      <hr />
+    </div>
+    <div class="wrapper">
+      <h3>Files that are in wrong directory</h3>
+      <div class="content">
+        <% stats.errors.filesInWrongDirectory.map(item=> { %>
+          <span>
+            <%= item %>
+          </span>
+          <% }) %>
+      </div>
+      <hr />
+    </div>
+    <div class="wrapper">
+      <h3>Directory that are not allowed</h3>
+      <div class="content">
+        <% stats.errors.notAllowedDirectory.map(item=> { %>
+          <span>
+            <%= item %>
+          </span>
+          <% }) %>
+      </div>
+      <hr />
+    </div>
+    <div class="wrapper">
+      <h3>Unsupported files</h3>
+      <div class="content">
+        <% stats.errors.unSupportedTypeOfFiles.map(item=> { %>
+          <span>
+            <%= item %>
+          </span>
+          <% }) %>
+      </div>
+      <hr />
+    </div>
+    <div class="wrapper">
+      <h3>Files that are reference in index.html but did not exists</h3>
+      <div class="content">
+        <% stats.errors.notFoundFiles.map(item=> { %>
+          <span>
+            <%= item %>
+          </span>
+          <% }) %>
+      </div>
+      <hr />
+    </div>
+
+  </main>
+  <div class="stats fixed">
+    <div class="wrapper">
+      <span id="beta-server" class="app-prim-button">SUBMIT AS BETA SERVER</span>
+      <span id="live-server" class="app-prim-button">SUBMIT AS LIVE SERVER</span>
+    </div>
+  </div>
+  <footer class="stats">Footer</footer>
+</body>
+
+</html>

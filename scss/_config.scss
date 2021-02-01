@@ -1,0 +1,33 @@
+$btn-bg-color: #6495ed;
+$btn-color: #ffff;
+
+body,
+body > * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: 'Montserrat';
+}
+
+.app-prim-button {
+  padding: 9px 31px;
+  background-color: $btn-bg-color;
+  color: $btn-color;
+  border-radius: 5px;
+  font-family: 'Nunito';
+  font-weight: bolder;
+  cursor: pointer;
+}
+
+.wrapper {
+  max-width: 900px;
+  margin: 0 auto;
+}
