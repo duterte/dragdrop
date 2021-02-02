@@ -2,6 +2,7 @@ const path = require('path');
 const fs = require('fs');
 const express = require('express');
 const fileupload = require('express-fileupload');
+const { requiresAuth } = require('express-openid-connect');
 const { analyzeZip } = require('../modules');
 
 const router = express.Router();
@@ -14,11 +15,11 @@ const fileUploadOption = {
   preserveExtension: true,
 };
 
-router.get('/', (req, res) => {
+router.get('/', requiresAuth(), (req, res) => {
   res.render('upload');
 });
 
-router.post('/', fileupload(fileUploadOption), (req, res) => {
+router.post('/', requiresAuth(), fileupload(fileUploadOption), (req, res) => {
   try {
     const { files } = req;
     // file validation
@@ -55,4 +56,9 @@ router.post('/', fileupload(fileUploadOption), (req, res) => {
   }
 });
 
-module.exports = router;
+module.exports = {
+  url: '/upload',
+  route: router,
+};
+
+// module.exports = router;

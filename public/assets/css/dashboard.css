@@ -1,20 +1,40 @@
-header.dashboard {
-  min-height: 4em;
-  margin-bottom: 2em;
-  -webkit-box-shadow: 0 1px 5px rgba(0, 0, 0, 0.5);
-          box-shadow: 0 1px 5px rgba(0, 0, 0, 0.5);
-  padding-top: 1em;
-}
-
-header.dashboard .wrapper {
+main.dashboard .dashboard-content {
+  margin-top: 5em;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -webkit-box-pack: end;
-      -ms-flex-pack: end;
-          justify-content: flex-end;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  margin-bottom: 1em;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: start;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  font-family: 'Nunito';
+}
+
+main.dashboard .project-box {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-rows: 1fr auto;
+      grid-template-rows: 1fr auto;
+  justify-items: center;
+  width: 240px;
+  height: 275px;
+  border-radius: 5px;
+  -webkit-box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+          box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+  margin: 8px;
+  cursor: pointer;
+}
+
+main.dashboard svg {
+  -ms-flex-item-align: center;
+      -ms-grid-row-align: center;
+      align-self: center;
+  font-size: 9em;
+  color: #dfd5d569;
+}
+
+main.dashboard span {
+  font-weight: bold;
+  height: 45px;
 }

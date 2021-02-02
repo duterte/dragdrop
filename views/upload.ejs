@@ -99,15 +99,16 @@
         </div>
       </div>
     </main>
-
-    <div id="pop">
-      <div class="loading-spinner">
-        <svg class="spinner-icon">
-          <use href="#spinner-icon-solid" />
-        </svg>
+    <%- include('partials/footer.ejs' , {className: 'upload' }) %>
+      <div id="pop">
+        <div class="loading-spinner">
+          <svg class="spinner-icon">
+            <use href="#spinner-icon-solid" />
+          </svg>
+        </div>
       </div>
-    </div>
-    <script src="assets/js/upload.js"></script>
+
+      <script src="assets/js/upload.js"></script>
 </body>
 
 </html>

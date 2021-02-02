@@ -1,15 +1,4 @@
-header.upload {
-  min-height: 4em;
-  margin-bottom: 2em;
-  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.5);
-  padding-top: 1em;
-  .wrapper {
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    margin-bottom: 1em;
-  }
-}
+@import 'config';
 
 // ul,
 // li {

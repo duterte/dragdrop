@@ -6,4 +6,9 @@ router.get('/', (req, res) => {
   return res.render('dashboard');
 });
 
-module.exports = router;
+module.exports = {
+  url: '/',
+  route: router,
+};
+
+// module.exports = router;

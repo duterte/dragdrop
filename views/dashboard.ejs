@@ -23,15 +23,27 @@
 </head>
 
 <body>
+  <div style="display: none;">
+    <svg xmlns="http://www.w3.org/2000/svg">
+      <symbol id="plus-icon" viewBox="0 0 448 512" fill="currentColor" with="1em" height="1em">
+        <path
+          d="M416 208H272V64c0-17.67-14.33-32-32-32h-32c-17.67 0-32 14.33-32 32v144H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h144v144c0 17.67 14.33 32 32 32h32c17.67 0 32-14.33 32-32V304h144c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z" />
+      </symbol>
+    </svg>
+  </div>
   <%- include('partials/header.ejs' , {className: 'dashboard' }) %>
     <main class="dashboard">
-      <div class="wrapper">
-        main
+      <h1 class="wrapper" style="text-align: center;">PROJECT DASHBOARD</h1>
+      <div class="wrapper dashboard-content">
+        <div class="project-box">
+          <svg>
+            <use href="#plus-icon" />
+          </svg>
+          <span>ADD PROJECT</span>
+        </div>
       </div>
     </main>
-    <footer>
-      <div class="wrapper">footer</div>
-    </footer>
+    <%- include('partials/footer.ejs' , {className: 'dashboard' }) %>
 </body>
 
 </html>
