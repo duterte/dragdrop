@@ -130,28 +130,8 @@ function analyzeZipFile(zipFileName) {
       stats.errors.notFoundFiles.push(relativeUrls[i]);
     }
   }
-  // const json = JSON.stringify(stats, null, 2);
   return JSON.stringify(stats, null, 2);
-  // return stats;
-  // const jsonFileName = path.resolve(`submission/${id}.json`);
-  // const report = fs.createWriteStream(jsonFileName);
-  // report.write(json);
 
-  // The next step will be here.
-
-  // parsing Date
-
-  // const date = new Date();
-  // const year = date.getFullYear();
-  // const month = date.getMonth() + 1;
-  // const day = date.getDay() + 1;
-  // const stringDate = `${year}/${month}/${day}`;
-
-  //
-  // fs.remove(path.resolve(filename), err => {
-  //   if (err) console.log(err);
-  //   console.log('done');
-  // });
 }
 
 module.exports = analyzeZipFile;
