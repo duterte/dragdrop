@@ -17,6 +17,11 @@ h6 {
   font-family: 'Montserrat';
 }
 
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
 .app-prim-button {
   padding: 9px 31px;
   background-color: $btn-bg-color;
@@ -37,11 +42,90 @@ header {
   margin-bottom: 2em;
   box-shadow: 0 1px 5px rgba(0, 0, 0, 0.5);
   padding-top: 1em;
+  font-family: 'Montserrat';
+  font-weight: bold;
+
   .wrapper {
     display: flex;
     justify-content: flex-end;
     align-items: center;
     margin-bottom: 1em;
+
+    > .empty-space {
+      flex: 1 0 0;
+    }
+
+    > :not(:first-child) {
+      margin-left: 2em;
+    }
+
+    > a:not(.app-prim-button):hover {
+      text-decoration: underline;
+    }
+  }
+
+  .menu-holder {
+    position: relative;
+
+    :first-child > * {
+      cursor: pointer;
+    }
+  }
+
+  .avatar {
+    width: 40px;
+  }
+
+  .avatar img {
+    border-radius: 50%;
+    width: 100%;
+  }
+
+  .menu {
+    box-shadow: 0 0 5px rgba(41, 20, 20, 0.2);
+    border-radius: 5px;
+    position: absolute;
+    right: 0;
+    min-width: 193px;
+    width: max-content;
+    cursor: pointer;
+    font-family: 'Nunito';
+
+    div {
+      background-color: $btn-bg-color;
+      color: $btn-color;
+      padding: 1em 1em 0 1em;
+      transition: background-color 0.2s ease-out;
+    }
+
+    div:hover {
+      background-color: #535353eb;
+    }
+
+    .first-child {
+      border-radius: 5px 5px 0 0;
+    }
+
+    .last-child {
+      border-radius: 0 0 5px 5px;
+    }
+
+    .single-child {
+      border-radius: 5px;
+    }
+  }
+  .content {
+    display: none;
+    overflow: hidden;
+    max-height: 0;
+    transition: max-height 0.2s ease-out;
+
+    svg {
+      width: 15px;
+      height: 15px;
+      margin-left: 10px;
+      font-size: 1rem;
+    }
   }
 }
 

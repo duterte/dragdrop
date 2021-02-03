@@ -1,5 +1,36 @@
+<div style="display: none;">
+  <svg xmlns="http://www.w3.org/2000/svg">
+    <symbol id="plus-icon" viewBox="0 0 448 512" fill="currentColor" with="1em" height="1em">
+      <path
+        d="M416 208H272V64c0-17.67-14.33-32-32-32h-32c-17.67 0-32 14.33-32 32v144H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h144v144c0 17.67 14.33 32 32 32h32c17.67 0 32-14.33 32-32V304h144c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z" />
+    </symbol>
+  </svg>
+</div>
 <header class="<%= className %> ">
   <div class="wrapper">
-    <span class="app-prim-button login">Login</span>
+    <div class="logo-placeholder">YOUR LOGO HERE</div>
+    <div class="empty-space"></div>
+    <a href="/">DASHBOARD</a>
+    <% if(user) { %>
+      <div class="menu-holder">
+        <div class="avatar collapse"><img src="<%= user.picture %> " alt="<%= user.given_name %>"></div>
+        <div class="menu content">
+          <div id="upload-menu" class="first-child">
+            <a href="/upload">
+              CREATE PROJECT <svg>
+                <use href="#plus-icon" />
+              </svg>
+            </a>
+            <hr />
+          </div>
+          <div id="logout-menu" class="last-child">
+            <a href="/logout">LOGOUT</a>
+            <hr />
+          </div>
+        </div>
+      </div>
+      <% } else { %>
+        <a class="app-prim-button login" href="/login">LOGIN</a>
+        <% } %>
   </div>
 </header>

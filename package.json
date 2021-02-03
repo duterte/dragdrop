@@ -2,10 +2,10 @@
   "name": "nwu_workflow",
   "version": "1.0.0",
   "description": "",
-  "main": "server/index.js",
+  "main": "server",
   "scripts": {
-    "start": "node server/index.js",
-    "dev": "nodemon server/index.js"
+    "start": "node server",
+    "dev": "nodemon server"
   },
   "keywords": [],
   "author": "",
@@ -23,5 +23,12 @@
   },
   "devDependencies": {
     "nodemon": "^2.0.7"
+  },
+  "nodemonConfig": {
+    "ignore": [
+      "/submission/*",
+      "temp/*",
+      "/public/*"
+    ]
   }
 }

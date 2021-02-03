@@ -1,5 +1,5 @@
-const analyzeZip = require('./zip');
-
 module.exports = {
-  analyzeZip: analyzeZip,
+  analyzeZipFile: require('./analyzeZipFile'),
+  routes: require('./routes'),
+  auth: require('./authentication'),
 };

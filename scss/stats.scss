@@ -1,5 +1,11 @@
 @import 'config';
 
+header.stats {
+  #upload-menu {
+    display: none;
+  }
+}
+
 main.stats {
   .wrapper {
     margin-bottom: 2em;
@@ -7,8 +13,14 @@ main.stats {
   }
 
   .collapse {
-    background-color: #eee;
     color: #444;
+    background: rgb(54, 53, 53);
+    background: linear-gradient(
+      0deg,
+      rgba(54, 53, 53, 0.2) 5%,
+      rgba(67, 67, 67, 0.13518910982361698) 50%,
+      rgba(54, 53, 53, 0.2) 95%
+    );
     cursor: pointer;
     padding: 18px;
     border-radius: 5px;
@@ -17,19 +29,22 @@ main.stats {
   .content {
     display: none;
     overflow: hidden;
-    flex-direction: column;
     max-height: 0;
-    padding: 1em;
     transition: max-height 0.2s ease-out;
     font-family: 'Nunito';
   }
 
   svg {
     position: absolute;
-    top: 14px;
-    right: 14px;
-    transform: rotateX(0deg);
+    top: 13px;
+    right: 22px;
+    transform: rotateZ(0deg);
     transition: transform 0.2s ease-out;
+    width: 32px;
+    height: 37px;
+    font-size: 2em;
+    color: #868686;
+    pointer-events: none;
   }
 
   svg.down {
@@ -45,7 +60,6 @@ main.stats {
 }
 
 .stats.fixed {
-  // position: fixed;
   min-height: 4em;
   bottom: 0;
 

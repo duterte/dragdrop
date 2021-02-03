@@ -2,36 +2,29 @@
 <html lang="en">
 
 <head>
-  <link rel="preload" type="font/ttf" href="assets/fonts/Montserrat-Regular.ttf" as="font" crossorigin>
-  <link rel="preload" type="font/ttf" href="assets/fonts/Nunito-Regular.ttf" as="font" crossorigin>
+  <link rel="preload" type="font/ttf" href="fonts/Montserrat-Regular.ttf" as="font" crossorigin>
+  <link rel="preload" type="font/ttf" href="fonts/Nunito-Regular.ttf" as="font" crossorigin>
   <style>
     @font-face {
       font-family: 'Montseratt';
-      src: url("assets/fonts/Montserrat-Regular.ttf");
+      src: url("fonts/Montserrat-Regular.ttf");
     }
 
     @font-face {
       font-family: 'Nunito';
-      src: url("assets/fonts/Nunito-Regular.ttf");
+      src: url("fonts/Nunito-Regular.ttf");
     }
   </style>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="assets/css/common.css">
-  <link rel="stylesheet" href="assets/css/dashboard.css">
+  <link rel="stylesheet" href="css/common.css">
+  <link rel="stylesheet" href="css/dashboard.css">
   <title>Project Dashboard</title>
 </head>
 
 <body>
-  <div style="display: none;">
-    <svg xmlns="http://www.w3.org/2000/svg">
-      <symbol id="plus-icon" viewBox="0 0 448 512" fill="currentColor" with="1em" height="1em">
-        <path
-          d="M416 208H272V64c0-17.67-14.33-32-32-32h-32c-17.67 0-32 14.33-32 32v144H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h144v144c0 17.67 14.33 32 32 32h32c17.67 0 32-14.33 32-32V304h144c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z" />
-      </symbol>
-    </svg>
-  </div>
-  <%- include('partials/header.ejs' , {className: 'dashboard' }) %>
+
+  <%- include('partials/header.ejs' , { user: user, className: 'dashboard' }) %>
     <main class="dashboard">
       <h1 class="wrapper" style="text-align: center;">PROJECT DASHBOARD</h1>
       <div class="wrapper dashboard-content">
@@ -44,6 +37,8 @@
       </div>
     </main>
     <%- include('partials/footer.ejs' , {className: 'dashboard' }) %>
+      <script src="js/common.js"></script>
+      <script src="js/dashboard.js"></script>
 </body>
 
 </html>
