@@ -2,7 +2,7 @@
 @import 'config';
 
 body,
-body > * {
+body * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -30,6 +30,16 @@ a {
   font-family: 'Nunito';
   font-weight: bolder;
   cursor: pointer;
+}
+
+.app-second-button {
+  padding: 9px 31px;
+  border-radius: 5px;
+  font-family: 'Nunito';
+  font-weight: bolder;
+  cursor: pointer;
+  background-color: #edb610;
+  color: #000000ab;
 }
 
 .wrapper {
@@ -96,10 +106,11 @@ header {
       color: $btn-color;
       padding: 1em 1em 0 1em;
       transition: background-color 0.2s ease-out;
+      padding-bottom: 0.3em;
     }
 
     div:hover {
-      background-color: #535353eb;
+      background-color: #4674c6;
     }
 
     .first-child {

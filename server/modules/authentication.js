@@ -15,7 +15,7 @@ function handler(app) {
   app.use((req, res, next) => {
     req.data = undefined;
     if (req.oidc.isAuthenticated()) {
-      req.data = req.oidc.user;
+      req.user = req.oidc.user;
       // console.log(req.data);
     }
     next();

@@ -16,7 +16,7 @@ const fileUploadOption = {
 };
 
 router.get('/', requiresAuth(), (req, res) => {
-  res.render('upload', { user: req.data });
+  res.render('upload', { user: req.user });
 });
 
 router.post(
@@ -32,20 +32,22 @@ router.post(
         return res.status(400).json('request body has no files in it.');
       }
 
-      const user = req.data.email;
+      const user = req.user.email;
       const fileName = files['file1'].name;
       const id = uuid().split('-').join('');
       const split = fileName.split('.');
       const ext = split[split.length - 1].toLowerCase();
-      const savePath = path.resolve(`submission/${user}/${id}.${ext}`);
-      const jsonFileName = path.resolve(`submission/${user}/${id}.json`);
+      const dir = path.resolve(`submission/${user}`);
+      const extractionPath = path.resolve(`${dir}/${id}`);
+      const saveFileName = path.resolve(`${dir}/${id}.${ext}`);
+      const jsonFileName = path.resolve(`${dir}/${id}.json`);
       if (ext !== 'zip') {
         const error = new Error('File not valid');
         error.code = 400;
         throw error;
       } else {
-        await files['file1'].mv(savePath);
-        const stats = analyzeZipFile(savePath);
+        await files['file1'].mv(saveFileName);
+        const stats = analyzeZipFile(saveFileName, extractionPath);
         const report = fs.createWriteStream(jsonFileName);
         report.write(stats);
         return res.redirect(302, `/stats?id=${id}`);

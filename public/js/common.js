@@ -33,11 +33,9 @@ document.body.addEventListener('click', () => {
 });
 
 document.body.addEventListener('dragover', e => {
-  console.log('dragOver');
   e.preventDefault();
 });
 
 document.body.addEventListener('drop', e => {
-  console.log('dropped');
   e.preventDefault();
 });

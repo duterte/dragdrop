@@ -1,0 +1,90 @@
+header.directory #upload-menu {
+  display: none;
+}
+
+main.directory {
+  position: relative;
+}
+
+main.directory .wrapper {
+  padding: 0.5em 1em;
+}
+
+main.directory .tools {
+  border-radius: 2px;
+  -webkit-box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+          box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+}
+
+main.directory .breadcrumb {
+  padding: 0.2em 1em;
+  margin: 0.2em auto;
+  border-radius: 2px;
+  -webkit-box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+          box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+  font-family: 'Nunito';
+  font-weight: bold;
+}
+
+main.directory .breadcrumb span {
+  cursor: pointer;
+}
+
+main.directory table {
+  -webkit-box-shadow: 0 -1px 5px rgba(0, 0, 0, 0.2);
+          box-shadow: 0 -1px 5px rgba(0, 0, 0, 0.2);
+  border-collapse: collapse;
+  text-transform: uppercase;
+  background-color: white;
+  border-bottom: 0.5px solid gray;
+  position: relative;
+  width: 100%;
+  padding: 0;
+  z-index: 1;
+}
+
+main.directory table svg {
+  width: 33px;
+  height: 33px;
+  font-size: 2em;
+  margin-right: 0.4em;
+}
+
+main.directory thead tr {
+  font-family: 'Montserrat';
+  font-weight: bolder;
+  background-color: #6495ed;
+  color: #ffff;
+}
+
+main.directory tbody tr {
+  font-family: 'Nunito';
+  font-weight: normal;
+}
+
+main.directory tbody tr :first-child {
+  text-transform: lowercase;
+}
+
+main.directory td {
+  border-top: 0.5px solid #808080;
+  padding: 0.5em;
+}
+
+main.directory .add-file {
+  -webkit-box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+          box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+  display: -ms-grid;
+  display: grid;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  background-color: white;
+  position: relative;
+  height: 263px;
+  bottom: 5px;
+  z-index: 0;
+}

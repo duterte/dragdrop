@@ -1,5 +1,6 @@
 const AdmZip = require('adm-zip');
 const $ = require('cheerio');
+const fs = require('fs-extra');
 
 const allowedDirectory = [
   'assets',
@@ -11,29 +12,29 @@ const allowedDirectory = [
   'video',
 ];
 
-function analyzeZipFile(zipFileName) {
+const stats = {
+  errors: {
+    hierarchyLevelViolation: [],
+    filesInWrongDirectory: [],
+    notAllowedDirectory: [],
+    unSupportedTypeOfFiles: [],
+    notFoundFiles: [],
+  },
+  passed: {
+    'index.html': false,
+    filesInRightDirectory: [],
+  },
+  referencedUrls: {
+    absoluteUrls: [],
+    relativeUrls: [],
+  },
+  files: [],
+  totalNumberOfFiles: 0,
+};
+
+function analyzeZipFile(zipFileName /* , directory */) {
   const zip = new AdmZip(zipFileName);
   const zipEntries = zip.getEntries();
-
-  const stats = {
-    errors: {
-      hierarchyLevelViolation: [],
-      filesInWrongDirectory: [],
-      notAllowedDirectory: [],
-      unSupportedTypeOfFiles: [],
-      notFoundFiles: [],
-    },
-    passed: {
-      'index.html': false,
-      filesInRightDirectory: [],
-    },
-    referencedUrls: {
-      absoluteUrls: [],
-      relativeUrls: [],
-    },
-    files: [],
-    totalNumberOfFiles: 0,
-  };
 
   zipEntries.forEach(entry => {
     const info = {
@@ -130,8 +131,8 @@ function analyzeZipFile(zipFileName) {
       stats.errors.notFoundFiles.push(relativeUrls[i]);
     }
   }
+  fs.remove(zipFileName);
   return JSON.stringify(stats, null, 2);
-
 }
 
 module.exports = analyzeZipFile;

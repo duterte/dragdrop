@@ -1,0 +1,288 @@
+header.project #upload-menu {
+  display: none;
+}
+
+main.project {
+  position: relative;
+}
+
+main.project .wrapper {
+  padding: 0.5em 1em;
+}
+
+main.project .tools {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  border-radius: 2px;
+  -webkit-box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+          box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+  font-family: 'Nunito';
+  font-weight: bold;
+}
+
+main.project .tools > *:not(:last-child) {
+  margin-right: 2em;
+}
+
+main.project .tools > * {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  cursor: pointer;
+}
+
+main.project .tools > * > span {
+  padding-top: 6px;
+}
+
+main.project .tools .empty {
+  -webkit-box-flex: 1;
+      -ms-flex: 1 0 auto;
+          flex: 1 0 auto;
+  visibility: hidden;
+}
+
+main.project .tools svg {
+  font-size: 1.5em;
+  width: 23px;
+  height: 23px;
+  color: #6495ed;
+  margin-right: 0.2em;
+}
+
+main.project .breadcrumb {
+  padding: 0.2em 1em;
+  margin: 0.2em auto;
+  border-radius: 2px;
+  -webkit-box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+          box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+  font-family: 'Nunito';
+  font-weight: bold;
+}
+
+main.project .breadcrumb span {
+  cursor: pointer;
+}
+
+main.project table {
+  -webkit-box-shadow: 0 -1px 5px rgba(0, 0, 0, 0.2);
+          box-shadow: 0 -1px 5px rgba(0, 0, 0, 0.2);
+  border-collapse: collapse;
+  text-transform: uppercase;
+  background-color: white;
+  border-bottom: 0.5px solid gray;
+  position: relative;
+  width: 100%;
+  padding: 0;
+  z-index: 1;
+}
+
+main.project table svg {
+  width: 33px;
+  height: 33px;
+  font-size: 2em;
+  margin-right: 0.4em;
+}
+
+main.project thead tr {
+  font-family: 'Montserrat';
+  font-weight: bolder;
+  background-color: #6495ed;
+  color: #ffff;
+}
+
+main.project tbody tr {
+  font-family: 'Nunito';
+  font-weight: normal;
+}
+
+main.project tbody tr :first-child {
+  text-transform: lowercase;
+}
+
+main.project table .table-item,
+main.project table a {
+  position: relative;
+  bottom: 9px;
+}
+
+main.project tbody tr:hover {
+  background-color: rgba(128, 128, 128, 0.1);
+}
+
+main.project td {
+  border-top: 0.5px solid #808080;
+  padding: 0.5em;
+}
+
+main.project tbody td:last-of-type {
+  text-transform: capitalize;
+}
+
+main.project .add-file {
+  -webkit-box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+          box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+  display: -ms-grid;
+  display: grid;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  background-color: white;
+  position: relative;
+  height: 263px;
+  bottom: 5px;
+  z-index: 0;
+}
+
+#dropzone {
+  display: none;
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  z-index: 100;
+  top: 0;
+  left: 0;
+  background-color: rgba(100, 100, 100, 0.3);
+  font-family: 'Montserrat';
+  color: #6495ed;
+}
+
+#dropzone .target {
+  display: -ms-grid;
+  display: grid;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  border: 7px dashed #6495ed;
+  background-color: white;
+  width: 94vw;
+  height: 91vh;
+  font-size: 4em;
+  font-weight: bolder;
+  border-radius: 50px;
+}
+
+#dropzone.show {
+  display: -ms-grid;
+  display: grid;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+#folder-modal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.2);
+}
+
+#folder-modal .create-folder-dialog {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  position: relative;
+  border-radius: 5px;
+  -webkit-box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+          box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+  background-color: white;
+  max-width: 492px;
+  margin: 68px auto 0 auto;
+  padding: 1em;
+  font-family: 'Nunito';
+  -webkit-transition: top 0.8s ease-out;
+  transition: top 0.8s ease-out;
+}
+
+#folder-modal .create-folder-dialog > *:not(:first-child):not(svg) {
+  margin-top: 1em;
+}
+
+#folder-modal .create-folder-dialog input {
+  height: 35px;
+  border-radius: 5px;
+  padding-left: 0.5em;
+  outline: none;
+  border: 0.5px solid gray;
+}
+
+#folder-modal .create-folder-dialog > svg {
+  position: absolute;
+  right: 17px;
+  top: 5px;
+  width: 24px;
+  height: 24px;
+  font-size: 1.5em;
+  cursor: pointer;
+}
+
+#folder-modal .app-prim-button {
+  max-width: 100px;
+  text-align: center;
+  -ms-flex-item-align: end;
+      align-self: flex-end;
+}
+
+#delete-modal {
+  display: block;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.2);
+}
+
+#delete-modal .delete-dialog {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  position: relative;
+  border-radius: 5px;
+  -webkit-box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+          box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+  background-color: white;
+  max-width: 347px;
+  margin: 68px auto 0 auto;
+  padding: 2em 1em 1em 1em;
+  font-family: 'Nunito';
+}
+
+#delete-modal .dialog-btn {
+  -ms-flex-item-align: end;
+      align-self: flex-end;
+  margin-top: 3em;
+}
+
+#folder-modal.show {
+  display: block;
+}

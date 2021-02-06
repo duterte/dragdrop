@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <link rel="preload" type="font/ttf" href="fonts/Montserrat-Regular.ttf" as="font" crossorigin>
+  <link rel="preload" type="font/ttf" href="fonts/Nunito-Regular.ttf" as="font" crossorigin>
+  <style>
+    @font-face {
+      font-family: 'Montseratt';
+      src: url("fonts/Montserrat-Regular.ttf");
+    }
+
+    @font-face {
+      font-family: 'Nunito';
+      src: url("fonts/Nunito-Regular.ttf");
+    }
+  </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="css/common.css">
+  <title>Unexpected Error | Website Submission System</title>
+</head>
+
+<body>
+
+  <%- include('partials/header.ejs', {className: 'notfound' }) %>
+    <main class="notfound">
+      <div class="wrapper">
+        Unexpected Error happen in the server
+      </div>
+    </main>
+    <%- include('partials/footer.ejs' , {className: 'notfound' }) %>
+      <script src="js/common.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <link rel="preload" type="font/ttf" href="fonts/Montserrat-Regular.ttf" as="font" crossorigin>
+  <link rel="preload" type="font/ttf" href="fonts/Nunito-Regular.ttf" as="font" crossorigin>
+  <style>
+    @font-face {
+      font-family: 'Montseratt';
+      src: url("fonts/Montserrat-Regular.ttf");
+    }
+
+    @font-face {
+      font-family: 'Nunito';
+      src: url("fonts/Nunito-Regular.ttf");
+    }
+  </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="css/common.css">
+  <link rel="stylesheet" href="css/project.css">
+  <title>Project Directory | Website Submission System</title>
+</head>
+
+<body>
+  <div style="display: none;">
+    <svg xmlns="http://www.w3.org/2000/svg">
+      <symbol id="folder" viewBox="0 0 48 48" enable-background="new 0 0 48 48" width="1em" height="1em">
+        <path fill="#FFA000" d="M40,12H22l-4-4H8c-2.2,0-4,1.8-4,4v8h40v-4C44,13.8,42.2,12,40,12z" />
+        <path fill="#FFCA28"
+          d="M40,12H8c-2.2,0-4,1.8-4,4v20c0,2.2,1.8,4,4,4h32c2.2,0,4-1.8,4-4V16C44,13.8,42.2,12,40,12z" />
+      </symbol>
+    </svg>
+    <svg xmlns="http://www.w3.org/2000/svg">
+      <symbol id="js-file" viewBox="0 0 490 490" fill="currentColor" width="1em" height="1em">
+        <path d="M454.05,150.8l-154-145.6c-3.1-3.1-8.3-5.2-13.5-5.2H50.45c-11.4,0-20.8,9.4-20.8,20.8v448.4c0,11.4,9.4,20.8,20.8,20.8
+        h389.1c11.4,0,20.8-9.4,20.8-21.8V165.4C460.35,160.2,458.25,155,454.05,150.8z M306.35,68.3l82.7,78.4h-82.7V68.3z M419.75,449.4
+        H70.15V41.6h195.6v124.8c0,11.4,9.4,20.8,20.8,20.8h133.2L419.75,449.4L419.75,449.4z" />
+        <path d="M301.85,302.3c-12.3,0-22.4-10-22.4-22.4s10-22.4,22.4-22.4c6.2,0,12,2.5,16.3,7.1c5.7,6,15.1,6.3,21.1,0.6
+        c6-5.7,6.3-15.1,0.6-21.1c-9.8-10.5-23.7-16.5-38.1-16.5c-28.8,0-52.3,23.5-52.3,52.3s23.5,52.3,52.3,52.3
+        c12.3,0,22.4,10,22.4,22.4s-10,22.4-22.4,22.4c-6.2,0-12-2.5-16.3-7.1c-5.7-6-15.1-6.3-21.1-0.6c-6,5.7-6.3,15.1-0.6,21.1
+        c9.8,10.5,23.7,16.5,38.1,16.5c28.8,0,52.3-23.5,52.3-52.3S330.75,302.3,301.85,302.3z" />
+        <path
+          d="M213.05,227.6c-8.3,0-15,6.7-15,15v118.2c0,9-7.3,16.2-16.2,16.2c-9,0-16.2-7.3-16.2-16.2v-11.3c0-8.3-6.7-15-15-15
+        s-15,6.7-15,15v11.3c0,25.4,20.7,46.1,46.1,46.1s46.1-20.7,46.1-46.1V242.6C228.05,234.3,221.35,227.6,213.05,227.6z" />
+      </symbol>
+    </svg>
+    <svg xmlns="http://www.w3.org/2000/svg">
+      <symbol id="html-file" viewBox="0 0 16 16" fill="currentColor" width="1em" height="1em">
+        <path
+          d="M4.708 5.578L2.061 8.224l2.647 2.646-.708.708-3-3V7.87l3-3 .708.708zm7-.708L11 5.578l2.647 2.646L11 10.87l.708.708 3-3V7.87l-3-3zM4.908 13l.894.448 5-10L9.908 3l-5 10z" />
+      </symbol>
+    </svg>
+    <svg xmlns="http://www.w3.org/2000/svg">
+      <symbol id="image-file" viewBox="0 0 1024 1024" fill="currentColor" width="1em" height="1em">
+        <path
+          d="M553.1 509.1l-77.8 99.2-41.1-52.4a8 8 0 0 0-12.6 0l-99.8 127.2a7.98 7.98 0 0 0 6.3 12.9H696c6.7 0 10.4-7.7 6.3-12.9l-136.5-174a8.1 8.1 0 0 0-12.7 0zM360 442a40 40 0 1 0 80 0 40 40 0 1 0-80 0zm494.6-153.4L639.4 73.4c-6-6-14.1-9.4-22.6-9.4H192c-17.7 0-32 14.3-32 32v832c0 17.7 14.3 32 32 32h640c17.7 0 32-14.3 32-32V311.3c0-8.5-3.4-16.7-9.4-22.7zM790.2 326H602V137.8L790.2 326zm1.8 562H232V136h302v216a42 42 0 0 0 42 42h216v494z" />
+      </symbol>
+    </svg>
+    <svg xmlns="http://www.w3.org/2000/svg">
+      <symbol id="text-file" viewBox="0 0 1024 1024" fill="currentColor" with="1em" height="1em">
+        <path
+          d="M854.6 288.6L639.4 73.4c-6-6-14.1-9.4-22.6-9.4H192c-17.7 0-32 14.3-32 32v832c0 17.7 14.3 32 32 32h640c17.7 0 32-14.3 32-32V311.3c0-8.5-3.4-16.7-9.4-22.7zM790.2 326H602V137.8L790.2 326zm1.8 562H232V136h302v216a42 42 0 0 0 42 42h216v494zM504 618H320c-4.4 0-8 3.6-8 8v48c0 4.4 3.6 8 8 8h184c4.4 0 8-3.6 8-8v-48c0-4.4-3.6-8-8-8zM312 490v48c0 4.4 3.6 8 8 8h384c4.4 0 8-3.6 8-8v-48c0-4.4-3.6-8-8-8H320c-4.4 0-8 3.6-8 8z" />
+      </symbol>
+    </svg>
+    <svg xmlns="http://www.w3.org/2000/svg">
+      <symbol id="video-file" viewBox="0 0 384 512" fill="currentColor" with="1em" height="1em">
+        <path
+          d="M384 121.941V128H256V0h6.059c6.365 0 12.47 2.529 16.971 7.029l97.941 97.941A24.005 24.005 0 0 1 384 121.941zM224 136V0H24C10.745 0 0 10.745 0 24v464c0 13.255 10.745 24 24 24h336c13.255 0 24-10.745 24-24V160H248c-13.2 0-24-10.8-24-24zm96 144.016v111.963c0 21.445-25.943 31.998-40.971 16.971L224 353.941V392c0 13.255-10.745 24-24 24H88c-13.255 0-24-10.745-24-24V280c0-13.255 10.745-24 24-24h112c13.255 0 24 10.745 24 24v38.059l55.029-55.013c15.011-15.01 40.971-4.491 40.971 16.97z" />
+      </symbol>
+    </svg>
+    <svg xmlns="http://www.w3.org/2000/svg">
+      <symbol id="home-icon" viewBox="0 0 1024 1024" fill="currentColor" with="1em" height="1em">
+        <path
+          d="M946.5 505L534.6 93.4a31.93 31.93 0 0 0-45.2 0L77.5 505c-12 12-18.8 28.3-18.8 45.3 0 35.3 28.7 64 64 64h43.4V908c0 17.7 14.3 32 32 32H448V716h112v224h265.9c17.7 0 32-14.3 32-32V614.3h43.4c17 0 33.3-6.7 45.3-18.8 24.9-25 24.9-65.5-.1-90.5z" />
+      </symbol>
+    </svg>
+    <svg xmlns="http://www.w3.org/2000/svg">
+      <symbol id="create-folder" width="1em" height="1em" fill="currentColor" viewBox='0 0 24 24'>
+        <path
+          d="M20 6h-8l-2-2H4c-1.11 0-1.99.89-1.99 2L2 18c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V8c0-1.11-.89-2-2-2zm-1 8h-3v3h-2v-3h-3v-2h3V9h2v3h3v2z" />
+      </symbol>
+    </svg>
+    <svg xmlns="http://www.w3.org/2000/svg">
+      <symbol id="delete-trash" width="1em" height="1em" fill="currentColor" viewBox='0 0 24 24'>
+        <path
+          d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zm2.46-7.12l1.41-1.41L12 12.59l2.12-2.12 1.41 1.41L13.41 14l2.12 2.12-1.41 1.41L12 15.41l-2.12 2.12-1.41-1.41L10.59 14l-2.13-2.12zM15.5 4l-1-1h-5l-1 1H5v2h14V4z" />
+      </symbol>
+    </svg>
+    <svg xmlns="http://www.w3.org/2000/svg">
+      <symbol id="upload-file" width="1em" height="1em" fill="currentColor" viewBox="0 0 384 512">
+        <path
+          d="M224 136V0H24C10.7 0 0 10.7 0 24v464c0 13.3 10.7 24 24 24h336c13.3 0 24-10.7 24-24V160H248c-13.2 0-24-10.8-24-24zm65.18 216.01H224v80c0 8.84-7.16 16-16 16h-32c-8.84 0-16-7.16-16-16v-80H94.82c-14.28 0-21.41-17.29-11.27-27.36l96.42-95.7c6.65-6.61 17.39-6.61 24.04 0l96.42 95.7c10.15 10.07 3.03 27.36-11.25 27.36zM377 105L279.1 7c-4.5-4.5-10.6-7-17-7H256v128h128v-6.1c0-6.3-2.5-12.4-7-16.9z" />
+      </symbol>
+    </svg>
+    <svg xmlns="http://www.w3.org/2000/svg">
+      <symbol id="stats-icon" viewBox="0 0 24 24" with="1em" height="1em" fill="currentColor">
+        <path
+          d="M20,12c-0.249,0-0.483,0.051-0.703,0.133l-2.398-1.963C16.958,9.956,17,9.734,17,9.5C17,8.114,15.886,7,14.5,7 S12,8.114,12,9.5c0,0.396,0.1,0.765,0.262,1.097l-2.909,3.438C9.237,14.015,9.121,14,9,14c-0.179,0-0.348,0.03-0.512,0.074 l-2.563-2.563C5.97,11.348,6,11.179,6,11c0-1.108-0.892-2-2-2s-2,0.892-2,2s0.892,2,2,2c0.179,0,0.348-0.03,0.512-0.074 l2.563,2.563C7.03,15.652,7,15.821,7,16c0,1.108,0.892,2,2,2s2-0.892,2-2c0-0.237-0.048-0.46-0.123-0.671l2.913-3.442 C14.017,11.953,14.252,12,14.5,12c0.411,0,0.792-0.107,1.133-0.281l2.399,1.963C18.016,13.786,18,13.891,18,14c0,1.108,0.892,2,2,2 s2-0.892,2-2S21.108,12,20,12z" />
+      </symbol>
+    </svg>
+    <svg xmlns="http://www.w3.org/2000/svg">
+      <symbol id="download-icon" viewBox="0 0 512 512" with="1em" height="1em" fill="currentColor">
+        <path
+          d="M216 0h80c13.3 0 24 10.7 24 24v168h87.7c17.8 0 26.7 21.5 14.1 34.1L269.7 378.3c-7.5 7.5-19.8 7.5-27.3 0L90.1 226.1c-12.6-12.6-3.7-34.1 14.1-34.1H192V24c0-13.3 10.7-24 24-24zm296 376v112c0 13.3-10.7 24-24 24H24c-13.3 0-24-10.7-24-24V376c0-13.3 10.7-24 24-24h146.7l49 49c20.1 20.1 52.5 20.1 72.6 0l49-49H488c13.3 0 24 10.7 24 24zm-124 88c0-11-9-20-20-20s-20 9-20 20 9 20 20 20 20-9 20-20zm64 0c0-11-9-20-20-20s-20 9-20 20 9 20 20 20 20-9 20-20z" />
+      </symbol>
+    </svg>
+    <svg xmlns="http://www.w3.org/2000/svg">
+      <symbol id="close-icon" viewBox="0 0 24 24" fill="currentColor" width="1em" height="1em">
+        <g>
+          <path fill="none" d="M0 0h24v24H0z" />
+          <path
+            d="M12 10.586l4.95-4.95 1.414 1.414-4.95 4.95 4.95 4.95-1.414 1.414-4.95-4.95-4.95 4.95-1.414-1.414 4.95-4.95-4.95-4.95L7.05 5.636z" />
+        </g>
+      </symbol>
+    </svg>
+    <svg xmlns="http://www.w3.org/2000/svg">
+      <symbol id="cloud-upload-icon" viewBox="0 0 24 24" fill="currentColor" width="1em" height="1em">
+        <path
+          d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96zM14 13v4h-4v-4H7l5-5 5 5h-3z" />
+      </symbol>
+    </svg>
+  </div>
+
+  <%- include('partials/header.ejs', {className: 'project' }) %>
+    <main class="project">
+      <div class="wrapper tools">
+        <a href="/project?id=<%= id %>">
+          <svg>
+            <use href="#home-icon" />
+          </svg>
+        </a>
+        <div id="create-folder-modal">
+          <svg>
+            <use href="#create-folder" />
+          </svg>
+          <span>
+            CREATE FOLDER
+          </span>
+        </div>
+        <div id="upload-btn2">
+          <svg>
+            <use href="#upload-file" />
+          </svg>
+          <span>
+            UPLOAD FILE
+          </span>
+        </div>
+        <a href="/project/download" download>
+          <svg>
+            <use href="#download-icon" />
+          </svg>
+          <span>
+            DOWNLOAD
+          </span>
+        </a>
+        <a href="/stats?id=<%= id %>">
+          <svg>
+            <use href="#stats-icon" />
+          </svg>
+          <span>
+            STATS
+          </span>
+        </a>
+        <div class="empty"></div>
+        <a href="#">
+          <svg>
+            <use href="#delete-trash" />
+          </svg>
+          <span>
+            DELETE
+          </span>
+        </a>
+      </div>
+      <div class="wrapper breadcrumb">
+        <% breadcrumb.map(item=> { %>
+          <a href="<%= item.href %>">
+            <%= item.name.toLowerCase() %>
+          </a> >
+          <%}) %>
+      </div>
+      <table class="wrapper">
+        <thead>
+          <tr>
+            <td>Name</td>
+            <td>Size</td>
+            <td>Type</td>
+          </tr>
+        </thead>
+        <tbody>
+          <% for (const item of dirStructure) { %>
+            <%- include(`dir-partials/${item.partial}.ejs`,{name : item.name,size: item.size, link: item.link}) %>
+              <% } %>
+        </tbody>
+      </table>
+      <div class="wrapper add-file">
+        <input type="file" multiple style="display: none;">
+        <div id="upload-btn1">
+          <span class="app-prim-button">
+            Click Here or Drop a file to upload
+          </span>
+        </div>
+      </div>
+    </main>
+    <%- include('partials/footer.ejs' , {className: 'project' }) %>
+      <div id="dropzone">
+        <div class="target">
+          DROP FILES TO UPLOAD
+        </div>
+      </div>
+      <div id="folder-modal">
+        <div class="create-folder-dialog">
+          <b>Folder Name</b>
+          <input type="text" placeholder="example: css" value="New Folder">
+          <span class="app-prim-button" id="create-folder-btn">OK</span>
+          <svg id="close-folder-modal">
+            <use href="#close-icon" />
+          </svg>
+        </div>
+        <!-- <div class="delete-dialog">
+          <p>
+            Are you sure you want to delete this folder ?
+          </p>
+          <div class="dialog-btn">
+            <span class="app-second-button">CANCEL</span>
+            <span class="app-prim-button">OK</span>
+          </div>
+        </div> -->
+      </div>
+      <!-- <div id="delete-modal">
+        <div class="delete-dialog">
+          <p>
+            Are you sure you want to delete this folder ?
+          </p>
+          <div class="dialog-btn">
+            <span class="app-second-button">CANCEL</span>
+            <span class="app-prim-button">OK</span>
+          </div>
+        </div>
+      </div> -->
+      <script src="js/common.js"></script>
+      <script src="js/project.js"></script>
+</body>
+
+</html>

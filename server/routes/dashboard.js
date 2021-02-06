@@ -3,7 +3,7 @@ const router = express.Router();
 
 router.get('/', (req, res) => {
   try {
-    return res.render('dashboard', { user: req.data });
+    return res.render('dashboard', { user: req.user });
   } catch (err) {
     console.log(err);
     return res.status(500).json('Internal Server Error');
@@ -14,7 +14,7 @@ router.get('/', (req, res) => {
 
 // router.get('/:user_email', (req, res) => {
 //   try {
-//     res.render('dashboard', { user: req.data });
+//     res.render('dashboard', { user: req.user });
 //   } catch (err) {
 //     console.log(err);
 //     return res.status(500).json('Internal Server Error');
