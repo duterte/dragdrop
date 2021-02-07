@@ -4,10 +4,12 @@ const uploadBtn2 = document.querySelector('#upload-btn2');
 const dropzone = document.querySelector('#dropzone');
 const target = document.querySelector('#dropzone .target');
 const table = document.querySelector('table > tbody');
-// const tr = document.querySelectorAll('tbody > tr');
-const createFolderModal = document.querySelector('#create-folder-modal');
-const folderModal = document.querySelector('#folder-modal');
-
+const createFolder = document.querySelector('#create-folder');
+const folderModal = document.querySelector('#modal-holder');
+const folderDialog = document.querySelector('.folder-dialog');
+const deleteItem = document.querySelector('#delete-item');
+const deleteDialog = document.querySelector('.delete-dialog');
+const submit = document.querySelector('#submit');
 const body = document.body;
 
 // event listeners
@@ -17,42 +19,84 @@ dropzone.addEventListener('dragleave', dragLeaveDropzone);
 uploadBtn1.addEventListener('click', () => fileInput.click());
 uploadBtn2.addEventListener('click', () => fileInput.click());
 fileInput.addEventListener('change', fileInputChange);
-createFolderModal.addEventListener('click', e => {
-  folderModal.classList.toggle('show');
-});
 folderModal.addEventListener('click', folderModalClick);
+createFolder.addEventListener('click', showModal);
+deleteItem.addEventListener('click', showModal);
+
+function showModal() {
+  folderModal.classList.add('show');
+  const targetID = this.id;
+  if (targetID === 'create-folder') {
+    folderDialog.classList.add('show');
+  } else if (targetID === 'delete-item') {
+    deleteDialog.classList.add('show');
+  }
+}
+
+function parseQuery() {
+  const regex = new RegExp(`\\?(.*)`);
+  const param = {};
+  for (const item of window.location.search.match(regex)[1].split('&')) {
+    const query = item.split('=');
+    param[query[0]] = query[1];
+  }
+  return param;
+}
+
+function createUrl(subpath, query) {
+  return query.dirname
+    ? `/project/${subpath}?id=${query.id}&dirname=${query.dirname}`
+    : `/project/${subpath}?id=${query.id}`;
+}
+
+function fetchRequest(url, json) {
+  fetch(url, {
+    method: 'post',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: json,
+  })
+    .then(res => {
+      if (res.status !== 200) {
+        throw new Error(`Upload not sucessful status code: ${res.status}`);
+      } else {
+        window.location.reload();
+      }
+    })
+    .catch(err => console.log(err));
+}
 
 function folderModalClick(e) {
-  const targetID = e.target.id.toLowerCase();
-  const folderName = document.querySelector('#folder-modal input[type="text"]');
-  if (targetID === 'close-folder-modal' || targetID === 'folder-modal') {
-    folderModal.classList.toggle('show');
-  } else if (targetID === 'create-folder-btn') {
-    const regex = new RegExp(`\\?(.*)`);
-    const queries = window.location.search.match(regex)[1].split('&');
-    const param = {};
-    for (const item of queries) {
-      const query = item.split('=');
-      param[query[0]] = query[1];
+  const { tagName, id, className } = e.target;
+  if (
+    tagName === 'svg' ||
+    tagName === 'use' ||
+    id === 'modal-holder' ||
+    className === 'app-second-button'
+  ) {
+    folderModal.classList.remove('show');
+    folderDialog.classList.remove('show');
+    deleteDialog.classList.remove('show');
+  } else if (id === 'create-folder-btn') {
+    const query = parseQuery();
+    const url = createUrl('folder', query);
+    const json = JSON.stringify({
+      folderName: folderDialog.querySelector('input').value,
+    });
+    fetchRequest(url, json);
+  } else if (className === 'app-prim-button') {
+    const query = parseQuery();
+    const url = createUrl('deletefiles', query);
+    const lists = [];
+    for (const item of document.querySelectorAll('.table-item')) {
+      if (item.checked) {
+        lists.push(item.value);
+      }
     }
-    const url = param.dirname
-      ? `/project/folder?id=${param.id}&dirname=${param.dirname}`
-      : `/project/folder?id=${param.id}`;
-    fetch(url, {
-      method: 'post',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ folderName: folderName.value }),
-    })
-      .then(res => {
-        if (res.status !== 200) {
-          throw new Error(`Upload not sucessful status code: ${res.status}`);
-        } else {
-          window.location.reload();
-        }
-      })
-      .catch(err => console.log(err));
+    const json = JSON.stringify({ lists });
+    console.log(json);
+    fetchRequest(url, json);
   }
 }
 
@@ -85,6 +129,13 @@ class TableData {
   }
 }
 
+function activateSpinner() {
+  const pop = document.querySelector('#pop');
+  const spinnerIcon = document.querySelector('.spinner-icon');
+  pop.style.display = 'grid';
+  // spinnerIcon.classList.add('animate');
+}
+
 function uploadFiles(files) {
   const fileData = new FormData();
   let i = 0;
@@ -105,7 +156,7 @@ function uploadFiles(files) {
   const url = param.dirname
     ? `/project?id=${param.id}&dirname=${param.dirname}`
     : `/project?id=${param.id}`;
-
+  activateSpinner();
   fetch(url, {
     method: 'post',
     body: fileData,

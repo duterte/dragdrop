@@ -50,30 +50,4 @@ main.stats {
   svg.down {
     transform: rotateZ(90deg);
   }
-
-  .app-prim-button {
-    padding: 18px 31px;
-  }
-  .app-prim-button:first-of-type {
-    margin-right: 1em;
-  }
-}
-
-.stats.fixed {
-  min-height: 4em;
-  bottom: 0;
-
-  .wrapper {
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    position: relative;
-  }
-  .app-prim-button {
-    padding: 18px 31px;
-  }
-  .app-prim-button:first-of-type {
-    margin-right: 1em;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
-  }
 }

@@ -1,6 +1,6 @@
+const path = require('path');
 const AdmZip = require('adm-zip');
 const $ = require('cheerio');
-const fs = require('fs-extra');
 
 const allowedDirectory = [
   'assets',
@@ -32,10 +32,10 @@ const stats = {
   totalNumberOfFiles: 0,
 };
 
-function analyzeZipFile(zipFileName /* , directory */) {
-  const zip = new AdmZip(zipFileName);
+module.exports = function (userPath, id) {
+  const zip = new AdmZip();
+  zip.addLocalFolder(path.resolve(userPath, id));
   const zipEntries = zip.getEntries();
-
   zipEntries.forEach(entry => {
     const info = {
       isDirectory: entry.isDirectory,
@@ -131,8 +131,5 @@ function analyzeZipFile(zipFileName /* , directory */) {
       stats.errors.notFoundFiles.push(relativeUrls[i]);
     }
   }
-  fs.remove(zipFileName);
-  return JSON.stringify(stats, null, 2);
-}
-
-module.exports = analyzeZipFile;
+  return stats;
+};

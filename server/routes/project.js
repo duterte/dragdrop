@@ -6,6 +6,8 @@ const { v4: uuid } = require('uuid');
 const { requiresAuth } = require('express-openid-connect');
 const AdmZip = require('adm-zip');
 const dirTree = require('directory-tree');
+const { projectStats } = require('./modules');
+const AWS = require('aws-sdk');
 
 const router = express.Router();
 require('dotenv').config();
@@ -153,8 +155,11 @@ router.post(
         dirname ? dirname : ''
       );
       for (const item in files) {
-        const mimetype = files[item].mimetype.toLowerCase();
-        if (mimetype === 'application/x-zip-compressed') {
+        const extension = files[item].name
+          .split('.')
+          .reduceRight(i => i)
+          .toLowerCase();
+        if (extension === 'zip') {
           const zip = new AdmZip(files[item].data);
           zip.extractAllTo(projectPath, true);
         } else {
@@ -205,25 +210,82 @@ router.get('/download', requiresAuth(), (req, res) => {
     res.setHeader('Content-disposition', `attachment; filename=${id}.zip`);
     res.setHeader('Content-type', 'application/x-zip-compressed');
     res.download(path.resolve('submission', user.email, `${id}.zip`));
-    // fs.rm(path.resolve('submission', req.user.email, `${id}.zip`));
   } catch (err) {
     console.log(err);
     return res.status(500).json('unexpected error occur in the server');
   }
 });
 
+function targetPath(user, query) {
+  return query.dirname
+    ? path.resolve('submission', user.email, query.id, query.dirname)
+    : path.resolve('submission', user.email, query.id);
+}
+
 router.post('/folder', requiresAuth(), (req, res) => {
   try {
     const { query, body, user } = req;
-
-    const projectPath = query.dirname
-      ? path.resolve('submission', user.email, query.id, query.dirname)
-      : path.resolve('submission', user.email, query.id);
-
+    const projectPath = targetPath(user, query);
     fs.mkdirSync(path.join(projectPath, body.folderName));
     return res.status(200).send();
   } catch (err) {
     console.log(err);
+    return res.status(500).json('unexpected error occur in the server');
+  }
+});
+
+router.post('/deletefiles', requiresAuth(), (req, res) => {
+  try {
+    const { query, body, user } = req;
+    const projectPath = targetPath(user, query);
+    if (body.lists) {
+      for (const item of body.lists) {
+        const a = path.join(projectPath, item).trim();
+        fs.removeSync(a);
+      }
+    }
+    return res.status(200).send();
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json('unexpected error occur in the server');
+  }
+});
+
+router.get('/submission', requiresAuth(), (req, res) => {
+  try {
+    const { cookies, user } = req;
+    const userPath = path.resolve('submission', user.email);
+    const stats = projectStats(userPath, cookies.project_id);
+
+    for (const key in stats.errors) {
+      if (key.length) {
+        return res.redirect(`/stats?id=${cookies.project_id}`);
+      }
+    }
+
+    // console.log(projectStats(userPath, cookies.project_id));
+
+    // const s3 = new AWS.S3({
+    //   accessKeyId: process.env.AWS_ACCESS_KEY,
+    //   secretAccessKey: process.env.AWS_SECRET,
+    // });
+
+    // const payload = {
+    //   Bucket: 'bucket_test1',
+    //   Key: 'key_test1',
+    //   Body: fs.readFileSync(path.resolve('test_sample/sample2/sample.txt')),
+    // };
+    // s3.upload(payload, (err, data) => {
+    //   if (err) {
+    //     console.log(err);
+    //     throw new Error('S3 error');
+    //   } else {
+    //     console.log(data);
+    //     throw new Error('Test Error');
+    //   }
+    // });
+  } catch (err) {
+    console.log(err.message);
     return res.status(500).json('unexpected error occur in the server');
   }
 });

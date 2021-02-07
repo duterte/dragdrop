@@ -1,0 +1,186 @@
+@font-face {
+  font-family: 'Montseratt';
+  src: url(Montserrat-Regular.ttf);
+}
+
+@font-face {
+  font-family: 'Nunito';
+  src: url(Nunito-Regular.ttf);
+}
+
+* {
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: 'Montseratt';
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.page-button {
+  text-transform: uppercase;
+  cursor: pointer;
+  padding: 0.5em 1em;
+}
+
+#root {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  font-family: 'Nunito';
+}
+
+.data {
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+}
+
+#data-list {
+  margin: 1em;
+  padding: 1em 2em;
+}
+
+.prompt {
+  position: fixed;
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-rows: 1fr 1fr 1fr;
+      grid-template-rows: 1fr 1fr 1fr;
+  top: 20px;
+  right: 5px;
+  -webkit-box-shadow: 0 0 5px rgba(0, 0, 0, 0.4);
+          box-shadow: 0 0 5px rgba(0, 0, 0, 0.4);
+  z-index: 100;
+  background-color: white;
+  opacity: 0;
+}
+
+.prompt.hide {
+  -webkit-animation-name: hideprompt;
+          animation-name: hideprompt;
+  -webkit-animation-fill-mode: forwards;
+          animation-fill-mode: forwards;
+  -webkit-animation-duration: 1s;
+          animation-duration: 1s;
+}
+
+.prompt.show {
+  -webkit-animation-name: showprompt;
+          animation-name: showprompt;
+  -webkit-animation-fill-mode: forwards;
+          animation-fill-mode: forwards;
+  -webkit-animation-duration: 1s;
+          animation-duration: 1s;
+}
+
+@-webkit-keyframes hideprompt {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes hideprompt {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+@-webkit-keyframes showprompt {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes showprompt {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.prompt > h4 {
+  -ms-flex-item-align: start;
+      -ms-grid-row-align: start;
+      align-self: start;
+  background-color: green;
+  color: white;
+  -ms-grid-row: 1;
+  -ms-grid-row-span: 1;
+  grid-row: 1/2;
+  padding: 0.5em 0;
+}
+
+.prompt > .question {
+  -ms-grid-row: 2;
+  -ms-grid-row-span: 1;
+  grid-row: 2/3;
+  -ms-flex-item-align: center;
+      -ms-grid-row-align: center;
+      align-self: center;
+  -ms-grid-column-align: center;
+      justify-self: center;
+  width: 100%;
+  height: 100%;
+  padding-left: 2em;
+  padding-right: 2em;
+}
+
+.question > #question-text {
+  font-weight: bold;
+}
+
+.question > #question-type {
+  width: 100%;
+  height: 31px;
+  margin-top: 4em;
+}
+
+#question-type .page-button {
+  background-color: green;
+  color: white;
+  border-radius: 5px;
+}
+
+.prompt > .page-button {
+  background-color: green;
+  color: white;
+  -ms-grid-row: 3;
+  -ms-grid-row-span: 1;
+  grid-row: 3/4;
+  -ms-flex-item-align: end;
+      -ms-grid-row-align: end;
+      align-self: end;
+  -ms-grid-column-align: end;
+      justify-self: end;
+  margin-right: 0.5em;
+  margin-bottom: 0.5em;
+  opacity: 1;
+  -webkit-transition: opacity 1s;
+  transition: opacity 1s;
+}
+
+.prompt > .page-button.hide {
+  opacity: 0;
+  pointer-events: none;
+}
