@@ -6,8 +6,7 @@ const { v4: uuid } = require('uuid');
 const { requiresAuth } = require('express-openid-connect');
 const AdmZip = require('adm-zip');
 const dirTree = require('directory-tree');
-const { projectStats } = require('./modules');
-const AWS = require('aws-sdk');
+const { projectStats, s3upload } = require('./modules');
 
 const router = express.Router();
 require('dotenv').config();
@@ -251,39 +250,22 @@ router.post('/deletefiles', requiresAuth(), (req, res) => {
   }
 });
 
-router.get('/submission', requiresAuth(), (req, res) => {
+router.post('/submission', requiresAuth(), (req, res) => {
   try {
     const { cookies, user } = req;
     const userPath = path.resolve('submission', user.email);
     const stats = projectStats(userPath, cookies.project_id);
-
     for (const key in stats.errors) {
       if (key.length) {
         return res.redirect(`/stats?id=${cookies.project_id}`);
       }
     }
-
-    // console.log(projectStats(userPath, cookies.project_id));
-
-    // const s3 = new AWS.S3({
-    //   accessKeyId: process.env.AWS_ACCESS_KEY,
-    //   secretAccessKey: process.env.AWS_SECRET,
-    // });
-
-    // const payload = {
-    //   Bucket: 'bucket_test1',
-    //   Key: 'key_test1',
-    //   Body: fs.readFileSync(path.resolve('test_sample/sample2/sample.txt')),
-    // };
-    // s3.upload(payload, (err, data) => {
-    //   if (err) {
-    //     console.log(err);
-    //     throw new Error('S3 error');
-    //   } else {
-    //     console.log(data);
-    //     throw new Error('Test Error');
-    //   }
-    // });
+    s3upload({
+      files: stats.files,
+      user: user.email,
+      projectId: cookies.project_id,
+    });
+    return res.status(200).json();
   } catch (err) {
     console.log(err.message);
     return res.status(500).json('unexpected error occur in the server');

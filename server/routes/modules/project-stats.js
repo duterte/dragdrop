@@ -123,11 +123,10 @@ module.exports = function (userPath, id) {
   const relativeUrls = stats.referencedUrls.relativeUrls;
 
   for (let i = 0; i < relativeUrls.length; i++) {
-    if (
-      !stats.files.find(
-        file => file.toLowerCase() === relativeUrls[i].toLowerCase()
-      )
-    ) {
+    const found = stats.files.find(
+      file => file.toLowerCase() === relativeUrls[i].toLowerCase()
+    );
+    if (!found) {
       stats.errors.notFoundFiles.push(relativeUrls[i]);
     }
   }
