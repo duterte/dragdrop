@@ -5,6 +5,56 @@
   const secretInput = document.querySelector('#secret');
   const project = document.querySelector('#assigned-project');
 
+  document.addEventListener('keydown', keydown);
+  project.addEventListener('change', selectChangedHandler);
+
+  function getLists(secret) {
+    fetch('/project/lists', {
+      method: 'post',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ secret }),
+    })
+      .then(res => {
+        if (res.status !== 200) {
+          throw new Error(`Upload not sucessful status code: ${res.status}`);
+        } else {
+          return res.json();
+        }
+      })
+      .then((json = []) => {
+        if (json.length) {
+          for (const item of json) {
+            const element = document.createElement('option');
+            element.innerText = item;
+            element.value = item;
+            project.append(element);
+            project.classList.add('show');
+          }
+        } else {
+          project.innerHTML = '';
+          project.classList.remove('show');
+        }
+      })
+      .catch(err => console.log(err));
+  }
+
+  function selectChangedHandler(e) {
+    const secret = e.target.value;
+    if (id) {
+      new Promise((resolve, reject) => {
+        window.location.replace(`/project/get?id=${id}`);
+        resolve();
+      }).then(() => {});
+    }
+  }
+
+  function keydown(e) {
+    if (e.keyCode === 13 && secretInput.value) {
+      getLists(secretInput.value);
+    }
+  }
   collapse.forEach(item => {
     item.addEventListener('click', e => {
       e.stopPropagation();

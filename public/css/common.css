@@ -529,3 +529,7 @@ footer {
 .secret select {
   display: none;
 }
+
+.secret select.show {
+  display: block;
+}

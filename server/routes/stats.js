@@ -6,7 +6,7 @@ const router = express.Router();
 router.get('/', (req, res) => {
   try {
     const { query, user } = req;
-    const userPath = path.resolve('submission', user.email);
+    const userPath = path.resolve('submission', user);
     const stats = projectStats(userPath, query.id);
     return res.render('stats', { user: req.user, stats: stats });
   } catch (err) {

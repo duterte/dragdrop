@@ -5,8 +5,6 @@
   const uploadBtn1 = document.querySelector('#upload-btn1');
   const uploadBtn2 = document.querySelector('#upload-btn2');
   const dropzone = document.querySelector('#dropzone');
-  const target = document.querySelector('#dropzone .target');
-  const table = document.querySelector('table > tbody');
   const createFolder = document.querySelector('#create-folder');
   const folderModal = document.querySelector('#modal-holder');
   const folderDialog = document.querySelector('.folder-dialog');

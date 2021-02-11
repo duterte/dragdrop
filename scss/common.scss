@@ -166,4 +166,7 @@ footer {
   select {
     display: none;
   }
+  select.show {
+    display: block;
+  }
 }

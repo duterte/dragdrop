@@ -5,7 +5,7 @@ const fs = require('fs-extra');
 const { v4: uuid } = require('uuid');
 const AdmZip = require('adm-zip');
 const dirTree = require('directory-tree');
-const { projectStats, s3upload, requireSecret } = require('./modules');
+const { projectStats, s3upload, requireSecret, sample } = require('./modules');
 
 const router = express.Router();
 require('dotenv').config();
@@ -105,7 +105,7 @@ router.get('/', requireSecret, (req, res) => {
     }
 
     return res
-      .cookie('project_id', id, {
+      .cookie('project_name', id, {
         path: '/project',
         httpOnly: true,
         secure: process.env.MODE === 'production' ? true : false,
@@ -178,20 +178,40 @@ router.post(
   }
 );
 
-router.get('/create', requireSecret, (req, res) => {
+router.post('/lists', requireSecret, (req, res) => {
   try {
-    const id = uuid().split('-').join('');
-    const user = req.user;
+    // Testing
+    return res
+      .status(200)
+      .cookie('secret', req.user, {
+        httpOnly: false,
+        secure: process.env.MODE === 'production' ? true : false,
+        sameSite: true,
+      })
+      .json(sample);
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json('unexpected error occur in the server');
+  }
+});
+
+router.get('/get', requireSecret, (req, res) => {
+  try {
+    const user = req.user ? req.user : 'test_user';
+    const id = req.query.id;
     const userPath = path.resolve('submission', user);
-    const { pathExistsSync } = fs;
-    if (!pathExistsSync(path.resolve('submission'))) {
-      fs.mkdirSync(path.resolve('submission'));
+    if (!fs.pathExistsSync(path.resolve('submission', user, id))) {
+      if (!fs.pathExistsSync(path.resolve('submission'))) {
+        fs.mkdirSync(path.resolve('submission'));
+      }
+      if (!fs.pathExistsSync(path.resolve('submission', user))) {
+        fs.mkdirSync(path.resolve('submission', user));
+      }
+      fs.mkdirSync(path.join(userPath, id));
+      return res.redirect(`/project?id=${id}`);
+    } else {
+      return res.redirect(`/project?id=${id}`);
     }
-    if (!pathExistsSync(path.resolve('submission', user))) {
-      fs.mkdirSync(path.resolve('submission', user));
-    }
-    fs.mkdirSync(path.join(userPath, id));
-    return res.redirect(`/project?id=${id}`);
   } catch (err) {
     console.log(err);
     return res.status(500).json('unexpected error occur in the server');
