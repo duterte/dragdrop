@@ -2,7 +2,6 @@ const express = require('express');
 const path = require('path');
 const fileupload = require('express-fileupload');
 const fs = require('fs-extra');
-const { v4: uuid } = require('uuid');
 const AdmZip = require('adm-zip');
 const dirTree = require('directory-tree');
 const { projectStats, s3upload, requireSecret, sample } = require('./modules');
@@ -35,29 +34,29 @@ router.get('/', requireSecret, (req, res) => {
   try {
     // secret
     const user = req.user;
-    const { id, dirname } = req.query;
+    const { name, dirname } = req.query;
     let dir = undefined;
     let breadcrumb = [
       {
         name: 'root',
-        href: `/project?id=${id}`,
+        href: `/project?name=${name}`,
       },
     ];
 
     if (dirname) {
-      dir = path.resolve(`submission/${user}/${id}/${dirname}`);
+      dir = path.resolve(`submission/${name}/${dirname}`);
       const paths = dirname.split('/');
       breadcrumb = [
         ...breadcrumb,
         ...paths.map((item, i, n) => {
           return {
             name: item,
-            href: `/project?id=${id}&dirname=${n.slice(0, i + 1)}`,
+            href: `/project?name=${name}&dirname=${n.slice(0, i + 1)}`,
           };
         }),
       ];
     } else {
-      dir = path.resolve(`submission/${user}/${id}`);
+      dir = path.resolve(`submission/${name}`);
     }
 
     const tree = dirTree(dir, { normalizePath: true });
@@ -90,10 +89,10 @@ router.get('/', requireSecret, (req, res) => {
           partial = 'text-file';
         }
       } else {
-        const regex = new RegExp(`${id}\/(\.*)`);
+        const regex = new RegExp(`${name}\/(\.*)`);
         const dirname = entry.path.match(regex)[1];
         partial = 'folder';
-        link = `/project?id=${id}&dirname=${dirname}`;
+        link = `/project?name=${name}&dirname=${dirname}`;
       }
       const data = {
         name: entry.name,
@@ -105,7 +104,7 @@ router.get('/', requireSecret, (req, res) => {
     }
 
     return res
-      .cookie('project_name', id, {
+      .cookie('project_name', name, {
         path: '/project',
         httpOnly: true,
         secure: process.env.MODE === 'production' ? true : false,
@@ -115,7 +114,7 @@ router.get('/', requireSecret, (req, res) => {
         breadcrumb,
         dirStructure,
         user: req.user,
-        id,
+        name,
       });
   } catch (err) {
     console.log(err);
@@ -139,20 +138,15 @@ router.post(
   fileupload(fileUploadOption),
   async (req, res) => {
     try {
-      const { query, files, user } = req;
-      const { id, dirname } = query;
-      if (!fs.pathExistsSync(path.resolve('submission', user, id))) {
+      const { query, files /* , user */ } = req;
+      const { name, dirname = '' } = query;
+      if (!fs.pathExistsSync(path.resolve('submission', name))) {
         const error = new Error('project did not exist');
         error.code = 400;
         throw error;
       }
 
-      const projectPath = path.resolve(
-        'submission',
-        user,
-        id,
-        dirname ? dirname : ''
-      );
+      const projectPath = path.resolve('submission', name, dirname);
       for (const item in files) {
         const extension = files[item].name
           .split('.')
@@ -178,39 +172,19 @@ router.post(
   }
 );
 
-router.post('/lists', requireSecret, (req, res) => {
-  try {
-    // Testing
-    return res
-      .status(200)
-      .cookie('secret', req.user, {
-        httpOnly: false,
-        secure: process.env.MODE === 'production' ? true : false,
-        sameSite: true,
-      })
-      .json(sample);
-  } catch (err) {
-    console.log(err);
-    return res.status(500).json('unexpected error occur in the server');
-  }
-});
-
 router.get('/get', requireSecret, (req, res) => {
   try {
-    const user = req.user ? req.user : 'test_user';
-    const id = req.query.id;
-    const userPath = path.resolve('submission', user);
-    if (!fs.pathExistsSync(path.resolve('submission', user, id))) {
+    const name = req.query.name;
+    // const userPath = path.resolve('submission', user);
+    if (!fs.pathExistsSync(path.resolve('submission', name))) {
       if (!fs.pathExistsSync(path.resolve('submission'))) {
         fs.mkdirSync(path.resolve('submission'));
       }
-      if (!fs.pathExistsSync(path.resolve('submission', user))) {
-        fs.mkdirSync(path.resolve('submission', user));
-      }
-      fs.mkdirSync(path.join(userPath, id));
-      return res.redirect(`/project?id=${id}`);
+
+      fs.mkdirSync(path.resolve('submission', name));
+      return res.redirect(`/project?name=${name}`);
     } else {
-      return res.redirect(`/project?id=${id}`);
+      return res.redirect(`/project?name=${name}`);
     }
   } catch (err) {
     console.log(err);
@@ -221,30 +195,30 @@ router.get('/get', requireSecret, (req, res) => {
 router.get('/download', requireSecret, (req, res) => {
   try {
     const { cookies, user } = req;
-    const id = cookies.project_id;
+    const name = cookies.project_name;
     const zip = new AdmZip();
-    zip.addLocalFolder(path.resolve('submission', user, id));
-    zip.writeZip(path.resolve('submission', user, `${id}.zip`));
-    console.log(id);
-    res.setHeader('Content-disposition', `attachment; filename=${id}.zip`);
+    zip.addLocalFolder(path.resolve('submission', name));
+    zip.writeZip(path.resolve('submission', `${name}.zip`));
+    console.log(name);
+    res.setHeader('Content-disposition', `attachment; filename=${name}.zip`);
     res.setHeader('Content-type', 'application/x-zip-compressed');
-    res.download(path.resolve('submission', user, `${id}.zip`));
+    res.download(path.resolve('submission', `${name}.zip`));
   } catch (err) {
     console.log(err);
     return res.status(500).json('unexpected error occur in the server');
   }
 });
 
-function targetPath(user, query) {
+function targetPath(query) {
   return query.dirname
-    ? path.resolve('submission', user, query.id, query.dirname)
-    : path.resolve('submission', user, query.id);
+    ? path.resolve('submission', query.name, query.dirname)
+    : path.resolve('submission', query.name);
 }
 
 router.post('/folder', requireSecret, (req, res) => {
   try {
-    const { query, body, user } = req;
-    const projectPath = targetPath(user, query);
+    const { query, body } = req;
+    const projectPath = targetPath(query);
     fs.mkdirSync(path.join(projectPath, body.folderName));
     return res.status(200).send();
   } catch (err) {
@@ -256,7 +230,7 @@ router.post('/folder', requireSecret, (req, res) => {
 router.post('/deletefiles', requireSecret, (req, res) => {
   try {
     const { query, body, user } = req;
-    const projectPath = targetPath(user, query);
+    const projectPath = targetPath(query);
     if (body.lists) {
       for (const item of body.lists) {
         const a = path.join(projectPath, item).trim();
@@ -272,18 +246,17 @@ router.post('/deletefiles', requireSecret, (req, res) => {
 
 router.post('/submission', requireSecret, (req, res) => {
   try {
-    const { cookies, user } = req;
-    const userPath = path.resolve('submission', user);
-    const stats = projectStats(userPath, cookies.project_id);
+    const { cookies } = req;
+    const userPath = path.resolve('submission');
+    const stats = projectStats(userPath, cookies.project_name);
     for (const key in stats.errors) {
       if (key.length) {
-        return res.redirect(`/stats?id=${cookies.project_id}`);
+        return res.redirect(`/stats?name=${cookies.project_name}`);
       }
     }
     s3upload({
       files: stats.files,
-      user: user,
-      projectId: cookies.project_id,
+      project_name: cookies.project_name,
     });
     return res.status(200).json();
   } catch (err) {

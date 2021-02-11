@@ -7,9 +7,12 @@
 
   document.addEventListener('keydown', keydown);
   project.addEventListener('change', selectChangedHandler);
+  // document.body.addEventListener('load', load);
+  window.addEventListener('load', load);
 
-  function getLists(secret) {
-    fetch('/project/lists', {
+  function getLists(secret = '') {
+    console.log('fetch lists');
+    fetch('/lists', {
       method: 'post',
       headers: {
         'Content-Type': 'application/json',
@@ -24,14 +27,20 @@
         }
       })
       .then((json = []) => {
+        console.log(json);
         if (json.length) {
+          project.innerHTML = '';
+          const element = document.createElement('option');
+          element.innerText = 'select project';
+          element.value = '';
+          project.append(element);
           for (const item of json) {
-            const element = document.createElement('option');
-            element.innerText = item;
-            element.value = item;
-            project.append(element);
-            project.classList.add('show');
+            const element2 = document.createElement('option');
+            element2.innerText = item;
+            element2.value = item;
+            project.append(element2);
           }
+          project.classList.add('show');
         } else {
           project.innerHTML = '';
           project.classList.remove('show');
@@ -40,13 +49,14 @@
       .catch(err => console.log(err));
   }
 
+  function load(e) {
+    getLists();
+  }
+
   function selectChangedHandler(e) {
     const secret = e.target.value;
-    if (id) {
-      new Promise((resolve, reject) => {
-        window.location.replace(`/project/get?id=${id}`);
-        resolve();
-      }).then(() => {});
+    if (secret) {
+      window.location.replace(`/project/get?name=${secret}`);
     }
   }
 

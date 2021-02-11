@@ -4,7 +4,7 @@ require('dotenv').config();
 module.exports = object => {
   // object.user can be replaced with the name of the website
   // that user is working with.
-  const { files, user, projectId } = object;
+  const { files, project_name } = object;
   config.update({ region: 'ap-northeast-1' });
   const s3 = new S3({
     apiVersion: '2006-03-01',
@@ -23,8 +23,8 @@ module.exports = object => {
       Bucket: process.env.S3_BUCKET,
       // ${user} can be replaced with the name of the website
       // that user is working with.
-      Key: `websites/${user}/${parseDate}/${file}`,
-      Body: fs.readFileSync(path.join('submission', user, projectId, file)),
+      Key: `websites/${project_name}.${parseDate}/${file}`,
+      Body: fs.readFileSync(path.join('submission', project_name, file)),
     };
     s3.upload(payload, (err, data) => {
       if (err) {

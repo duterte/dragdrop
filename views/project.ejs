@@ -143,7 +143,7 @@
   <%- include('partials/header.ejs', {className: 'project' }) %>
     <main class="project">
       <div class="wrapper tools">
-        <a href="/project?id=<%= id %>">
+        <a href="/project?name=<%= name %>">
           <svg>
             <use href="#home-icon" />
           </svg>
@@ -172,7 +172,7 @@
             DOWNLOAD
           </span>
         </a>
-        <a href="/stats?id=<%= id %>">
+        <a href="/stats?name=<%= name %>">
           <svg>
             <use href="#stats-icon" />
           </svg>

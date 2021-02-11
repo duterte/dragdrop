@@ -64,8 +64,8 @@
 
   function createUrl(subpath, query) {
     return query.dirname
-      ? `/project/${subpath}?id=${query.id}&dirname=${query.dirname}`
-      : `/project/${subpath}?id=${query.id}`;
+      ? `/project/${subpath}?name=${query.name}&dirname=${query.dirname}`
+      : `/project/${subpath}?name=${query.name}`;
   }
 
   function fetchRequest(url, json) {
@@ -144,8 +144,8 @@
       param[query[0]] = query[1];
     }
     const url = param.dirname
-      ? `/project?id=${param.id}&dirname=${param.dirname}`
-      : `/project?id=${param.id}`;
+      ? `/project?name=${param.name}&dirname=${param.dirname}`
+      : `/project?name=${param.name}`;
     activateSpinner();
     fetch(url, {
       method: 'post',
