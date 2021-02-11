@@ -25,20 +25,8 @@
 <body>
 
   <%- include('partials/header.ejs' , { user: user, className: 'dashboard' }) %>
-    <main class="dashboard">
-      <h1 class="wrapper" style="text-align: center;">PROJECT DASHBOARD</h1>
-      <div class="wrapper dashboard-content">
-        <div class="project-box">
-          <svg>
-            <use href="#plus-icon" />
-          </svg>
-          <span>CLICK TO ADD PROJECT</span>
-        </div>
-      </div>
-    </main>
-    <%- include('partials/footer.ejs' , {className: 'dashboard' }) %>
-      <script src="js/common.js"></script>
-      <script src="js/dashboard.js"></script>
+    <script src="js/common.js"></script>
+    <script src="js/dashboard.js"></script>
 </body>
 
 </html>

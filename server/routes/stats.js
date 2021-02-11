@@ -1,10 +1,9 @@
 const path = require('path');
 const express = require('express');
-const { requiresAuth } = require('express-openid-connect');
 const { projectStats } = require('./modules');
 const router = express.Router();
 
-router.get('/', requiresAuth(), (req, res) => {
+router.get('/', (req, res) => {
   try {
     const { query, user } = req;
     const userPath = path.resolve('submission', user.email);

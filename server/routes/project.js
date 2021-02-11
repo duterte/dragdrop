@@ -3,10 +3,9 @@ const path = require('path');
 const fileupload = require('express-fileupload');
 const fs = require('fs-extra');
 const { v4: uuid } = require('uuid');
-const { requiresAuth } = require('express-openid-connect');
 const AdmZip = require('adm-zip');
 const dirTree = require('directory-tree');
-const { projectStats, s3upload } = require('./modules');
+const { projectStats, s3upload, requireSecret } = require('./modules');
 
 const router = express.Router();
 require('dotenv').config();
@@ -32,9 +31,10 @@ function parsefileSize(number) {
   return str ? str : 0;
 }
 
-router.get('/', requiresAuth(), (req, res) => {
+router.get('/', requireSecret, (req, res) => {
   try {
-    const user = req.user.email;
+    // secret
+    const user = req.user;
     const { id, dirname } = req.query;
     let dir = undefined;
     let breadcrumb = [
@@ -135,13 +135,13 @@ const fileUploadOption = {
 
 router.post(
   '/',
-  requiresAuth(),
+  requireSecret,
   fileupload(fileUploadOption),
   async (req, res) => {
     try {
       const { query, files, user } = req;
       const { id, dirname } = query;
-      if (!fs.pathExistsSync(path.resolve('submission', user.email, id))) {
+      if (!fs.pathExistsSync(path.resolve('submission', user, id))) {
         const error = new Error('project did not exist');
         error.code = 400;
         throw error;
@@ -149,7 +149,7 @@ router.post(
 
       const projectPath = path.resolve(
         'submission',
-        user.email,
+        user,
         id,
         dirname ? dirname : ''
       );
@@ -178,10 +178,10 @@ router.post(
   }
 );
 
-router.get('/create', requiresAuth(), (req, res) => {
+router.get('/create', requireSecret, (req, res) => {
   try {
     const id = uuid().split('-').join('');
-    const user = req.user.email;
+    const user = req.user;
     const userPath = path.resolve('submission', user);
     const { pathExistsSync } = fs;
     if (!pathExistsSync(path.resolve('submission'))) {
@@ -198,17 +198,17 @@ router.get('/create', requiresAuth(), (req, res) => {
   }
 });
 
-router.get('/download', requiresAuth(), (req, res) => {
+router.get('/download', requireSecret, (req, res) => {
   try {
     const { cookies, user } = req;
     const id = cookies.project_id;
     const zip = new AdmZip();
-    zip.addLocalFolder(path.resolve('submission', user.email, id));
-    zip.writeZip(path.resolve('submission', user.email, `${id}.zip`));
+    zip.addLocalFolder(path.resolve('submission', user, id));
+    zip.writeZip(path.resolve('submission', user, `${id}.zip`));
     console.log(id);
     res.setHeader('Content-disposition', `attachment; filename=${id}.zip`);
     res.setHeader('Content-type', 'application/x-zip-compressed');
-    res.download(path.resolve('submission', user.email, `${id}.zip`));
+    res.download(path.resolve('submission', user, `${id}.zip`));
   } catch (err) {
     console.log(err);
     return res.status(500).json('unexpected error occur in the server');
@@ -217,11 +217,11 @@ router.get('/download', requiresAuth(), (req, res) => {
 
 function targetPath(user, query) {
   return query.dirname
-    ? path.resolve('submission', user.email, query.id, query.dirname)
-    : path.resolve('submission', user.email, query.id);
+    ? path.resolve('submission', user, query.id, query.dirname)
+    : path.resolve('submission', user, query.id);
 }
 
-router.post('/folder', requiresAuth(), (req, res) => {
+router.post('/folder', requireSecret, (req, res) => {
   try {
     const { query, body, user } = req;
     const projectPath = targetPath(user, query);
@@ -233,7 +233,7 @@ router.post('/folder', requiresAuth(), (req, res) => {
   }
 });
 
-router.post('/deletefiles', requiresAuth(), (req, res) => {
+router.post('/deletefiles', requireSecret, (req, res) => {
   try {
     const { query, body, user } = req;
     const projectPath = targetPath(user, query);
@@ -250,10 +250,10 @@ router.post('/deletefiles', requiresAuth(), (req, res) => {
   }
 });
 
-router.post('/submission', requiresAuth(), (req, res) => {
+router.post('/submission', requireSecret, (req, res) => {
   try {
     const { cookies, user } = req;
-    const userPath = path.resolve('submission', user.email);
+    const userPath = path.resolve('submission', user);
     const stats = projectStats(userPath, cookies.project_id);
     for (const key in stats.errors) {
       if (key.length) {
@@ -262,7 +262,7 @@ router.post('/submission', requiresAuth(), (req, res) => {
     }
     s3upload({
       files: stats.files,
-      user: user.email,
+      user: user,
       projectId: cookies.project_id,
     });
     return res.status(200).json();

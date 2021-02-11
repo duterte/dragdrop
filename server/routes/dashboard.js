@@ -10,17 +10,6 @@ router.get('/', (req, res) => {
   }
 });
 
-// This will be implemented soon
-
-// router.get('/:user_email', (req, res) => {
-//   try {
-//     res.render('dashboard', { user: req.user });
-//   } catch (err) {
-//     console.log(err);
-//     return res.status(500).json('Internal Server Error');
-//   }
-// });
-
 module.exports = {
   url: '/',
   route: router,
