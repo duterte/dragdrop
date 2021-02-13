@@ -26,6 +26,7 @@
       })
       .then((json = []) => {
         if (json.length) {
+          console.log(json);
           project.innerHTML = '';
           const element = document.createElement('option');
           element.innerText = 'select project';

@@ -19,11 +19,11 @@ module.exports = object => {
     date.getDate().toString().padStart(2, '0'),
   ].join('');
   //
-  const dir = process.env.S3_DIR || 'websites';
+  // const dir = process.env.S3_DIR || 'websites';
   files.forEach(file => {
     const payload = {
-      Bucket: process.env.S3_BUCKET,
-      Key: `${dir}/${project_name}.${parseDate}/${file}`,
+      Bucket: project_name,
+      Key: `${project_name}.${parseDate}/${file}`,
       Body: fs.readFileSync(path.join('submission', project_name, file)),
     };
     s3.upload(payload, (err, data) => {
