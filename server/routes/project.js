@@ -4,7 +4,7 @@ const fileupload = require('express-fileupload');
 const fs = require('fs-extra');
 const AdmZip = require('adm-zip');
 const dirTree = require('directory-tree');
-const { projectStats, s3upload, requireSecret, sample } = require('./modules');
+const { requireSecret } = require('./modules');
 
 const router = express.Router();
 require('dotenv').config();
@@ -105,10 +105,9 @@ router.get('/', requireSecret, (req, res) => {
 
     return res
       .cookie('project_name', name, {
-        path: '/project',
         httpOnly: true,
         secure: process.env.MODE === 'production' ? true : false,
-        sameSite: true,
+        sameSite: 'Lax',
       })
       .render('project', {
         breadcrumb,
@@ -192,23 +191,6 @@ router.get('/get', requireSecret, (req, res) => {
   }
 });
 
-router.get('/download', requireSecret, (req, res) => {
-  try {
-    const { cookies, user } = req;
-    const name = cookies.project_name;
-    const zip = new AdmZip();
-    zip.addLocalFolder(path.resolve('submission', name));
-    zip.writeZip(path.resolve('submission', `${name}.zip`));
-    console.log(name);
-    res.setHeader('Content-disposition', `attachment; filename=${name}.zip`);
-    res.setHeader('Content-type', 'application/x-zip-compressed');
-    res.download(path.resolve('submission', `${name}.zip`));
-  } catch (err) {
-    console.log(err);
-    return res.status(500).json('unexpected error occur in the server');
-  }
-});
-
 function targetPath(query) {
   return query.dirname
     ? path.resolve('submission', query.name, query.dirname)
@@ -240,27 +222,6 @@ router.post('/deletefiles', requireSecret, (req, res) => {
     return res.status(200).send();
   } catch (err) {
     console.log(err);
-    return res.status(500).json('unexpected error occur in the server');
-  }
-});
-
-router.post('/submission', requireSecret, (req, res) => {
-  try {
-    const { cookies } = req;
-    const userPath = path.resolve('submission');
-    const stats = projectStats(userPath, cookies.project_name);
-    for (const key in stats.errors) {
-      if (key.length) {
-        return res.redirect(`/stats?name=${cookies.project_name}`);
-      }
-    }
-    s3upload({
-      files: stats.files,
-      project_name: cookies.project_name,
-    });
-    return res.status(200).json();
-  } catch (err) {
-    console.log(err.message);
     return res.status(500).json('unexpected error occur in the server');
   }
 });

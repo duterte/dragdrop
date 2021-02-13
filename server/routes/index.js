@@ -3,4 +3,5 @@ module.exports = {
   dashboard: require('./dashboard'),
   directory: require('./project'),
   lists: require('./lists'),
+  submission: require('./submission'),
 };

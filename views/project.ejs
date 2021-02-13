@@ -94,18 +94,6 @@
       </symbol>
     </svg>
     <svg xmlns="http://www.w3.org/2000/svg">
-      <symbol id="stats-icon" viewBox="0 0 24 24" with="1em" height="1em" fill="currentColor">
-        <path
-          d="M20,12c-0.249,0-0.483,0.051-0.703,0.133l-2.398-1.963C16.958,9.956,17,9.734,17,9.5C17,8.114,15.886,7,14.5,7 S12,8.114,12,9.5c0,0.396,0.1,0.765,0.262,1.097l-2.909,3.438C9.237,14.015,9.121,14,9,14c-0.179,0-0.348,0.03-0.512,0.074 l-2.563-2.563C5.97,11.348,6,11.179,6,11c0-1.108-0.892-2-2-2s-2,0.892-2,2s0.892,2,2,2c0.179,0,0.348-0.03,0.512-0.074 l2.563,2.563C7.03,15.652,7,15.821,7,16c0,1.108,0.892,2,2,2s2-0.892,2-2c0-0.237-0.048-0.46-0.123-0.671l2.913-3.442 C14.017,11.953,14.252,12,14.5,12c0.411,0,0.792-0.107,1.133-0.281l2.399,1.963C18.016,13.786,18,13.891,18,14c0,1.108,0.892,2,2,2 s2-0.892,2-2S21.108,12,20,12z" />
-      </symbol>
-    </svg>
-    <svg xmlns="http://www.w3.org/2000/svg">
-      <symbol id="download-icon" viewBox="0 0 512 512" with="1em" height="1em" fill="currentColor">
-        <path
-          d="M216 0h80c13.3 0 24 10.7 24 24v168h87.7c17.8 0 26.7 21.5 14.1 34.1L269.7 378.3c-7.5 7.5-19.8 7.5-27.3 0L90.1 226.1c-12.6-12.6-3.7-34.1 14.1-34.1H192V24c0-13.3 10.7-24 24-24zm296 376v112c0 13.3-10.7 24-24 24H24c-13.3 0-24-10.7-24-24V376c0-13.3 10.7-24 24-24h146.7l49 49c20.1 20.1 52.5 20.1 72.6 0l49-49H488c13.3 0 24 10.7 24 24zm-124 88c0-11-9-20-20-20s-20 9-20 20 9 20 20 20 20-9 20-20zm64 0c0-11-9-20-20-20s-20 9-20 20 9 20 20 20 20-9 20-20z" />
-      </symbol>
-    </svg>
-    <svg xmlns="http://www.w3.org/2000/svg">
       <symbol id="close-icon" viewBox="0 0 24 24" fill="currentColor" width="1em" height="1em">
         <g>
           <path fill="none" d="M0 0h24v24H0z" />
@@ -124,12 +112,6 @@
       <symbol id="angle-right-icon" viewBox="0 0 256 512" fill="currentColor" width="1em" height="1em">
         <path
           d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z" />
-      </symbol>
-    </svg>
-    <svg xmlns="http://www.w3.org/2000/svg">
-      <symbol id="fold-down-icon" viewBox="0 0 16 16" fill="currentColor" width="1em" height="1em">
-        <path
-          d="M14.207 1.707L13.5 1l-6 6-6-6-.707.707 6.353 6.354h.708l6.353-6.354zm0 6L13.5 7l-6 6-6-6-.707.707 6.353 6.354h.708l6.353-6.354z" />
       </symbol>
     </svg>
     <svg xmlns="http://www.w3.org/2000/svg">
@@ -164,22 +146,6 @@
             UPLOAD FILE
           </span>
         </div>
-        <a href="/project/download" download>
-          <svg>
-            <use href="#download-icon" />
-          </svg>
-          <span>
-            DOWNLOAD
-          </span>
-        </a>
-        <a href="/stats?name=<%= name %>">
-          <svg>
-            <use href="#stats-icon" />
-          </svg>
-          <span>
-            STATS
-          </span>
-        </a>
         <div class="empty"></div>
         <div id="delete-item">
           <svg>
@@ -224,57 +190,48 @@
         </div>
       </div>
       <div class="wrapper submit-btn-wrapper">
-        <div class="collapse">
-          <div id="submit">
-            <span>SUBMIT</span>
-            <svg>
-              <use href="#fold-down-icon" />
-            </svg>
-          </div>
-          <div class="content">
-            <span id="submit-beta">AS BETA SERVER</span>
-            <span id="submit-live">AS LIVE SERVER</span>
-          </div>
-        </div>
+        <a href="/stats?name=<%= name %>" id="submit" class="app-prim-button">
+          Submit
+        </a>
+      </div>
       </div>
     </main>
-    <%- include('partials/footer.ejs' , {className: 'project' }) %>
-      <div id="dropzone">
-        <div class="target">
-          DROP FILES TO UPLOAD
-        </div>
+    <div id="dropzone">
+      <div class="target">
+        DROP FILES TO UPLOAD
       </div>
-      <div id="modal-holder">
-        <div class="folder-dialog">
-          <b>Folder Name</b>
-          <input type="text" placeholder="example: css" value="New Folder">
-          <span class="app-prim-button" id="create-folder-btn">OK</span>
-          <svg class="close-modal">
-            <use href="#close-icon" />
-          </svg>
-        </div>
-        <div class="delete-dialog">
-          <p>
-            Delete selected files ?
-          </p>
-          <div class="dialog-btn">
-            <span class="app-second-button">CANCEL</span>
-            <span class="app-prim-button">OK</span>
-          </div>
-          <svg class="close-modal">
-            <use href="#close-icon" />
-          </svg>
-        </div>
+    </div>
+    <div id="modal-holder">
+      <div class="folder-dialog">
+        <b>Folder Name</b>
+        <input type="text" placeholder="example: css" value="New Folder">
+        <span class="app-prim-button" id="create-folder-btn">OK</span>
+        <svg class="close-modal">
+          <use href="#close-icon" />
+        </svg>
       </div>
-      <div id="pop">
-        <div class="loading-spinner">
-          <svg class="spinner-icon">
-            <use href="#spinner-icon-solid" />
-          </svg>
+      <div class="delete-dialog">
+        <p>
+          Delete selected files ?
+        </p>
+        <div class="dialog-btn">
+          <span class="app-second-button">CANCEL</span>
+          <span class="app-prim-button">OK</span>
         </div>
+        <svg class="close-modal">
+          <use href="#close-icon" />
+        </svg>
       </div>
-      <script src="js/common.js"></script>
-      <script src="js/project.js"></script>
+    </div>
+    <div id="pop">
+      <div class="loading-spinner">
+        <svg class="spinner-icon">
+          <use href="#spinner-icon-solid" />
+        </svg>
+      </div>
+    </div>
+    <script src="js/common.js"></script>
+    <script src="js/project.js"></script>
 </body>
 
 </html>

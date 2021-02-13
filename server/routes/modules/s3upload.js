@@ -1,9 +1,9 @@
+const fs = require('fs-extra');
+const path = require('path');
 const { S3, config } = require('aws-sdk');
 require('dotenv').config();
 
 module.exports = object => {
-  // object.user can be replaced with the name of the website
-  // that user is working with.
   const { files, project_name } = object;
   config.update({ region: 'ap-northeast-1' });
   const s3 = new S3({
@@ -11,28 +11,27 @@ module.exports = object => {
     accessKeyId: process.env.S3_ACCESS,
     secretAccessKey: process.env.S3_SECRET,
   });
+  //
   const date = new Date();
   const parseDate = [
     date.getFullYear().toString().split('').slice(2).join(''),
     (date.getMonth() + 1).toString().padStart(2, '0'),
     date.getDate().toString().padStart(2, '0'),
   ].join('');
-
+  //
+  const dir = process.env.S3_DIR || 'websites';
   files.forEach(file => {
     const payload = {
       Bucket: process.env.S3_BUCKET,
-      // ${user} can be replaced with the name of the website
-      // that user is working with.
-      Key: `websites/${project_name}.${parseDate}/${file}`,
+      Key: `${dir}/${project_name}.${parseDate}/${file}`,
       Body: fs.readFileSync(path.join('submission', project_name, file)),
     };
     s3.upload(payload, (err, data) => {
       if (err) {
         console.log(err);
         throw new Error('S3 error');
-      } else {
-        console.log(data);
       }
+      // console.log(data);
     });
   });
 };

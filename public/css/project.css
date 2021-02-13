@@ -196,7 +196,7 @@ main.project #upload-btn1 span:last-of-type {
   font-size: 0.9em;
 }
 
-main.project .wrapper.submit-btn-wrapper {
+main.project .submit-btn-wrapper {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -205,83 +205,6 @@ main.project .wrapper.submit-btn-wrapper {
           justify-content: flex-end;
   padding-right: 0;
   position: relative;
-}
-
-main.project .wrapper.submit-btn-wrapper #submit {
-  position: relative;
-  color: white;
-  background-color: #6495ed;
-  font-family: 'Nunito';
-  font-weight: bold;
-  min-width: 165px;
-  min-height: 49px;
-  cursor: pointer;
-  border-radius: 5px;
-  -webkit-box-shadow: rgba(0, 0, 0, 0.2);
-          box-shadow: rgba(0, 0, 0, 0.2);
-  -webkit-user-select: none;
-     -moz-user-select: none;
-      -ms-user-select: none;
-          user-select: none;
-}
-
-main.project .wrapper.submit-btn-wrapper #submit span {
-  position: absolute;
-  font-size: 1.3em;
-  top: 14px;
-  left: 22px;
-}
-
-main.project .wrapper.submit-btn-wrapper svg {
-  width: 25.9px;
-  height: 24.7px;
-  font-size: 1.6em;
-  position: absolute;
-  right: 16px;
-  top: 13px;
-}
-
-main.project .wrapper.submit-btn-wrapper .content {
-  display: none;
-  margin-top: 0.2em;
-  background-color: white;
-  border: 1px solid black;
-  -webkit-box-shadow: rgba(0, 0, 0, 0.2);
-          box-shadow: rgba(0, 0, 0, 0.2);
-  border-radius: 5px;
-  max-height: 0;
-  -webkit-transition: max-height 0.2s ease-out;
-  transition: max-height 0.2s ease-out;
-  overflow: hidden;
-  position: absolute;
-}
-
-main.project .wrapper.submit-btn-wrapper .content span {
-  padding: 1em;
-  font-family: 'Nunito';
-  font-weight: bold;
-  color: black;
-  -webkit-transition-property: color, background-color;
-  transition-property: color, background-color;
-  -webkit-transition-duration: 1s;
-          transition-duration: 1s;
-  -webkit-transition-timing-function: ease-out;
-          transition-timing-function: ease-out;
-  cursor: pointer;
-}
-
-main.project .wrapper.submit-btn-wrapper .content span:hover {
-  padding: 1em;
-  color: white;
-  background-color: rgba(0, 0, 0, 0.871);
-}
-
-main.project .wrapper.submit-btn-wrapper .content span:first-child {
-  border-radius: 5px 5px 0 0;
-}
-
-main.project .wrapper.submit-btn-wrapper .content span:last-child {
-  border-radius: 0 0 5px 5px;
 }
 
 #dropzone {

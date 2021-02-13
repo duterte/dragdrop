@@ -169,74 +169,11 @@ main.project {
     }
   }
 
-  .wrapper.submit-btn-wrapper {
+  .submit-btn-wrapper {
     display: flex;
     justify-content: flex-end;
     padding-right: 0;
     position: relative;
-
-    #submit {
-      position: relative;
-      color: white;
-      background-color: #6495ed;
-      font-family: 'Nunito';
-      font-weight: bold;
-      min-width: 165px;
-      min-height: 49px;
-      cursor: pointer;
-      border-radius: 5px;
-      box-shadow: rgba(0, 0, 0, 0.2);
-      user-select: none;
-    }
-
-    #submit span {
-      position: absolute;
-      font-size: 1.3em;
-      top: 14px;
-      left: 22px;
-    }
-
-    svg {
-      width: 25.9px;
-      height: 24.7px;
-      font-size: 1.6em;
-      position: absolute;
-      right: 16px;
-      top: 13px;
-    }
-    .content {
-      display: none;
-      margin-top: 0.2em;
-      background-color: white;
-      border: 1px solid black;
-      box-shadow: rgba(0, 0, 0, 0.2);
-      border-radius: 5px;
-      max-height: 0;
-      transition: max-height 0.2s ease-out;
-      overflow: hidden;
-      position: absolute;
-    }
-    .content span {
-      padding: 1em;
-      font-family: 'Nunito';
-      font-weight: bold;
-      color: black;
-      transition-property: color, background-color;
-      transition-duration: 1s;
-      transition-timing-function: ease-out;
-      cursor: pointer;
-    }
-    .content span:hover {
-      padding: 1em;
-      color: white;
-      background-color: rgba(0, 0, 0, 0.871);
-    }
-    .content span:first-child {
-      border-radius: 5px 5px 0 0;
-    }
-    .content span:last-child {
-      border-radius: 0 0 5px 5px;
-    }
   }
 }
 

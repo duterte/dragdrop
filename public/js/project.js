@@ -10,8 +10,7 @@
   const folderDialog = document.querySelector('.folder-dialog');
   const deleteItem = document.querySelector('#delete-item');
   const deleteDialog = document.querySelector('.delete-dialog');
-  const submitBeta = document.querySelector('#submit-beta');
-  const submitLive = document.querySelector('#submit-live');
+  const submit = document.querySelector('#submit');
   const body = document.body;
 
   // event listeners
@@ -24,23 +23,9 @@
   folderModal.addEventListener('click', folderModalClick);
   createFolder.addEventListener('click', showModal);
   deleteItem.addEventListener('click', showModal);
-  submitBeta.addEventListener('click', submit);
-  submitLive.addEventListener('click', submit);
-
-  function submit(e) {
-    fetch('/project/submission', {
-      method: 'post',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ submit: e.target.id }),
-    })
-      .then(res => {
-        //
-        console.log(res);
-      })
-      .catch(err => console.log(err));
-  }
+  submit.addEventListener('click', () => {
+    activateSpinner();
+  });
 
   function showModal() {
     folderModal.classList.add('show');
@@ -123,7 +108,6 @@
     const pop = document.querySelector('#pop');
     const spinnerIcon = document.querySelector('.spinner-icon');
     pop.style.display = 'grid';
-    // spinnerIcon.classList.add('animate');
   }
 
   function uploadFiles(files) {

@@ -1,18 +1,19 @@
-// const collapse = document.querySelectorAll('.collapse');
+'use strict';
 
-// collapse.forEach(item => {
-//   item.addEventListener('click', e => {
-//     const element = e.target.parentElement;
-//     const content = element.querySelector('.content');
-//     const svg = element.querySelector('svg');
-//     svg.classList.toggle('down');
+(function () {
+  const beta = document.querySelector('#submit-beta');
+  const live = document.querySelector('#submit-live');
 
-//     if (content.style.display === 'flex') {
-//       content.style.display = 'none';
-//       content.style.maxHeight = null;
-//     } else {
-//       content.style.display = 'flex';
-//       content.style.maxHeight = `${content.scrollHeight}px`;
-//     }
-//   });
-// });
+  beta.addEventListener('click', upload);
+  live.addEventListener('click', upload);
+
+  function activateSpinner() {
+    const pop = document.querySelector('#pop');
+    const spinnerIcon = document.querySelector('.spinner-icon');
+    pop.style.display = 'grid';
+  }
+
+  function upload() {
+    activateSpinner();
+  }
+})();

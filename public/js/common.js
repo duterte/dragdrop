@@ -7,11 +7,9 @@
 
   document.addEventListener('keydown', keydown);
   project.addEventListener('change', selectChangedHandler);
-  // document.body.addEventListener('load', load);
   window.addEventListener('load', load);
 
   function getLists(secret = '') {
-    console.log('fetch lists');
     fetch('/lists', {
       method: 'post',
       headers: {
@@ -27,7 +25,6 @@
         }
       })
       .then((json = []) => {
-        console.log(json);
         if (json.length) {
           project.innerHTML = '';
           const element = document.createElement('option');

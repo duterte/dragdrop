@@ -1,5 +1,6 @@
 const SAMPLE_SECRET = [
   '80f8020293eeddc95ab526f0d480b22e19b9061f543930cf76d12b80bff8e067',
+  'bluefin_tuna',
 ];
 
 module.exports = (req, res, next) => {
