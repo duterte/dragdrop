@@ -137,7 +137,7 @@ router.post(
   fileupload(fileUploadOption),
   async (req, res) => {
     try {
-      const { query, files /* , user */ } = req;
+      const { query, files } = req;
       const { name, dirname = '' } = query;
       if (!fs.pathExistsSync(path.resolve('submission', name))) {
         const error = new Error('project did not exist');
@@ -155,7 +155,9 @@ router.post(
           const zip = new AdmZip(files[item].data);
           zip.extractAllTo(projectPath, true);
         } else {
-          await files[item].mv(path.join(projectPath, files[item].name));
+          await files[item].mv(
+            path.join(projectPath, files[item].name.toLowerCase())
+          );
         }
       }
 
@@ -174,7 +176,6 @@ router.post(
 router.get('/get', requireSecret, (req, res) => {
   try {
     const name = req.query.name;
-    // const userPath = path.resolve('submission', user);
     if (!fs.pathExistsSync(path.resolve('submission', name))) {
       if (!fs.pathExistsSync(path.resolve('submission'))) {
         fs.mkdirSync(path.resolve('submission'));

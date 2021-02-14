@@ -40,7 +40,9 @@
   <%- include('partials/header.ejs', {className: 'stats' }) %>
     <main class="stats">
       <div class="wrapper">
-        <h1 style="text-align: center;">Stats</h1>
+        <h1 style="text-align: center;">
+          Stats
+        </h1>
         <hr />
       </div>
       <div class="wrapper">
@@ -128,9 +130,17 @@
         </svg>
         <hr />
       </div>
-      <div class="wrapper">
-        <a class="app-prim-button" id="submit-beta" href="/submission">Submit as beta</a>
-        <a class="app-prim-button" id="submit-live" href="/submission">Submit as live</a>
+      <div class="wrapper btn-holder">
+        <% if(buttons.beta) { %>
+          <a class="app-prim-button" id="submit-beta" href="/submission">Submit as beta</a>
+          <% } else { %>
+            <span class="app-prim-button disable">Submit as beta</span>
+            <% } %>
+              <% if(buttons.live) { %>
+                <a class="app-prim-button" id="submit-live" href="/submission">Submit as live</a>
+                <% } else { %>
+                  <span class="app-prim-button disable">Submit as live</span>
+                  <% } %>
       </div>
     </main>
     <div id="pop">

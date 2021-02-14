@@ -52,6 +52,20 @@ main.stats {
   }
 }
 
+.btn-holder {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.btn-holder > :last-child {
+  margin-left: 1em;
+}
+
+.disable {
+  background-color: #607d8b;
+  color: #f9f6f699;
+}
+
 #pop {
   display: none;
   justify-content: center;

@@ -1,20 +1,31 @@
 const path = require('path');
+const fs = require('fs-extra');
 const express = require('express');
-const { projectStats } = require('./modules');
+const { projectStats, requireSecret } = require('./modules');
 const router = express.Router();
 
-router.get('/', (req, res) => {
-  const name = req.query.name;
+router.get('/', requireSecret, (req, res) => {
+  const name = req.query.name || req.cookies.project_name;
   try {
-    const userPath = path.resolve('submission');
-    const stats = projectStats(userPath, name);
-    return res.render('stats', { stats: stats });
+    const projectPath = path.resolve('submission', name);
+    if (!fs.pathExistsSync(projectPath)) {
+      const error = new Error('Content not found');
+      error.code = 404;
+      throw error;
+    }
+    const stats = projectStats(path.resolve('submission'), name);
+    const project = req.projects.find(item => item.projectName === name);
+    const buttons = {
+      beta: project.allowBeta,
+      live: project.allowProd,
+    };
+    return res.render('stats', { stats: stats, buttons: buttons, name: name });
   } catch (err) {
     console.log(err);
     if (err.code && (err.code === 404 || err.code.toUpperCase() === 'ENOENT')) {
-      return res.status(404).render('404', { user });
+      return res.status(404).render('404');
     } else {
-      return res.status(500).render('500', { user });
+      return res.status(500).render('500');
     }
   }
 });

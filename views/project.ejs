@@ -70,48 +70,9 @@
       </symbol>
     </svg>
     <svg xmlns="http://www.w3.org/2000/svg">
-      <symbol id="home-icon" viewBox="0 0 1024 1024" fill="currentColor" with="1em" height="1em">
-        <path
-          d="M946.5 505L534.6 93.4a31.93 31.93 0 0 0-45.2 0L77.5 505c-12 12-18.8 28.3-18.8 45.3 0 35.3 28.7 64 64 64h43.4V908c0 17.7 14.3 32 32 32H448V716h112v224h265.9c17.7 0 32-14.3 32-32V614.3h43.4c17 0 33.3-6.7 45.3-18.8 24.9-25 24.9-65.5-.1-90.5z" />
-      </symbol>
-    </svg>
-    <svg xmlns="http://www.w3.org/2000/svg">
-      <symbol id="create-folder-icon" width="1em" height="1em" fill="currentColor" viewBox='0 0 24 24'>
-        <path
-          d="M20 6h-8l-2-2H4c-1.11 0-1.99.89-1.99 2L2 18c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V8c0-1.11-.89-2-2-2zm-1 8h-3v3h-2v-3h-3v-2h3V9h2v3h3v2z" />
-      </symbol>
-    </svg>
-    <svg xmlns="http://www.w3.org/2000/svg">
-      <symbol id="delete-trash" width="1em" height="1em" fill="currentColor" viewBox='0 0 24 24'>
-        <path
-          d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zm2.46-7.12l1.41-1.41L12 12.59l2.12-2.12 1.41 1.41L13.41 14l2.12 2.12-1.41 1.41L12 15.41l-2.12 2.12-1.41-1.41L10.59 14l-2.13-2.12zM15.5 4l-1-1h-5l-1 1H5v2h14V4z" />
-      </symbol>
-    </svg>
-    <svg xmlns="http://www.w3.org/2000/svg">
-      <symbol id="upload-file" width="1em" height="1em" fill="currentColor" viewBox="0 0 384 512">
-        <path
-          d="M224 136V0H24C10.7 0 0 10.7 0 24v464c0 13.3 10.7 24 24 24h336c13.3 0 24-10.7 24-24V160H248c-13.2 0-24-10.8-24-24zm65.18 216.01H224v80c0 8.84-7.16 16-16 16h-32c-8.84 0-16-7.16-16-16v-80H94.82c-14.28 0-21.41-17.29-11.27-27.36l96.42-95.7c6.65-6.61 17.39-6.61 24.04 0l96.42 95.7c10.15 10.07 3.03 27.36-11.25 27.36zM377 105L279.1 7c-4.5-4.5-10.6-7-17-7H256v128h128v-6.1c0-6.3-2.5-12.4-7-16.9z" />
-      </symbol>
-    </svg>
-    <svg xmlns="http://www.w3.org/2000/svg">
-      <symbol id="close-icon" viewBox="0 0 24 24" fill="currentColor" width="1em" height="1em">
-        <g>
-          <path fill="none" d="M0 0h24v24H0z" />
-          <path
-            d="M12 10.586l4.95-4.95 1.414 1.414-4.95 4.95 4.95 4.95-1.414 1.414-4.95-4.95-4.95 4.95-1.414-1.414 4.95-4.95-4.95-4.95L7.05 5.636z" />
-        </g>
-      </symbol>
-    </svg>
-    <svg xmlns="http://www.w3.org/2000/svg">
       <symbol id="cloud-upload-icon" viewBox="0 0 24 24" fill="currentColor" width="1em" height="1em">
         <path
           d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96zM14 13v4h-4v-4H7l5-5 5 5h-3z" />
-      </symbol>
-    </svg>
-    <svg xmlns="http://www.w3.org/2000/svg">
-      <symbol id="angle-right-icon" viewBox="0 0 256 512" fill="currentColor" width="1em" height="1em">
-        <path
-          d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z" />
       </symbol>
     </svg>
     <svg xmlns="http://www.w3.org/2000/svg">
@@ -124,47 +85,6 @@
 
   <%- include('partials/header.ejs', {className: 'project' }) %>
     <main class="project">
-      <div class="wrapper tools">
-        <a href="/project?name=<%= name %>">
-          <svg>
-            <use href="#home-icon" />
-          </svg>
-        </a>
-        <div id="create-folder">
-          <svg>
-            <use href="#create-folder-icon" />
-          </svg>
-          <span>
-            CREATE FOLDER
-          </span>
-        </div>
-        <div id="upload-btn2">
-          <svg>
-            <use href="#upload-file" />
-          </svg>
-          <span>
-            UPLOAD FILE
-          </span>
-        </div>
-        <div class="empty"></div>
-        <div id="delete-item">
-          <svg>
-            <use href="#delete-trash" />
-          </svg>
-          <span>
-            DELETE
-          </span>
-        </div>
-      </div>
-      <div class="wrapper breadcrumb">
-        <% breadcrumb.map(item=> { %>
-          <a href="<%= item.href %>">
-            <%= item.name.toLowerCase() %>
-          </a> <svg>
-            <use href="#angle-right-icon" />
-          </svg>
-          <%}) %>
-      </div>
       <table class="wrapper">
         <thead>
           <tr>

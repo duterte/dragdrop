@@ -48,6 +48,24 @@ main.stats svg.down {
           transform: rotateZ(90deg);
 }
 
+.btn-holder {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
+}
+
+.btn-holder > :last-child {
+  margin-left: 1em;
+}
+
+.disable {
+  background-color: #607d8b;
+  color: #f9f6f699;
+}
+
 #pop {
   display: none;
   -webkit-box-pack: center;

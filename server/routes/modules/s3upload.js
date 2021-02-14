@@ -22,8 +22,8 @@ module.exports = object => {
   // const dir = process.env.S3_DIR || 'websites';
   files.forEach(file => {
     const payload = {
-      Bucket: project_name,
-      Key: `${project_name}.${parseDate}/${file}`,
+      Bucket: req.destination,
+      Key: `${project_name}.${parseDate}/${file}`.toLowerCase(),
       Body: fs.readFileSync(path.join('submission', project_name, file)),
     };
     s3.upload(payload, (err, data) => {

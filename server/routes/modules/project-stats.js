@@ -32,9 +32,9 @@ const stats = {
   totalNumberOfFiles: 0,
 };
 
-module.exports = function (userPath, id) {
+module.exports = function (userPath, name) {
   const zip = new AdmZip();
-  zip.addLocalFolder(path.resolve(userPath, id));
+  zip.addLocalFolder(path.resolve(userPath, name));
   const zipEntries = zip.getEntries();
   zipEntries.forEach(entry => {
     const info = {
@@ -50,6 +50,7 @@ module.exports = function (userPath, id) {
         return ext;
       })(),
     };
+    console.log(info.entryName);
     const dirPath = info.entryName.split('/');
     if (info.isDirectory) {
       if (dirPath.length - 1 > 1) {
@@ -93,30 +94,35 @@ module.exports = function (userPath, id) {
         // file hierarchy validation
         const directory = info.entryName.split('/')[0];
         let possibleDirectory = [];
-
+        // extension for js file
         if (/js/i.test(info.nameExt)) {
           possibleDirectory = ['js'];
+          // extension for css file
         } else if (/css/i.test(info.nameExt)) {
           possibleDirectory = ['css'];
+          // image files extension
         } else if (/png|jpe?g|gif|pdf|webp/i.test(info.nameExt)) {
           possibleDirectory = ['images', 'img', 'assets'];
         } else if (
+          // video files extension
           /mp4|mov|wmv|avi|avchd|f(l|4)v|swf|mkv|webm/i.test(info.nameExt)
         ) {
           possibleDirectory = ['video', 'assets'];
         }
         const found = possibleDirectory.find(entry => entry === directory);
         if (possibleDirectory.length && !found) {
-          stats.errors.filesInWrongDirectory.push(info.entryName);
+          stats.errors.filesInWrongDirectory.push(info.entryName.toLowerCase());
         } else if (!found) {
-          stats.errors.unSupportedTypeOfFiles.push(info.entryName);
+          stats.errors.unSupportedTypeOfFiles.push(
+            info.entryName.toLowerCase()
+          );
         } else if (dirPath.length - 1 > 1) {
-          stats.errors.filesInWrongDirectory.push(info.entryName);
+          stats.errors.filesInWrongDirectory.push(info.entryName.toLowerCase());
         } else {
-          stats.passed.filesInRightDirectory.push(info.entryName);
+          stats.passed.filesInRightDirectory.push(info.entryName.toLowerCase());
         }
       }
-      stats.files.push(info.entryName);
+      stats.files.push(info.entryName.toLowerCase());
       stats.totalNumberOfFiles++;
     }
   });
@@ -127,8 +133,9 @@ module.exports = function (userPath, id) {
       file => file.toLowerCase() === relativeUrls[i].toLowerCase()
     );
     if (!found) {
-      stats.errors.notFoundFiles.push(relativeUrls[i]);
+      stats.errors.notFoundFiles.push(relativeUrls[i].toLowerCase());
     }
   }
+  console.log(stats);
   return stats;
 };
