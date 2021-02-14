@@ -15,25 +15,20 @@ router.get('/live', requireSecret, (req, res) => {
         message: `Can't Upload Content`,
       });
     }
-    if (!fs.pathExistsSync(path.resolve('submission', name))) {
+    const projectPath = path.resolve('submission', name);
+    if (!fs.pathExistsSync(projectPath)) {
       const error = new Error('Content not found');
       error.code = 404;
       throw error;
     }
-    const stats = projectStats(
-      path.resolve('submission'),
-      cookies.project_name
-    );
+    const stats = projectStats(projectPath);
     for (const item in stats.errors) {
       if (item.length) {
         return res.redirect('/stats');
       }
     }
 
-    s3upload({
-      files: stats.files,
-      project_name: cookies.project_name,
-    });
+    s3upload({ files: stats.files, project_name: name });
     return res.render('submission', {
       status: 'Successful',
       message: 'Upload Successful',
@@ -55,13 +50,13 @@ router.get('/beta', requireSecret, (req, res) => {
         message: `Can't Upload Content`,
       });
     }
-
-    if (!fs.pathExistsSync(path.resolve('submission', name))) {
+    const projectPath = path.resolve('submission', name);
+    if (!fs.pathExistsSync(projectPath)) {
       const error = new Error('Content not found');
       error.code = 404;
       throw error;
     }
-    const stats = projectStats(path.resolve('submission'), name);
+    const stats = projectStats(projectPath);
     for (const item in stats.errors) {
       if (item.length) {
         return res.redirect('/stats');
@@ -69,7 +64,10 @@ router.get('/beta', requireSecret, (req, res) => {
     }
 
     s3upload({ files: stats.files, project_name: name });
-    return res.render('submission');
+    return res.render('submission', {
+      status: 'Successful',
+      message: 'Upload Successful',
+    });
   } catch (err) {
     console.log(err);
     return res.status(500).json('unexpected error occur in the server');
