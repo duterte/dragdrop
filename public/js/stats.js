@@ -9,7 +9,6 @@
 
   function activateSpinner() {
     const pop = document.querySelector('#pop');
-    const spinnerIcon = document.querySelector('.spinner-icon');
     pop.style.display = 'grid';
   }
 

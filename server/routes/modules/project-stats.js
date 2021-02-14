@@ -50,7 +50,6 @@ module.exports = function (userPath, name) {
         return ext;
       })(),
     };
-    console.log(info.entryName);
     const dirPath = info.entryName.split('/');
     if (info.isDirectory) {
       if (dirPath.length - 1 > 1) {
@@ -136,6 +135,5 @@ module.exports = function (userPath, name) {
       stats.errors.notFoundFiles.push(relativeUrls[i].toLowerCase());
     }
   }
-  console.log(stats);
   return stats;
 };

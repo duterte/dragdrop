@@ -33,32 +33,8 @@ function parsefileSize(number) {
 router.get('/', requireSecret, (req, res) => {
   try {
     // secret
-    const user = req.user;
-    const { name, dirname } = req.query;
-    let dir = undefined;
-    let breadcrumb = [
-      {
-        name: 'root',
-        href: `/project?name=${name}`,
-      },
-    ];
-
-    if (dirname) {
-      dir = path.resolve(`submission/${name}/${dirname}`);
-      const paths = dirname.split('/');
-      breadcrumb = [
-        ...breadcrumb,
-        ...paths.map((item, i, n) => {
-          return {
-            name: item,
-            href: `/project?name=${name}&dirname=${n.slice(0, i + 1)}`,
-          };
-        }),
-      ];
-    } else {
-      dir = path.resolve(`submission/${name}`);
-    }
-
+    const { name } = req.query;
+    const dir = path.resolve(`submission/${name}`);
     const tree = dirTree(dir, { normalizePath: true });
     if (!tree) {
       const error = new Error('Directory not found');
@@ -71,7 +47,6 @@ router.get('/', requireSecret, (req, res) => {
     const dirStructure = [];
     for (const entry of [...typeDir, ...typeFile]) {
       let partial = undefined;
-      let link = undefined;
       if (entry.type === 'file') {
         if (/html?/i.test(entry.extension)) {
           partial = 'html-file';
@@ -92,13 +67,11 @@ router.get('/', requireSecret, (req, res) => {
         const regex = new RegExp(`${name}\/(\.*)`);
         const dirname = entry.path.match(regex)[1];
         partial = 'folder';
-        link = `/project?name=${name}&dirname=${dirname}`;
       }
       const data = {
         name: entry.name,
         partial,
         size: parsefileSize(entry.size),
-        link: link,
       };
       dirStructure.push(data);
     }
@@ -110,7 +83,6 @@ router.get('/', requireSecret, (req, res) => {
         sameSite: 'Lax',
       })
       .render('project', {
-        breadcrumb,
         dirStructure,
         user: req.user,
         name,
@@ -186,41 +158,6 @@ router.get('/get', requireSecret, (req, res) => {
     } else {
       return res.redirect(`/project?name=${name}`);
     }
-  } catch (err) {
-    console.log(err);
-    return res.status(500).json('unexpected error occur in the server');
-  }
-});
-
-function targetPath(query) {
-  return query.dirname
-    ? path.resolve('submission', query.name, query.dirname)
-    : path.resolve('submission', query.name);
-}
-
-router.post('/folder', requireSecret, (req, res) => {
-  try {
-    const { query, body } = req;
-    const projectPath = targetPath(query);
-    fs.mkdirSync(path.join(projectPath, body.folderName));
-    return res.status(200).send();
-  } catch (err) {
-    console.log(err);
-    return res.status(500).json('unexpected error occur in the server');
-  }
-});
-
-router.post('/deletefiles', requireSecret, (req, res) => {
-  try {
-    const { query, body, user } = req;
-    const projectPath = targetPath(query);
-    if (body.lists) {
-      for (const item of body.lists) {
-        const a = path.join(projectPath, item).trim();
-        fs.removeSync(a);
-      }
-    }
-    return res.status(200).send();
   } catch (err) {
     console.log(err);
     return res.status(500).json('unexpected error occur in the server');

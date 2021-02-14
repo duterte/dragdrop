@@ -2,23 +2,23 @@
 <html lang="en">
 
 <head>
-  <link rel="preload" type="font/ttf" href="fonts/Montserrat-Regular.ttf" as="font" crossorigin>
-  <link rel="preload" type="font/ttf" href="fonts/Nunito-Regular.ttf" as="font" crossorigin>
+  <link rel="preload" type="font/ttf" href="/fonts/Montserrat-Regular.ttf" as="font" crossorigin>
+  <link rel="preload" type="font/ttf" href="/fonts/Nunito-Regular.ttf" as="font" crossorigin>
   <style>
     @font-face {
       font-family: 'Montseratt';
-      src: url("fonts/Montserrat-Regular.ttf");
+      src: url("/fonts/Montserrat-Regular.ttf");
     }
 
     @font-face {
       font-family: 'Nunito';
-      src: url("fonts/Nunito-Regular.ttf");
+      src: url("/fonts/Nunito-Regular.ttf");
     }
   </style>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="css/common.css">
-  <title>Successful Confirmation | Website Submission System</title>
+  <link rel="stylesheet" href="/css/common.css">
+  <title>Upload <%= status %> | Website Submission System</title>
 </head>
 
 <body>
@@ -26,10 +26,10 @@
     <main class="submission">
       <div class="wrapper"
         style="margin-top: 2em; text-align: center; font-family: 'Montseratt', sans-serif; font-size: 2em; font-weight: bolder;">
-        Upload Successful
+        <%= message %>
       </div>
     </main>
-    <script src="js/common.js"></script>
+    <script src="/js/common.js"></script>
 </body>
 
 </html>
