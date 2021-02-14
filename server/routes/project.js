@@ -4,6 +4,7 @@ const fileupload = require('express-fileupload');
 const fs = require('fs-extra');
 const AdmZip = require('adm-zip');
 const dirTree = require('directory-tree');
+const { v4: uuidv4 } = require('uuid');
 const { requireSecret } = require('./modules');
 
 const router = express.Router();
@@ -32,8 +33,7 @@ function parsefileSize(number) {
 
 router.get('/', requireSecret, (req, res) => {
   try {
-    // secret
-    const { name } = req.query;
+    const name = req.cookies.content_id;
     const dir = path.resolve(`submission/${name}`);
     const tree = dirTree(dir, { normalizePath: true });
     if (!tree) {
@@ -76,17 +76,11 @@ router.get('/', requireSecret, (req, res) => {
       dirStructure.push(data);
     }
 
-    return res
-      .cookie('project_name', name, {
-        httpOnly: true,
-        secure: process.env.MODE === 'production' ? true : false,
-        sameSite: 'Lax',
-      })
-      .render('project', {
-        dirStructure,
-        user: req.user,
-        name,
-      });
+    return res.render('project', {
+      dirStructure,
+      user: req.user,
+      name,
+    });
   } catch (err) {
     console.log(err);
     if (err.code && (err.code === 404 || err.code.toUpperCase() === 'ENOENT')) {
@@ -109,15 +103,15 @@ router.post(
   fileupload(fileUploadOption),
   async (req, res) => {
     try {
-      const { query, files } = req;
-      const { name, dirname = '' } = query;
+      const files = req.files;
+      const name = req.cookies.content_id;
       if (!fs.pathExistsSync(path.resolve('submission', name))) {
         const error = new Error('project did not exist');
         error.code = 400;
         throw error;
       }
 
-      const projectPath = path.resolve('submission', name, dirname);
+      const projectPath = path.resolve('submission', name);
       for (const item in files) {
         const extension = files[item].name
           .split('.')
@@ -148,16 +142,25 @@ router.post(
 router.get('/get', requireSecret, (req, res) => {
   try {
     const name = req.query.name;
-    if (!fs.pathExistsSync(path.resolve('submission', name))) {
+    const uuid = uuidv4().split('-').join('');
+    if (!fs.pathExistsSync(path.resolve('submission', uuid))) {
       if (!fs.pathExistsSync(path.resolve('submission'))) {
         fs.mkdirSync(path.resolve('submission'));
       }
-
-      fs.mkdirSync(path.resolve('submission', name));
-      return res.redirect(`/project?name=${name}`);
-    } else {
-      return res.redirect(`/project?name=${name}`);
+      fs.mkdirSync(path.resolve('submission', uuid));
     }
+    res.cookie('project_name', name, {
+      httpOnly: true,
+      secure: process.env.MODE === 'production' ? true : false,
+      sameSite: 'Lax',
+    });
+    res.cookie('content_id', uuid, {
+      httpOnly: true,
+      secure: process.env.MODE === 'production' ? true : false,
+      sameSite: 'Lax',
+    });
+    return res.redirect(`/project`);
+    // throw new Error('Test Error');
   } catch (err) {
     console.log(err);
     return res.status(500).json('unexpected error occur in the server');

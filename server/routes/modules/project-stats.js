@@ -34,6 +34,7 @@ const stats = {
 
 module.exports = function (userPath, name) {
   const zip = new AdmZip();
+  console.log({ userPath, name });
   zip.addLocalFolder(path.resolve(userPath, name));
   const zipEntries = zip.getEntries();
   zipEntries.forEach(entry => {

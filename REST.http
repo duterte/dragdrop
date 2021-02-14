@@ -7,3 +7,7 @@ Content-Type: application/json
 {
   "secret": "blue-elephant"
 }
+
+###
+
+GET http://localhost:3000/project/get HTTP/1.1

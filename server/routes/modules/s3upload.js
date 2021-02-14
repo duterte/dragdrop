@@ -4,7 +4,7 @@ const { S3, config } = require('aws-sdk');
 require('dotenv').config();
 
 module.exports = object => {
-  const { files, project_name } = object;
+  const { files, project_name, destination } = object;
   config.update({ region: 'ap-northeast-1' });
   const s3 = new S3({
     apiVersion: '2006-03-01',
@@ -18,11 +18,9 @@ module.exports = object => {
     (date.getMonth() + 1).toString().padStart(2, '0'),
     date.getDate().toString().padStart(2, '0'),
   ].join('');
-  //
-  // const dir = process.env.S3_DIR || 'websites';
   files.forEach(file => {
     const payload = {
-      Bucket: req.destination,
+      Bucket: destination,
       Key: `${project_name}.${parseDate}/${file}`.toLowerCase(),
       Body: fs.readFileSync(path.join('submission', project_name, file)),
     };

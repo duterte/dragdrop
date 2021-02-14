@@ -7,7 +7,7 @@ const router = express.Router();
 
 router.get('/live', requireSecret, (req, res) => {
   try {
-    const name = req.query.name || req.cookies.project_name;
+    const { project_name: name, content_id: id } = req.cookies;
     const live = req.projects.find(item => item.projectName === name).allowProd;
     if (!live) {
       return res.render('submission', {
@@ -15,20 +15,23 @@ router.get('/live', requireSecret, (req, res) => {
         message: `Can't Upload Content`,
       });
     }
-    const projectPath = path.resolve('submission', name);
+    const projectPath = path.resolve('submission', id);
     if (!fs.pathExistsSync(projectPath)) {
       const error = new Error('Content not found');
       error.code = 404;
       throw error;
     }
-    const stats = projectStats(projectPath);
+    console.log({ id });
+    const stats = projectStats(path.resolve('submission'), id);
     for (const item in stats.errors) {
       if (item.length) {
         return res.redirect('/stats');
       }
     }
 
-    s3upload({ files: stats.files, project_name: name });
+    const destination = req.projects.find(item => item.projectName === name)
+      .destination;
+    s3upload({ files: stats.files, project_name: id, destination });
     return res.render('submission', {
       status: 'Successful',
       message: 'Upload Successful',
@@ -41,8 +44,7 @@ router.get('/live', requireSecret, (req, res) => {
 
 router.get('/beta', requireSecret, (req, res) => {
   try {
-    const name = req.query.name || req.cookies.project_name;
-
+    const { project_name: name, content_id: id } = req.cookies;
     const beta = req.projects.find(item => item.projectName === name).allowBeta;
     if (!beta) {
       return res.render('submission', {
@@ -50,20 +52,21 @@ router.get('/beta', requireSecret, (req, res) => {
         message: `Can't Upload Content`,
       });
     }
-    const projectPath = path.resolve('submission', name);
+    const projectPath = path.resolve('submission', id);
     if (!fs.pathExistsSync(projectPath)) {
       const error = new Error('Content not found');
       error.code = 404;
       throw error;
     }
-    const stats = projectStats(projectPath);
-    for (const item in stats.errors) {
-      if (item.length) {
-        return res.redirect('/stats');
-      }
-    }
-
-    s3upload({ files: stats.files, project_name: name });
+    const stats = projectStats(path.resolve('submission'), id);
+    // for (const item in stats.errors) {
+    //   if (item.length) {
+    //     return res.redirect('/stats');
+    //   }
+    // }
+    const destination = req.projects.find(item => item.projectName === name)
+      .destination;
+    s3upload({ files: stats.files, project_name: id, destination });
     return res.render('submission', {
       status: 'Successful',
       message: 'Upload Successful',
