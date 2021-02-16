@@ -7,7 +7,7 @@ const router = express.Router();
 
 router.get('/live', requireSecret, (req, res) => {
   try {
-    const { project_name: name, content_id: id } = req.cookies;
+    const { project_name: name, content_id: id, appSession = '' } = req.cookies;
     const live = req.projects.find(item => item.projectName === name).allowProd;
     if (!live) {
       return res.render('submission', {
@@ -21,7 +21,6 @@ router.get('/live', requireSecret, (req, res) => {
       error.code = 404;
       throw error;
     }
-    console.log({ id });
     const stats = projectStats(path.resolve('submission'), id);
     for (const item in stats.errors) {
       if (item.length) {
@@ -33,6 +32,7 @@ router.get('/live', requireSecret, (req, res) => {
       .destination;
     s3upload({ files: stats.files, project_name: id, destination });
     return res.render('submission', {
+      pwd: appSession,
       status: 'Successful',
       message: 'Upload Successful',
     });
@@ -59,11 +59,11 @@ router.get('/beta', requireSecret, (req, res) => {
       throw error;
     }
     const stats = projectStats(path.resolve('submission'), id);
-    // for (const item in stats.errors) {
-    //   if (item.length) {
-    //     return res.redirect('/stats');
-    //   }
-    // }
+    for (const item in stats.errors) {
+      if (item.length) {
+        return res.redirect('/stats');
+      }
+    }
     const destination = req.projects.find(item => item.projectName === name)
       .destination;
     s3upload({ files: stats.files, project_name: id, destination });

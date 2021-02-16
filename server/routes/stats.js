@@ -5,21 +5,27 @@ const { projectStats, requireSecret } = require('./modules');
 const router = express.Router();
 
 router.get('/', requireSecret, (req, res) => {
-  const { project_name: name, content_id: id } = req.cookies;
+  const { project_name: name, content_id: id, appSession = '' } = req.cookies;
   try {
-    const projectPath = path.resolve('submission', name);
+    const projectPath = path.resolve('submission', id);
     if (!fs.pathExistsSync(projectPath)) {
       const error = new Error('Content not found');
       error.code = 404;
       throw error;
     }
+
     const stats = projectStats(path.resolve('submission'), id);
     const project = req.projects.find(item => item.projectName === name);
     const buttons = {
       beta: project.allowBeta,
       live: project.allowProd,
     };
-    return res.render('stats', { stats: stats, buttons: buttons, name: name });
+    return res.render('stats', {
+      pwd: appSession,
+      stats: stats,
+      buttons: buttons,
+      name: name,
+    });
   } catch (err) {
     console.log(err);
     if (err.code && (err.code === 404 || err.code.toUpperCase() === 'ENOENT')) {

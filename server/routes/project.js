@@ -78,6 +78,7 @@ router.get('/', requireSecret, (req, res) => {
 
     return res.render('project', {
       dirStructure,
+      pwd: req.cookies.appSession || '',
       user: req.user,
       name,
     });

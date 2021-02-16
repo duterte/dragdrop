@@ -3,7 +3,8 @@ const router = express.Router();
 
 router.get('/', (req, res) => {
   try {
-    return res.render('dashboard', { user: req.user });
+    const { appSession = '' } = req.cookies;
+    return res.render('dashboard', { pwd: appSession });
   } catch (err) {
     console.log(err);
     return res.status(500).json('Internal Server Error');

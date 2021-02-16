@@ -55,6 +55,9 @@ header {
   padding-top: 1em;
   font-family: 'Nunito';
   font-weight: bold;
+  position: relative;
+  z-index: 100;
+  // z-index: 100;
 
   .wrapper {
     display: flex;

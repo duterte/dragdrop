@@ -64,6 +64,7 @@ main.stats svg.down {
 .disable {
   background-color: #607d8b;
   color: #f9f6f699;
+  cursor: none;
 }
 
 #pop {
@@ -78,7 +79,7 @@ main.stats svg.down {
   height: 100vh;
   position: fixed;
   top: 0;
-  z-index: 100;
+  z-index: 99;
   background-color: white;
 }
 
