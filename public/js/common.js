@@ -54,7 +54,7 @@
   function selectChangedHandler(e) {
     const secret = e.target.value;
     if (secret) {
-      window.location.replace(`/project/get?name=${secret}`);
+      window.location.replace(`/getproject?name=${secret}`);
     }
   }
 

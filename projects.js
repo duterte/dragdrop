@@ -26,4 +26,14 @@ module.exports = [
     allowBeta: true,
     allowProd: true,
   },
+  {
+    secret: 'talking-tom',
+    projectName: 'www.kobe.com',
+    allowed: ['aiff', 'jpg', 'mp3'],
+    destination: 'chinesepod',
+    versioning: true,
+    allowBeta: true,
+    allowProd: true,
+    lesson: true,
+  },
 ];
