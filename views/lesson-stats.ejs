@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <link rel="preload" type="font/ttf" href="/fonts/Montserrat-Regular.ttf" as="font" crossorigin>
+  <link rel="preload" type="font/ttf" href="/fonts/Nunito-Regular.ttf" as="font" crossorigin>
+  <style>
+    @font-face {
+      font-family: 'Montseratt';
+      src: url("/fonts/Montserrat-Regular.ttf");
+    }
+
+    @font-face {
+      font-family: 'Nunito';
+      src: url("/fonts/Nunito-Regular.ttf");
+    }
+  </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/css/common.css">
+  <link rel="stylesheet" href="/css/lesson-stats.css">
+  <title>Lesson Stats | Website Submission System</title>
+</head>
+
+<body>
+  
+  <%- include('partials/header.ejs' , { pwd, className: 'lesson-stats' }) %>
+  <main>
+    <div class="wrapper confirmation">
+      <h3>Submission received for <%= payload.lessonNumber %> </h3>
+      <div>
+        <div><%= payload.audio.header %></div>
+        <% payload.audio.contents.map(item => { %>
+          <div><%= item %></div>
+        <% }) %> 
+      </div>
+        <% payload.contents.map(item => { %>
+          <div>
+            
+            <% if(item.header === 'Other Violations:') {%> 
+              <% if (item.contents.wrongFileNames.length) { %>
+                <h4><%= item.header %></h4>
+                <p>This files has violation but doesn't have corresponding audio file</p>
+              <% } %> 
+            <% } else { %> 
+              <h4><%= item.header %></h4>
+            <% } %> 
+
+            <% if (item.contents.slidesReceived) { %>
+              <div class="slides-received">
+                <div><%= item.contents.slidesReceived %></div>
+                <% if (item.contents.incomplete && item.contents.incomplete.length) { %>
+                  <% item.contents.incomplete.map(item2 => { %>
+                      <div><%= item2 %></div>
+                  <% }) %> 
+                <% } %>
+              </div>
+            <% } %>
+
+            <% if (item.contents.wrongFileNames && item.contents.wrongFileNames.length) { %>
+              <div class="wrong-files">
+                <b>Wrong file names:</b>
+                <% item.contents.wrongFileNames.map(item2 => { %>
+                    <div><%= item2 %></div>
+                <% }) %> 
+              </div>
+            <% } %>
+          </div>
+        <% }) %> 
+        <div class="msg">
+          <% if (withErrors) {%> 
+            <p style="color: red;">Lesson cannot be marked complete<br/>Please correct errors and submit again</p>
+          <% } else { %>
+            <p style="color: green;">No consistency errors detected</p>
+          <% } %> 
+        </div>
+    </div>
+  </main>
+    <script src="/js/common.js"></script>
+    <script src="/js/lesson-stats.js"></script>
+</body>
+
+</html>

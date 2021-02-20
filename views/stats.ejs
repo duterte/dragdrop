@@ -133,14 +133,14 @@
       <div class="wrapper btn-holder">
         <% if(buttons.beta) { %>
           <a class="app-prim-button" id="submit-beta" href="/submission/beta">Submit as beta</a>
-          <% } else { %>
-            <span class="app-prim-button disable">Submit as beta</span>
-            <% } %>
-              <% if(buttons.live) { %>
-                <a class="app-prim-button" id="submit-live" href="/submission/live">Submit as live</a>
-                <% } else { %>
-                  <span class="app-prim-button disable">Submit as live</span>
-                  <% } %>
+        <% } else { %>
+          <span class="app-prim-button disable">Submit as beta</span>
+        <% } %>
+        <% if(buttons.live) { %>
+          <a class="app-prim-button" id="submit-live" href="/submission/live">Submit as live</a>
+        <% } else { %>
+          <span class="app-prim-button disable">Submit as live</span>
+        <% } %>
       </div>
     </main>
     <div id="pop">

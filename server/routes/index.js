@@ -4,5 +4,6 @@ module.exports = {
   directory: require('./project'),
   lists: require('./lists'),
   submission: require('./submission'),
-  getproject: require('./getproject')
+  getproject: require('./getproject'),
+  lessonStats: require('./lesson-stats'),
 };
