@@ -1,6 +1,7 @@
 // const path = require("path");
 const num = require("number-to-words");
 const AdmZip = require("adm-zip");
+const { find } = require("./sample-project");
 
 const audioFileExtensions = [
   "3gp",
@@ -246,7 +247,8 @@ module.exports = (path, number) => {
   // CHECKING FOR SIMPLIFIED AND TRADITIONAL
   // =========================================
 
-  /* As mentioned slides should be available in simplified and traditional Chinese character */
+  /* As mentioned slides should be available
+   in simplified and traditional Chinese character */
 
   for (const item of audit.slides) {
     const keys = Object.keys(item);
@@ -275,6 +277,28 @@ module.exports = (path, number) => {
       }
     });
   }
+
+  // =========================================
+  // CHECKING FOR TWO PORTRAIT VERSION
+  // =========================================
+
+  /* As metioned slides should be available in atleast 2 portrait version */
+
+  // for (const item of audit.slides) {
+  //   const keys = Object.keys(item);
+  //   const map = keys.map((key) => {
+  //     return ["sp", "tp"].find((item2) => item2 === key);
+  //   });
+  //   const sp = map.find((sp) => sp === "sp");
+  //   if (!sp) {
+  //     //
+  //   }
+  //   const tp = map.find((tp) => tp === "tp");
+  //   if (!tp) {
+  //     console.log(item["sp"]);
+  //   }
+  //   console.log(map);
+  // }
 
   // =========================================
   // CHECKING VIEW MODE: Landscape, Portrait

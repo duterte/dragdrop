@@ -21,8 +21,6 @@ router.get("/", requireSecret, (req, res) => {
         ...stats.failed.invalidFileExtensions,
       ].length;
 
-      console.log(...stats.messages.contents);
-
       const payload = {
         lessonNumber: name,
         audio: stats.messages.audio,
