@@ -1,7 +1,7 @@
 module.exports = [
   {
     secret: "blue-elephant",
-    projectName: "www.voicestream.app",
+    projectName: "www.voicestream.app", // Website submission
     allowed: ["css", "htm", "html", "js", "jpg", "svg"],
     destination: "voicestream", // <- this would be the bucket name
     versioning: true,
@@ -27,7 +27,7 @@ module.exports = [
     allowProd: true,
   },
   {
-    secret: "talking-tom",
+    secret: "talking-tom", // submission for lesson
     lessonNumber: 1234,
   },
   {

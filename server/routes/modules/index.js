@@ -4,4 +4,5 @@ module.exports = {
   requireSecret: require("./requireSecret"),
   sample: require("./sample-project"),
   validateLesson: require("./validate-lesson"),
+  lessonStats: require("./lesson-stats"),
 };
