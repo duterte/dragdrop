@@ -1,6 +1,6 @@
 //api list
-const UPLOAD_SERVER_API = "stats";
-const GET_FTP_FILE_NAMES_API = "stats";
+const UPLOAD_SERVER_API = "/chinesepod/stats";
+const GET_FTP_FILE_NAMES_API = "/chinesepod/stats";
 
 //check file name
 const CHECK_FILE_SUCCESS_CODE = 0;
