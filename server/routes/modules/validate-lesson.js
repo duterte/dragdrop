@@ -1,77 +1,76 @@
 // const path = require("path");
-const num = require("number-to-words");
-const AdmZip = require("adm-zip");
-const { find } = require("./sample-project");
+const num = require('number-to-words');
+const AdmZip = require('adm-zip');
 
 const audioFileExtensions = [
-  "3gp",
-  "aa",
-  "aac",
-  "aax",
-  "act",
-  "aiff",
-  "alac",
-  "amr",
-  "ape",
-  "au",
-  "awb",
-  "dss",
-  "dvf",
-  "flac",
-  "gsm",
-  "iklax",
-  "ivs",
-  "m4a",
-  "m4b",
-  "m4p",
-  "mmf",
-  "mp3",
-  "mpc",
-  "msv",
-  "nmf",
-  "ogg",
-  "oga",
-  "mogg",
-  "opus",
-  "org",
-  "ra",
-  "rm",
-  "raw",
-  "rf64",
-  "sln",
-  "tta",
-  "voc",
-  "vox",
-  "wav",
-  "wma",
-  "wv",
-  "webm",
-  "8svx",
-  "cda",
+  '3gp',
+  'aa',
+  'aac',
+  'aax',
+  'act',
+  'aiff',
+  'alac',
+  'amr',
+  'ape',
+  'au',
+  'awb',
+  'dss',
+  'dvf',
+  'flac',
+  'gsm',
+  'iklax',
+  'ivs',
+  'm4a',
+  'm4b',
+  'm4p',
+  'mmf',
+  'mp3',
+  'mpc',
+  'msv',
+  'nmf',
+  'ogg',
+  'oga',
+  'mogg',
+  'opus',
+  'org',
+  'ra',
+  'rm',
+  'raw',
+  'rf64',
+  'sln',
+  'tta',
+  'voc',
+  'vox',
+  'wav',
+  'wma',
+  'wv',
+  'webm',
+  '8svx',
+  'cda',
 ];
 
 const imageFileExtensions = [
-  "jpg",
-  "jpeg",
-  "png",
-  "webp",
-  "pdf",
-  "gif",
-  "eps",
-  "tif",
-  "tiff",
-  "bmp",
-  "raw",
-  "cr2",
-  "nef",
-  "orf",
-  "sr2",
+  'jpg',
+  'jpeg',
+  'png',
+  'webp',
+  'pdf',
+  'gif',
+  'eps',
+  'tif',
+  'tiff',
+  'bmp',
+  'raw',
+  'cr2',
+  'nef',
+  'orf',
+  'sr2',
 ];
 
-const allowedImageExtensions = ["jpg", "jpeg"];
+const allowedImageExtensions = ['jpg', 'jpeg'];
 
-const group4Names = ["sp", "tp", "sl", "tl"];
-const Cnt3group4Names = ["bg"];
+const group4Names = ['sp', 'tp', 'sl', 'tl'];
+const Cnt3group4Names = ['bg'];
 
 module.exports = (path, number) => {
   let audit = {
@@ -93,7 +92,7 @@ module.exports = (path, number) => {
     slides: [],
     messages: {
       audio: {
-        header: "",
+        header: '',
         contents: [],
       },
       contents: [],
@@ -108,7 +107,7 @@ module.exports = (path, number) => {
   entries.forEach((entry) => {
     if (!entry.isDirectory) {
       let counter = 0;
-      const fileName = entry.name.split(".");
+      const fileName = entry.name.split('.');
       const validNameRange = fileName.length >= 4 && fileName.length <= 5;
       // ======================================
       // CHECK FILE NAMING CONVENTION
@@ -160,7 +159,7 @@ module.exports = (path, number) => {
         (item) =>
           item ===
           entry.name
-            .split(".")
+            .split('.')
             .reduceRight((i) => i)
             .toLowerCase()
       );
@@ -172,7 +171,7 @@ module.exports = (path, number) => {
           (item) =>
             item ===
             entry.name
-              .split(".")
+              .split('.')
               .reduceRight((i) => i)
               .toLowerCase()
         );
@@ -198,11 +197,11 @@ module.exports = (path, number) => {
               const index = audit.slides.findIndex((item) => {
                 for (const entry in item) {
                   const slideTime = item[entry]
-                    .split(".")
+                    .split('.')
                     .slice(1, 3)
-                    .join(".");
+                    .join('.');
                   if (
-                    slideTime === [sliceFileName[0], sliceFileName[1]].join(".")
+                    slideTime === [sliceFileName[0], sliceFileName[1]].join('.')
                   ) {
                     return item;
                   }
@@ -253,25 +252,25 @@ module.exports = (path, number) => {
   for (const item of audit.slides) {
     const keys = Object.keys(item);
     keys.forEach((key) => {
-      const split = key.split("");
-      if (split[0] === "s") {
+      const split = key.split('');
+      if (split[0] === 's') {
         const t = keys.find((item) => {
           return item === `t${split[1]}`;
         });
         if (!t) {
-          let splitName = item[`${split[0]}${split[1]}`].split(".");
+          let splitName = item[`${split[0]}${split[1]}`].split('.');
           splitName[3] = `t${split[1]}`;
-          const join = splitName.join(".");
+          const join = splitName.join('.');
           audit.failed.missingFiles.push(join);
         }
-      } else if (split[0] === "t") {
+      } else if (split[0] === 't') {
         const s = keys.find((item) => {
           return item === `s${split[1]}`;
         });
         if (!s) {
-          let splitName = item[`${split[0]}${split[1]}`].split(".");
+          let splitName = item[`${split[0]}${split[1]}`].split('.');
           splitName[3] = `s${split[1]}`;
-          const join = splitName.join(".");
+          const join = splitName.join('.');
           audit.failed.missingFiles.push(join);
         }
       }
@@ -342,25 +341,25 @@ module.exports = (path, number) => {
   // Confirmation Message
   // =========================================
   if (audit.files.audioFiles.length) {
-    let numWord = num.toWords(audit.files.audioFiles.length).split("");
+    let numWord = num.toWords(audit.files.audioFiles.length).split('');
     numWord[0] = numWord[0].toUpperCase();
-    audit.messages.audio.header = `${numWord.join("")} audio file${
-      audit.files.audioFiles.length > 1 ? "s" : ""
+    audit.messages.audio.header = `${numWord.join('')} audio file${
+      audit.files.audioFiles.length > 1 ? 's' : ''
     }:`;
     let audioFiles = [];
     for (const audio of audit.files.audioFiles) {
-      const min = Number(audio.split(".")[1]);
+      const min = Number(audio.split('.')[1]);
       audioFiles = [...audioFiles, min];
       audit.messages.audio.contents.push(
-        `${min} minute${min > 1 ? "s" : ""} - ${audio}`
+        `${min} minute${min > 1 ? 's' : ''} - ${audio}`
       );
 
       audit.messages.contents.push({
-        header: `For ${min} min${min > 1 ? "s" : ""}. version:`,
+        header: `For ${min} min${min > 1 ? 's' : ''}. version:`,
         contents: (() => {
           const slides = audit.slides.filter((item) => {
             for (const key in item) {
-              const min2 = Number(item[key].split(".")[1]);
+              const min2 = Number(item[key].split('.')[1]);
               if (min2 === min) {
                 return item;
               }
@@ -368,34 +367,34 @@ module.exports = (path, number) => {
           });
 
           const missingFiles = audit.failed.missingFiles.filter(
-            (item) => Number(item.split(".")[1]) === min
+            (item) => Number(item.split('.')[1]) === min
           );
 
           const invalidFileExtensions = audit.failed.invalidFileExtensions
-            .filter((item) => Number(item.split(".")[1]) === min)
+            .filter((item) => Number(item.split('.')[1]) === min)
             .map((item) => `${item} is not a valid file extension`);
 
           const invalidFileNames = audit.failed.invalidFileNames
-            .filter((item) => Number(item.split(".")[1]) === min)
+            .filter((item) => Number(item.split('.')[1]) === min)
             .map((item) => `${item} is not a valid name`);
 
           const invalidLessonNumber = audit.failed.lessonNumbers
-            .filter((item) => Number(item.split(".")[1]) === min)
+            .filter((item) => Number(item.split('.')[1]) === min)
             .map((item) => `${item} invalid lesson number`);
 
           let missingVersions = [];
-          let availableVersion = "";
+          let availableVersion = '';
           if (missingFiles.length) {
-            availableVersion = "INCOMPLETE";
+            availableVersion = 'INCOMPLETE';
             for (const item of missingFiles) {
-              const split = item.split(".");
-              const first3 = split.slice(0, 3).join(".");
-              const group4Split = split[3].split("");
-              let receivedGroup4 = "";
+              const split = item.split('.');
+              const first3 = split.slice(0, 3).join('.');
+              const group4Split = split[3].split('');
+              let receivedGroup4 = '';
               let missingGroup4 = split[3];
-              if (group4Split[0] === "s") {
+              if (group4Split[0] === 's') {
                 receivedGroup4 = `t${group4Split[1]}`;
-              } else if (group4Split[0] === "t") {
+              } else if (group4Split[0] === 't') {
                 receivedGroup4 = `s${group4Split[1]}`;
               }
               missingVersions = [
@@ -404,17 +403,17 @@ module.exports = (path, number) => {
               ];
             }
           } else {
-            availableVersion = "complete in 4 versions";
+            availableVersion = 'complete in 4 versions';
             for (const version of slides) {
               const keys = Object.keys(version).length;
               if (keys !== 4) {
-                availableVersion = "available in 2 version";
+                availableVersion = 'available in 2 version';
               }
             }
           }
           return {
             slidesReceived: `${slides.length} Slide${
-              slides.length > 1 ? "s" : ""
+              slides.length > 1 ? 's' : ''
             } received - ${availableVersion}`,
             incomplete: missingVersions,
             wrongFileNames: [
@@ -433,7 +432,7 @@ module.exports = (path, number) => {
 
     const lessonNumbers = audit.failed.lessonNumbers
       .filter((item) => {
-        const num1 = Number(item.split(".")[1]);
+        const num1 = Number(item.split('.')[1]);
         return (
           !audioFiles.find((item2) => {
             const num2 = item2;
@@ -461,7 +460,7 @@ module.exports = (path, number) => {
 
     const invalidFileNames2 = unique
       .filter((item) => {
-        const num1 = Number(item.split(".")[1]);
+        const num1 = Number(item.split('.')[1]);
         return (
           !audioFiles.find((item2) => {
             const num2 = item2;
@@ -473,7 +472,7 @@ module.exports = (path, number) => {
 
     const invalidFileExtensions = audit.failed.invalidFileExtensions
       .filter((item) => {
-        const num1 = Number(item.split(".")[1]);
+        const num1 = Number(item.split('.')[1]);
         return (
           !audioFiles.find((item2) => {
             const num2 = item2;
@@ -484,7 +483,7 @@ module.exports = (path, number) => {
       .map((item) => `${item} invalid file extension`);
 
     audit.messages.contents.push({
-      header: "Other Violations:",
+      header: 'Other Violations:',
       contents: (() => {
         return {
           wrongFileNames: [

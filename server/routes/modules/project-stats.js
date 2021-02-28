@@ -1,15 +1,15 @@
-const path = require("path");
-const AdmZip = require("adm-zip");
-const $ = require("cheerio");
+const path = require('path');
+const AdmZip = require('adm-zip');
+const $ = require('cheerio');
 
 const allowedDirectory = [
-  "assets",
-  "css",
-  "fonts",
-  "images",
-  "img",
-  "js",
-  "video",
+  'assets',
+  'css',
+  'fonts',
+  'images',
+  'img',
+  'js',
+  'video',
 ];
 
 module.exports = function (userPath, name) {
@@ -22,7 +22,7 @@ module.exports = function (userPath, name) {
       notFoundFiles: [],
     },
     passed: {
-      "index.html": false,
+      'index.html': false,
       filesInRightDirectory: [],
     },
     referencedUrls: {
@@ -30,6 +30,7 @@ module.exports = function (userPath, name) {
       relativeUrls: [],
     },
     files: [],
+    files2: [],
     totalNumberOfFiles: 0,
   };
 
@@ -42,7 +43,7 @@ module.exports = function (userPath, name) {
       entryName: entry.entryName.toLowerCase(),
       name: entry.name.toLowerCase(),
       nameExt: (() => {
-        const name = entry.name.split(".");
+        const name = entry.name.split('.');
         let ext = undefined;
         if (name.length > 1) {
           ext = name[name.length - 1].toLowerCase();
@@ -50,7 +51,7 @@ module.exports = function (userPath, name) {
         return ext;
       })(),
     };
-    const dirPath = info.entryName.split("/");
+    const dirPath = info.entryName.split('/');
     if (info.isDirectory) {
       if (dirPath.length - 1 > 1) {
         stats.errors.hierarchyLevelViolation.push(info.entryName);
@@ -58,14 +59,14 @@ module.exports = function (userPath, name) {
         stats.errors.notAllowedDirectory.push(info.entryName);
       }
     } else {
-      if (info.entryName === "index.html") {
-        stats.passed["index.html"] = true;
+      if (info.entryName === 'index.html') {
+        stats.passed['index.html'] = true;
         // reading index.html
         const html = zip.readAsText(entry);
 
         // scrapping content in index.html;
-        const scrapSrc = $("[src]", html);
-        const scrapHref = $("[href]", html);
+        const scrapSrc = $('[src]', html);
+        const scrapHref = $('[href]', html);
         const relativeUrls = [];
         const absoluteUrls = [];
         const absoluteUrlPattern = /https?/i;
@@ -79,7 +80,7 @@ module.exports = function (userPath, name) {
         }
         for (let i = 0; i < scrapHref.length; i++) {
           const href = scrapHref[i].attribs.href;
-          if (href[0] !== "#") {
+          if (href[0] !== '#') {
             if (href.search(absoluteUrlPattern) === 0) {
               absoluteUrls.push(href);
             } else {
@@ -91,22 +92,22 @@ module.exports = function (userPath, name) {
         stats.referencedUrls.relativeUrls = relativeUrls;
       } else if (info.nameExt) {
         // file hierarchy validation
-        const directory = info.entryName.split("/")[0];
+        const directory = info.entryName.split('/')[0];
         let possibleDirectory = [];
         // extension for js file
         if (/js/i.test(info.nameExt)) {
-          possibleDirectory = ["js"];
+          possibleDirectory = ['js'];
           // extension for css file
         } else if (/css/i.test(info.nameExt)) {
-          possibleDirectory = ["css"];
+          possibleDirectory = ['css'];
           // image files extension
         } else if (/png|jpe?g|gif|pdf|webp/i.test(info.nameExt)) {
-          possibleDirectory = ["images", "img", "assets"];
+          possibleDirectory = ['images', 'img', 'assets'];
         } else if (
           // video files extension
           /mp4|mov|wmv|avi|avchd|f(l|4)v|swf|mkv|webm/i.test(info.nameExt)
         ) {
-          possibleDirectory = ["video", "assets"];
+          possibleDirectory = ['video', 'assets'];
         }
         const found = possibleDirectory.find((entry) => entry === directory);
         if (possibleDirectory.length && !found) {
@@ -122,6 +123,7 @@ module.exports = function (userPath, name) {
         }
       }
       stats.files.push(info.entryName.toLowerCase());
+      stats.files2.push(info.entryName);
       stats.totalNumberOfFiles++;
     }
   });

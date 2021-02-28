@@ -22,7 +22,7 @@ router.get('/live', requireSecret, (req, res) => {
       error.code = 404;
       throw error;
     }
-    const { files, errors } = projectStats(path.resolve('submission'), id);
+    const { files2, errors } = projectStats(path.resolve('submission'), id);
     for (const item in errors) {
       if (errors[item].length) {
         return res.redirect('/stats');
@@ -31,7 +31,7 @@ router.get('/live', requireSecret, (req, res) => {
 
     const destination = req.projects.find((item) => item.projectName === name)
       .destination;
-    s3upload({ files: files, project_name: id, destination });
+    s3upload({ files: files2, project_name: id, destination });
     return res.render('submission', {
       pwd: appSession,
       status: 'Successful',
@@ -60,7 +60,7 @@ router.get('/beta', requireSecret, (req, res) => {
       error.code = 404;
       throw error;
     }
-    const { files, errors } = projectStats(path.resolve('submission'), id);
+    const { files2, errors } = projectStats(path.resolve('submission'), id);
     for (const item in errors) {
       if (errors[item].length) {
         return res.redirect('/stats');
@@ -68,7 +68,7 @@ router.get('/beta', requireSecret, (req, res) => {
     }
     const destination = req.projects.find((item) => item.projectName === name)
       .destination;
-    s3upload({ files: files, project_name: id, destination });
+    s3upload({ files: files2, project_name: id, destination });
     return res.render('submission', {
       pwd: appSession,
       status: 'Successful',

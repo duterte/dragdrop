@@ -1,1 +1,0 @@
-module.exports = ['Sample Projects'];
