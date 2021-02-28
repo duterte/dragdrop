@@ -1,9 +1,10 @@
 const fs = require('fs-extra');
 const path = require('path');
 const { S3, config } = require('aws-sdk');
+const serverTime = require('./moment');
 require('dotenv').config();
 
-module.exports = object => {
+module.exports = (object) => {
   const { files, project_name, destination } = object;
   config.update({ region: 'ap-northeast-1' });
   const s3 = new S3({
@@ -11,17 +12,10 @@ module.exports = object => {
     accessKeyId: process.env.S3_ACCESS,
     secretAccessKey: process.env.S3_SECRET,
   });
-  //
-  const date = new Date();
-  const parseDate = [
-    date.getFullYear().toString().split('').slice(2).join(''),
-    (date.getMonth() + 1).toString().padStart(2, '0'),
-    date.getDate().toString().padStart(2, '0'),
-  ].join('');
-  files.forEach(file => {
+  files.forEach((file) => {
     const payload = {
-      Bucket: destination,
-      Key: `${project_name}.${parseDate}/${file}`.toLowerCase(),
+      Bucket: process.env.S3_BUCKET,
+      Key: `${serverTime}/${file}`.toLowerCase(),
       Body: fs.readFileSync(path.join('submission', project_name, file)),
     };
     s3.upload(payload, (err, data) => {
