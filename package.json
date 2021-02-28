@@ -4,7 +4,7 @@
   "description": "",
   "main": "server",
   "scripts": {
-    "start": "node server",
+    "start": "node .",
     "dev": "nodemon server"
   },
   "keywords": [],

@@ -227,6 +227,7 @@
   function submitHandler(e) {
     if (fileData.fileCount) {
       activateSpinner();
+      console.log('spinner activated')
       fetch('/upload', {
         method: 'post',
         redirect: 'follow',

@@ -8,16 +8,26 @@
   const body = document.body;
 
   // event listeners
-  body.addEventListener('drop', e => uploadFiles(e.dataTransfer.files));
-  body.addEventListener('dragover', e => dropzone.classList.add('show'));
-  dropzone.addEventListener('dragleave', e =>
+  body.addEventListener('drop', (e) => uploadFiles(e.dataTransfer.files));
+  body.addEventListener('dragover', (e) => dropzone.classList.add('show'));
+  dropzone.addEventListener('dragleave', (e) =>
     dropzone.classList.remove('show')
   );
   uploadBtn1.addEventListener('click', () => fileInput.click());
-  fileInput.addEventListener('change', e => uploadFiles(e.currentTarget.files));
+  fileInput.addEventListener('change', (e) =>
+    uploadFiles(e.currentTarget.files)
+  );
   submit.addEventListener('click', () => activateSpinner());
 
+  function activateSpinner() {
+    const pop = document.querySelector('#pop');
+    const spinnerIcon = document.querySelector('.spinner-icon');
+    pop.style.display = 'grid';
+    spinnerIcon.classList.add('animate');
+  }
+
   function uploadFiles(files) {
+    activateSpinner();
     const body = new FormData();
     let i = 0;
     for (const item of files) {
@@ -28,14 +38,15 @@
     }
     const pop = document.querySelector('#pop');
     pop.style.display = 'grid';
+
     fetch('/project', { method: 'post', body })
-      .then(res => {
+      .then((res) => {
         if (res.status !== 200) {
           throw new Error(`Upload failed status code: ${res.status}`);
         } else {
           window.location.reload();
         }
       })
-      .catch(err => console.log(err));
+      .catch((err) => console.log(err));
   }
 })();

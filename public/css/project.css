@@ -212,7 +212,7 @@ main.project .submit-btn-wrapper {
   position: fixed;
   width: 100vw;
   height: 100vh;
-  z-index: 100;
+  z-index: 98;
   top: 0;
   left: 0;
   background-color: rgba(100, 100, 100, 0.3);

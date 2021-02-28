@@ -18,12 +18,12 @@ module.exports = (object) => {
       Key: `${serverTime}/${file}`.toLowerCase(),
       Body: fs.readFileSync(path.join('submission', project_name, file)),
     };
+    console.log(payload);
     s3.upload(payload, (err, data) => {
       if (err) {
         console.log(err);
         throw new Error('S3 error');
       }
-      // console.log(data);
     });
   });
 };
