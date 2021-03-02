@@ -46,9 +46,10 @@ router.get('/live', requireSecret, (req, res) => {
 router.get('/beta', requireSecret, (req, res) => {
   try {
     const { project_name: name, content_id: id, appSession } = req.cookies;
-    const beta = req.projects.find((item) => item.projectName === name)
-      .allowBeta;
-    if (!beta) {
+    const project = req.projects.find((item) => item.projectName === name);
+    const { allowBeta, destination, s3_access, s3_secret } = project;
+
+    if (!allowBeta) {
       return res.render('submission', {
         status: 'Failed',
         message: `Can't Upload Content`,
@@ -66,9 +67,17 @@ router.get('/beta', requireSecret, (req, res) => {
         return res.redirect('/stats');
       }
     }
-    const destination = req.projects.find((item) => item.projectName === name)
-      .destination;
-    s3upload({ files: files2, project_name: id, destination });
+
+    // const destination = req.projects.find((item) => item.projectName === name)
+    // .destination;
+
+    s3upload({
+      files: files2,
+      project_name: id,
+      destination,
+      s3_access,
+      s3_secret,
+    });
     return res.render('submission', {
       pwd: appSession,
       status: 'Successful',

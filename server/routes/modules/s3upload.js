@@ -5,16 +5,16 @@ const serverTime = require('./moment');
 require('dotenv').config();
 
 module.exports = (object) => {
-  const { files, project_name, destination } = object;
+  const { files, project_name, destination, s3_access, s3_secret } = object;
   config.update({ region: 'ap-northeast-1' });
   const s3 = new S3({
     apiVersion: '2006-03-01',
-    accessKeyId: process.env.S3_ACCESS,
-    secretAccessKey: process.env.S3_SECRET,
+    accessKeyId: s3_access,
+    secretAccessKey: s3_secret,
   });
   files.forEach((file) => {
     const payload = {
-      Bucket: process.env.S3_BUCKET,
+      Bucket: destination,
       Key: `${serverTime}/${file}`.toLowerCase(),
       Body: fs.readFileSync(path.join('submission', project_name, file)),
     };
