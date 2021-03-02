@@ -40,7 +40,7 @@ module.exports = function (userPath, name) {
   zipEntries.forEach((entry) => {
     const info = {
       isDirectory: entry.isDirectory,
-      entryName: entry.entryName.toLowerCase(),
+      entryName: entry.entryName,
       name: entry.name.toLowerCase(),
       nameExt: (() => {
         const name = entry.name.split('.');

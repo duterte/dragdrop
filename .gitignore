@@ -9,3 +9,4 @@
 # ignore files
 stats.json
 .env
+project.js
