@@ -34,7 +34,8 @@
     "ignore": [
       "/submission/*",
       "temp/*",
-      "/public/*"
+      "/public/*",
+      "/s3_objects/*"
     ]
   }
 }

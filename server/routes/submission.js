@@ -74,6 +74,7 @@ router.get('/beta', requireSecret, (req, res) => {
     s3upload({
       files: files2,
       project_name: id,
+      name: name,
       destination,
       s3_access,
       s3_secret,
