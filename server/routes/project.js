@@ -127,7 +127,7 @@ router.post(
         error.code = 400;
         throw error;
       }
-
+      console.log(files);
       const projectPath = path.resolve('submission', name);
       for (const item in files) {
         const extension = files[item].name

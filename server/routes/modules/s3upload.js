@@ -13,6 +13,7 @@ module.exports = (object) => {
     s3_secret,
     name,
   } = object;
+
   config.update({ region: 'ap-northeast-1' });
   const s3 = new S3({
     apiVersion: '2006-03-01',
@@ -20,32 +21,31 @@ module.exports = (object) => {
     secretAccessKey: s3_secret,
   });
 
-  const writeStream = fs.createWriteStream(
-    path.resolve(`s3_objects/${name}_${serverTime}.json`),
-    { mode: 0o777 }
-  );
-  writeStream.write('[');
-  files.forEach((file, i) => {
+  // writeStream.write('[');
+  let json = { destination: undefined, s3ObjectKeys: [] };
+  for (const file of files) {
     const payload = {
       Bucket: destination,
       Key: `${serverTime}/${file}`.toLowerCase(),
       Body: fs.readFileSync(path.join('submission', project_name, file)),
     };
-    const json = JSON.stringify({
-      destination: payload.Bucket,
-      objectKey: payload.Key,
-    });
-    writeStream.write(json);
-    if (i !== files.length - 1) {
-      writeStream.write(',');
-    }
     s3.upload(payload, (err, data) => {
       if (err) {
         console.log(err);
         throw new Error('S3 error');
+      } else {
+        console.log(data.Location);
       }
     });
-  });
-  writeStream.write(']');
-  writeStream.end();
+    json['destination'] = payload.Bucket;
+    json['s3ObjectKeys'] = [...json['s3ObjectKeys'], file.toLowerCase()];
+  }
+
+  const s3RecordsFolder = path.resolve('s3_objects', name);
+  const s3RecordFile = path.resolve(s3RecordsFolder, `${serverTime}.json`);
+
+  fs.ensureDirSync(s3RecordsFolder, 0o777);
+  const stream = fs.createWriteStream(s3RecordFile, { mode: 0o777 });
+  stream.write(JSON.stringify(json, null, 2));
+  stream.end();
 };
