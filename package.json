@@ -11,6 +11,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@aws-sdk/client-s3": "^3.7.0",
     "adm-zip": "^0.5.2",
     "aws-sdk": "^2.839.0",
     "chalk": "^4.1.0",
@@ -35,7 +36,8 @@
       "/submission/*",
       "temp/*",
       "/public/*",
-      "/s3_objects/*"
+      "/s3_objects/*",
+      "/zip/*"
     ]
   }
 }

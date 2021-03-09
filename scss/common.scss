@@ -9,6 +9,10 @@ body * {
   font-family: 'Nunito', sans-serif;
 }
 
+body {
+  overflow-x: hidden;
+}
+
 h1,
 h2,
 h3,
@@ -51,13 +55,13 @@ a {
 header {
   min-height: 4em;
   margin-bottom: 2em;
+  background-color: white;
   box-shadow: 0 1px 5px rgba(0, 0, 0, 0.02);
   padding-top: 1em;
   font-family: 'Nunito';
   font-weight: bold;
   position: relative;
   z-index: 100;
-  // z-index: 100;
 
   .wrapper {
     display: flex;

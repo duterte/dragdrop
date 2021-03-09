@@ -86,6 +86,16 @@
 
   <%- include('partials/header.ejs', {pwd,className: 'project' }) %>
     <main class="project">
+      <div class="wrapper add-file">
+        <input type="file" multiple style="display: none;">
+        <div id="upload-btn1">
+          <svg>
+            <use href="#cloud-upload-icon" />
+          </svg>
+          <span>CLICK HERE OR DRAG AND DROP</span>
+          <span>TO UPLOAD A FILE</span>
+        </div>
+      </div>
       <table class="wrapper">
         <thead>
           <tr>
@@ -100,21 +110,7 @@
               <% } %>
         </tbody>
       </table>
-      <div class="wrapper add-file">
-        <input type="file" multiple style="display: none;">
-        <div id="upload-btn1">
-          <svg>
-            <use href="#cloud-upload-icon" />
-          </svg>
-          <span>CLICK HERE OR DRAG AND DROP</span>
-          <span>TO UPLOAD A FILE</span>
-        </div>
-      </div>
-      <div class="wrapper submit-btn-wrapper">
-        <a href="/stats?type=<%= type %>" id="submit" class="app-prim-button">
-          Submit
-        </a>
-      </div>
+      <div id="upload-interface" class="wrapper">
       </div>
     </main>
     <div id="dropzone">
@@ -122,33 +118,12 @@
         DROP FILES TO UPLOAD
       </div>
     </div>
-    <div id="modal-holder">
-      <div class="folder-dialog">
-        <b>Folder Name</b>
-        <input type="text" placeholder="example: css" value="New Folder">
-        <span class="app-prim-button" id="create-folder-btn">OK</span>
-        <svg class="close-modal">
-          <use href="#close-icon" />
-        </svg>
-      </div>
-      <div class="delete-dialog">
-        <p>
-          Delete selected files ?
-        </p>
-        <div class="dialog-btn">
-          <span class="app-second-button">CANCEL</span>
-          <span class="app-prim-button">OK</span>
-        </div>
-        <svg class="close-modal">
-          <use href="#close-icon" />
-        </svg>
-      </div>
-    </div>
-    <div id="pop">
-      <div class="loading-spinner">
-        <svg class="spinner-icon">
-          <use href="#spinner-icon-solid" />
-        </svg>
+    <div id="btns-holder">
+      <div class="wrapper">
+        <a href="/stats?type=<%= type %>" id="submit" class="app-prim-button">
+          Submit
+        </a>
+        <a href="/project" id="view-files" class="app-prim-button">VIEW FILES</a>
       </div>
     </div>
     <script src="/js/common.js"></script>

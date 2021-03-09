@@ -13,21 +13,15 @@ function getType(array, filter) {
   return array.filter((item) => item.type.toLowerCase() === filter);
 }
 
-function parsefileSize(number) {
-  const bytes = [
-    { type: 'GB', number: Math.round(number / 1000000000) },
-    { type: 'MB', number: Math.round(number / 1000000) },
-    { type: 'KB', number: Math.round(number / 1000) },
-    { type: 'Bytes', number: number },
-  ];
-  let str = undefined;
-  for (const item of bytes) {
-    if (item.number !== 0) {
-      str = `${item.number} ${item.type}`;
-      break;
-    }
-  }
-  return str ? str : 0;
+function parsefileSize(size = 0) {
+  const bytes = size;
+  const kiloBytes = Math.round(bytes / 1024);
+  const megaBytes = Math.round(kiloBytes / 1024);
+  const gigaBytes = Math.round(megaBytes / 1024);
+  if (gigaBytes) return gigaBytes + ' GB';
+  if (megaBytes) return megaBytes + ' MB';
+  if (kiloBytes) return kiloBytes + ' KB';
+  return bytes + ' Bytes';
 }
 
 router.get('/', requireSecret, (req, res) => {
@@ -110,7 +104,8 @@ router.get('/', requireSecret, (req, res) => {
 
 const fileUploadOption = {
   createParentPath: true,
-  // safeFileNames: true,
+  useTempFiles: true,
+  tempFileDir: path.resolve('temp'),
   preserveExtension: true,
 };
 
@@ -127,20 +122,25 @@ router.post(
         error.code = 400;
         throw error;
       }
-      console.log(files);
+      // console.log(files);
       const projectPath = path.resolve('submission', name);
       for (const item in files) {
         const extension = files[item].name
           .split('.')
           .reduceRight((i) => i)
           .toLowerCase();
+        console.log({ name: files[item].name });
         if (extension === 'zip') {
-          const zip = new AdmZip(files[item].data);
+          const zipDirPath = path.resolve('zip');
+          const zipName = name + '.zip';
+          const zipFilePath = path.join(zipDirPath, zipName);
+          fs.ensureDirSync(zipDirPath);
+          await files[item].mv(zipFilePath);
+          const zip = new AdmZip(zipFilePath);
           zip.extractAllTo(projectPath, true);
         } else {
-          await files[item].mv(
-            path.join(projectPath, files[item].name.toLowerCase())
-          );
+          const fileName = files[item].name.toLowerCase();
+          await files[item].mv(path.join(projectPath, fileName));
         }
       }
 

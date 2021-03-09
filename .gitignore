@@ -4,7 +4,7 @@
 /node_modules
 /tmp
 /temp
-
+/s3_objects
 
 # ignore files
 stats.json
