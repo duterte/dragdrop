@@ -5,6 +5,7 @@
   const uploadBtn1 = document.querySelector('#upload-btn1');
   const dropzone = document.querySelector('#dropzone');
   const submit = document.querySelector('#submit');
+  const tableData = document.querySelector('tbody');
   const body = document.body;
   let counter = 0;
   let loadend = 0;
@@ -23,22 +24,36 @@
   );
   submit.addEventListener('click', () => activateSpinner());
 
-  // function activateSpinner() {
-  //   const pop = document.querySelector('#pop');
-  //   const spinnerIcon = document.querySelector('.spinner-icon');
-  //   pop.style.display = 'grid';
-  //   spinnerIcon.classList.add('animate');
-  // }
+  if (!tableData.children.length) {
+    const btnsHolder = document.getElementById('btns-holder');
+    if (btnsHolder) btnsHolder.style.display = 'none';
+  }
 
   function calcFileSize(size = 0) {
-    const bytes = size;
-    const kiloBytes = Math.round(bytes / 1024);
-    const megaBytes = Math.round(kiloBytes / 1024);
-    const gigaBytes = Math.round(megaBytes / 1024);
-    if (gigaBytes) return gigaBytes + ' GB';
-    if (megaBytes) return megaBytes + ' MB';
-    if (kiloBytes) return kiloBytes + ' KB';
-    return bytes + ' Bytes';
+    class DigitalStorage {
+      constructor() {
+        this.bytes = { type: 'bytes', calc: size };
+        this.KB = { type: 'KB', calc: this.bytes.calc / 1024 };
+        this.MB = { type: 'MB', calc: this.KB.calc / 1024 };
+        this.GB = { type: 'GB', calc: this.MB.calc / 1024 };
+      }
+
+      storage() {
+        const array = [this.bytes, this.KB, this.MB, this.GB];
+        const sort = array.sort((a, b) => a.calc - b.calc);
+        const reduce = sort.reduce((acc, curr) => {
+          if (curr.calc > -1 && curr.calc < 1000) {
+            return curr;
+          } else {
+            return acc;
+          }
+        });
+        const result = reduce.calc.toFixed(2) + ' ' + reduce.type;
+        return result;
+      }
+    }
+    const digital = new DigitalStorage();
+    return digital.storage();
   }
 
   class FileUploadUI {
@@ -110,12 +125,12 @@
     }
   }
 
-  function fileInterface({}) {
-    const root = document.getElementById('upload-interface');
-    const wrapper = root.querySelector('.wrapper');
-    root.style.display('block');
-    wrapper.append();
-  }
+  // function fileInterface({}) {
+  //   const root = document.getElementById('upload-interface');
+  //   const wrapper = root.querySelector('.wrapper');
+  //   root.style.display('block');
+  //   wrapper.append();
+  // }
 
   function upload(file, id) {
     const fileUI = document.getElementById(id);
@@ -183,9 +198,9 @@
     xhr.upload.addEventListener('loadend', (e) => {
       loadend++;
       if (counter === loadend) {
-        const btnsHolder = document.querySelector('#btns-holder .wrapper');
+        const btnsHolder = document.querySelector('#btns-holder');
         const viewBtn = document.getElementById('view-files');
-        btnsHolder.style.display = 'flex';
+        btnsHolder.style.display = 'block';
         viewBtn.style.display = 'inline';
       }
     });
@@ -197,13 +212,13 @@
     const interface = document.getElementById('upload-interface');
     const table = document.querySelector('table');
     const addFile = document.querySelector('.add-file');
-    const btnsHolder = document.querySelector('#btns-holder .wrapper');
+    const btnsHolder = document.querySelector('#btns-holder');
     const submitBtn = document.querySelector('#submit');
     interface.style.display = 'block';
     table.style.display = 'none';
     addFile.style.display = 'none';
     btnsHolder.style.display = 'none';
-    submitBtn.style.display = 'none';
+    if (submitBtn) submitBtn.style.display = 'none';
 
     for (const item of files) {
       if (item && item.type) {

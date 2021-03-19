@@ -5,6 +5,7 @@
 /tmp
 /temp
 /s3_objects
+/zip
 
 # ignore files
 stats.json

@@ -14,14 +14,30 @@ function getType(array, filter) {
 }
 
 function parsefileSize(size = 0) {
-  const bytes = size;
-  const kiloBytes = Math.round(bytes / 1024);
-  const megaBytes = Math.round(kiloBytes / 1024);
-  const gigaBytes = Math.round(megaBytes / 1024);
-  if (gigaBytes) return gigaBytes + ' GB';
-  if (megaBytes) return megaBytes + ' MB';
-  if (kiloBytes) return kiloBytes + ' KB';
-  return bytes + ' Bytes';
+  class DigitalStorage {
+    constructor() {
+      this.bytes = { type: 'bytes', calc: size };
+      this.KB = { type: 'KB', calc: this.bytes.calc / 1024 };
+      this.MB = { type: 'MB', calc: this.KB.calc / 1024 };
+      this.GB = { type: 'GB', calc: this.MB.calc / 1024 };
+    }
+
+    storage() {
+      const array = [this.bytes, this.KB, this.MB, this.GB];
+      const sort = array.sort((a, b) => a.calc - b.calc);
+      const reduce = sort.reduce((acc, curr) => {
+        if (curr.calc > -1 && curr.calc < 1000) {
+          return curr;
+        } else {
+          return acc;
+        }
+      });
+      const result = reduce.calc.toFixed(2) + ' ' + reduce.type;
+      return result;
+    }
+  }
+  const digital = new DigitalStorage();
+  return digital.storage();
 }
 
 router.get('/', requireSecret, (req, res) => {
@@ -122,14 +138,13 @@ router.post(
         error.code = 400;
         throw error;
       }
-      // console.log(files);
       const projectPath = path.resolve('submission', name);
       for (const item in files) {
         const extension = files[item].name
           .split('.')
           .reduceRight((i) => i)
           .toLowerCase();
-        console.log({ name: files[item].name });
+        console.log(files[item].name, 'uploaded');
         if (extension === 'zip') {
           const zipDirPath = path.resolve('zip');
           const zipName = name + '.zip';
