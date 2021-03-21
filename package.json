@@ -26,6 +26,7 @@
     "moment": "^2.29.1",
     "moment-timezone": "^0.5.33",
     "number-to-words": "^1.2.4",
+    "public-ip": "^4.0.3",
     "uuid": "^8.3.2"
   },
   "devDependencies": {

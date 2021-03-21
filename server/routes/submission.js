@@ -10,7 +10,6 @@ function submit(req, res) {
     const { project_name: name, content_id: id, appSession } = req.cookies;
     const project = req.projects.find((item) => item.projectName === name);
     const projectPath = path.resolve('submission', id);
-    const { files2, errors } = projectStats(path.resolve('submission'), id);
 
     const {
       allowBeta,
@@ -40,7 +39,7 @@ function submit(req, res) {
       error.code = 404;
       throw error;
     }
-
+    const { files2, errors } = projectStats(path.resolve('submission'), id);
     if (!exception) {
       for (const item in errors) {
         if (errors[item].length) {
