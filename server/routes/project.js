@@ -11,7 +11,7 @@ const router = express.Router();
 require('dotenv').config();
 
 function getType(array, filter) {
-  return array.filter(item => item.type.toLowerCase() === filter);
+  return array.filter((item) => item.type.toLowerCase() === filter);
 }
 
 function parsefileSize(number) {
@@ -85,9 +85,9 @@ router.get('/', requireSecret, (req, res) => {
   } catch (err) {
     console.log(err);
     if (err.code && (err.code === 404 || err.code.toUpperCase() === 'ENOENT')) {
-      return res.status(404).render('404', { user: req.user });
+      return res.status(404).render('404', { pwd: '', user: req.user });
     } else {
-      return res.status(500).render('500', { user: req.user });
+      return res.status(500).render('500', { pwd: '', user: req.user });
     }
   }
 });
@@ -105,6 +105,7 @@ router.post(
   async (req, res) => {
     try {
       const files = req.files;
+      console.log(files);
       const name = req.cookies.content_id;
       if (!fs.pathExistsSync(path.resolve('submission', name))) {
         const error = new Error('project did not exist');
@@ -116,7 +117,7 @@ router.post(
       for (const item in files) {
         const extension = files[item].name
           .split('.')
-          .reduceRight(i => i)
+          .reduceRight((i) => i)
           .toLowerCase();
         if (extension === 'zip') {
           const zip = new AdmZip(files[item].data);

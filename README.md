@@ -1,8 +1,3 @@
-inorder to work
+![Continuous Integration](https://github.com/duterte/dragdrop/actions/workflows/pipeline.yml/badge.svg)
 
-```cmd
-
-npm install
-npm start
-
-```
+# DRAG AND DROP FILE UPLOAD
