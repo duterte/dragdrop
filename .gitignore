@@ -9,3 +9,5 @@
 # ignore files
 stats.json
 .env
+package-lock.json
+yarn.lock
